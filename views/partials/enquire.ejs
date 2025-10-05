@@ -1,0 +1,83 @@
+<script>       
+    document.getElementById('booktour').addEventListener('submit', async function (e) {
+        e.preventDefault(); // Prevent the default form submission
+    
+        try {
+            const API_BASE_URL = "<%= API_BASE_URL %>";
+            const websiteID = "<%= websiteID %>";
+            const WEBSITEIDKEY = "<%= WEBSITE_ID_KEY %>";
+            const BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS = <%- JSON.stringify(BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS) %>;
+    
+            const CREATE_BOOKING_ENQUIRY_END_POINT = `${API_BASE_URL}/website/service-enquiry/create-service-enquiry`;
+    
+            const booktour = e.target; // Reference to the form element
+            const WEBSITE_ID_KEY = WEBSITEIDKEY;
+    
+            // Prepare the payload from the form fields
+            const payload = {
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.name]: booktour.querySelector(
+                    `input[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.name}"]`
+                ).value,
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.businessname]: booktour.querySelector(
+                    `input[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.businessname}"]`
+                ).value,
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.businesscategory]: booktour.querySelector(
+                    `input[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.businesscategory}"]`
+                ).value,
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.phone]: booktour.querySelector(
+                    `input[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.phone}"]`
+                ).value,
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.email]: booktour.querySelector(
+                    `input[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.email}"]`
+                ).value,
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.service]: Array.from(
+                    booktour.querySelectorAll(`select[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.service}"] option:checked`)
+                ).map(option => option.value).join(','),
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.serviceType]: booktour.querySelector(
+                    `input[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.serviceType}"]`
+                ).value,
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.numSeats]: booktour.querySelector(
+                    `select[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.numSeats}"]`
+                ).value,
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.preferredLocation]: booktour.querySelector(
+                    `select[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.preferredLocation}"]`
+                ).value,
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks]: booktour.querySelector(
+                    `textarea[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks}"]`
+                ).value,
+                [WEBSITE_ID_KEY]: websiteID,
+            };
+    
+            // Set headers for the request
+            const headers = new Headers({
+                "Content-Type": "application/json",
+            });
+    
+            // Send POST request to the API
+            const response = await fetch(CREATE_BOOKING_ENQUIRY_END_POINT, {
+                method: "POST",
+                headers,
+                body: JSON.stringify(payload),
+            });
+    
+            // Handle response
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+    
+            const data = await response.json();
+    
+            // Redirect to thank-you page on successful submission
+            sessionStorage.setItem("thankYouMessage", "We've Recieved Your Booking Request and will Reach out to you soon");
+
+            window.location.href = "/thankyou";
+    
+            // Reset the form fields
+            booktour.reset();
+        } catch (error) {
+            console.error("Form submission error:", error);
+            // Optionally, handle errors here
+        }
+    });
+    
+</script>

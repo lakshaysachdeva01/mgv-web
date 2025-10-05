@@ -1,0 +1,278 @@
+<section style="padding-top: 50px;">
+  <div class="container">
+      <div class="text-center" data-aos="fade-up">
+          <h1 style="color:#1F0B45">What Parents Say</h1>
+      </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+<style>
+    .swiper-buttons {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+     
+    .swiper-prev,
+    .swiper-next {
+        width: 40px;
+        height: 40px;
+        background: #ff4081; /* Pink color */
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 50%;
+        cursor: pointer;
+        pointer-events: all;
+        transition: 0.3s;
+    }
+      
+    .swiper-prev:hover,
+    .swiper-next:hover {
+        background: #d81b60; /* Darker pink on hover */
+    }
+      
+    .swiper-prev {
+        left: -50px;
+    }
+      
+    .swiper-next {
+        right: -50px;
+    }
+      
+    .Reviews .swiper-slide {
+        flex-shrink: 0;
+        max-width: 380px;
+        width: 100%; /* Ensure slides don't shrink unexpectedly */
+    }
+    
+    .Reviews .swiper-wrapper {
+        padding-left: 25px;
+    }
+    .Reviews .swiper-pagination{
+      bottom:50px !important;
+    }
+    .swiper-pagination-bullet-active{
+      background:#e33d5c;
+    }
+    @media (max-width: 420px) {
+        .Reviews .swiper-slide {
+            min-width: 350px !important;
+        }
+        
+        .Reviews .swiper-wrapper {
+            padding-left: 0px;
+        }
+        .Reviews .swiper-pagination{
+          bottom:20px !important;
+        }
+    }
+</style>
+
+<!-- ======== Review Section ======== -->
+<section class="Reviews" style="max-width:1250px; padding-top:30px; margin:2px auto; position:relative">
+    <div class="container">
+        <div class="testimonial-container" style="overflow:hidden; height:100%; padding-top:50px">
+            <div class="swiper-wrapper" style="display: flex;">
+                <% testimonial.forEach((slide) => { %>
+                <div class="swiper-slide">
+                    <div class="position-relative d-flex flex-column justify-content-center align-items-center text-center" data-aos="flip-left">
+                        <figure class="position-absolute">
+                            <img class="rounded-circle" src="<%= process.env.S3_BASE_URL + slide.image %>" alt="<%= slide.name %>">
+                        </figure>
+                        <div class="d-flex flex-column justify-content-center align-items-center text-center">
+                            <span class="testimonial-text">
+                                <%= slide.review.length > 135 ? slide.review.slice(0, 135) + '...' : slide.review %> 
+                                <% if (slide.review.length > 135) { %>
+                                    <span class="read-more-btn" onclick="openReviewPopup(`<%= slide.review.replace(/'/g, '\\\'').replace(/"/g, '&quot;') %>`)">
+                                        Read More
+                                    </span>
+                                <% } %>
+                            </span>
+                            <h6 style="margin-top: 15px;"><%= slide.name %></h6>
+                            <p class="pt-1"><%= slide.companyProfile %></p>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+            
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</section>
+
+<script>
+    var swiper = new Swiper('.testimonial-container', {
+        slidesPerView: "1",
+        spaceBetween: 10,
+        loop: true,
+        centeredSlides: true,
+        navigation: {
+            nextEl: '.swiper-next',
+            prevEl: '.swiper-prev',
+        },
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+            },
+            1024: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+            },
+        }
+    });
+</script>
+
+<!-- Review Popup -->
+<div id="reviewPopup" class="review-popup">
+    <div class="review-popup-content">
+        <p id="fullReviewText"></p>
+    </div>
+    <button class="close-popup" onclick="closeReviewPopup()">&times;</button>
+</div>
+
+<style>
+    /* Glassy Popup Overlay */
+    .review-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    #fullReviewText {
+        font-size: 25px;
+        line-height: 38px;
+        font-weight: 500;
+        letter-spacing: -0.05em;
+    }
+
+    /* Popup Content */
+    .review-popup-content {
+        background: white;
+        padding: 60px;
+        border-radius: 12px;
+        width: 50%;
+        text-align: center;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        transform: scale(0.8);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    @media (max-width: 600px) {
+        .review-popup-content {
+            padding: 15px;
+            margin: 10px;
+            width: 100%;
+        }
+    }
+
+    /* Close Button Outside */
+    #reviewPopup .close-popup {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        height: 40px;
+        width: 40px;
+        padding: 0;
+        font-size: 24px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        background-color: #76767691;
+        color: white;
+        font-weight: bold;
+        z-index: 1001;
+    }
+
+    
+
+    .testimonial-text {
+        color: #323232;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 26px;
+    }
+
+    /* Read More Button (Inside the Box) */
+    .read-more-btn {
+        margin-top: 5px;
+        background-color: transparent;
+        color: #999999;
+        font-size: 15px;
+        font-style: italic;
+        font-weight: 400;
+        cursor: pointer;
+        padding: 5px 8px 5px 0;
+        border-radius: 4px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Disable scrolling when modal is open */
+    body.modal-open {
+        overflow: hidden;
+    }
+
+    /* Show animation */
+    .review-popup.show {
+        display: flex;
+        opacity: 1;
+    }
+
+    .review-popup.show .review-popup-content {
+        transform: scale(1);
+    }
+</style>
+
+<script>
+    function openReviewPopup(reviewText) {
+        document.getElementById("fullReviewText").innerText = reviewText;
+        const popup = document.getElementById("reviewPopup");
+        popup.style.display = "flex";
+        setTimeout(() => popup.classList.add("show"), 10);
+        document.body.classList.add("modal-open");
+    }
+
+    function closeReviewPopup() {
+        const popup = document.getElementById("reviewPopup");
+        popup.classList.remove("show");
+        setTimeout(() => popup.style.display = "none", 300);
+        document.body.classList.remove("modal-open");
+    }
+
+    // Close popup on clicking outside
+    document.getElementById("reviewPopup").addEventListener("click", function(event) {
+        if (event.target === this) {
+            closeReviewPopup();
+        }
+    });
+</script>

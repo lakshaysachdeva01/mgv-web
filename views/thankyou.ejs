@@ -1,0 +1,44 @@
+<%- include('header'), {seoDetails} %>
+
+<body style="overflow: hidden;"><div class="Courses" style="padding-top: 0px; ">
+    <div  style="max-width: 1250px; margin: 0 auto" style="display:flex; justify-content:center; align-items:center; height:100%">
+        <div class="row flex-deouti padd-left new-padding-bottom">
+            <div class="col-lg-6 align-self-center">
+            <div class="abou-heding">
+            <h1 class="h1error" style="   
+        color: #110028;
+        font-size: 80px;
+        font-weight: 700;
+        padding-bottom: 38px;">Thank You! </h1>
+            <p id="thank-you-message" style="margin-bottom: 40px;  color: #110028;"></p>
+    
+            <a href="/" class="hover1" id="getStartedAnchor"> Home</a>
+            </div>
+            </div>
+            <div class="col-lg-6 align-self-center">
+            <div class="content-holder">
+
+            </div>
+            </div>
+            </div>
+    </div>
+      
+
+</div>
+</body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const message = sessionStorage.getItem("thankYouMessage");
+        
+        if (message) {
+            // Display the message in an element with ID 'thank-you-message'
+            document.getElementById("thank-you-message").textContent = message;
+    
+            // Optionally clear the message after it's shown (to avoid persisting after page reload)
+            sessionStorage.removeItem("thankYouMessage");
+        }
+    });
+    
+</script>
+<%- include('footer') %>

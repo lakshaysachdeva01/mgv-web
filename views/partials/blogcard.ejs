@@ -1,0 +1,69 @@
+<!-- :: Breadcrumb Header -->
+<section class="breadcrumb-header style-2" id="page" style="background-image: url(/assets/images/header/02_breadcrumb-header.jpg)">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="banner">
+                    <h1>Our Blog</h1>
+                    <ul>
+                        <li><a href='/'>Home</a></li>
+                        <li><i class="fas fa-angle-right"></i></li>
+                        <li>Blogs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- :: Blog -->
+<section class="blog py-100-70">
+    <div class="container">
+        <div class="sec-title home-2">
+            <div class="row">
+                <div class="col-lg-5">
+                    <h2>Latest Insights</h2>
+                    <h3 style="width: 90%;">Stories of Innovation, Growth & Global Impact</h3>
+                </div>
+                <div class="col-lg-5 d-flex align-items-center">
+                    <p class="sec-explain">Explore our latest insights, portfolio stories, and industry updates that shape the future of innovation and growth.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+             <style>
+                 .blog-img img {
+                     width: 100%;
+                     max-height: 280px;
+                     object-fit: cover;
+                 }
+                 .blog-description{
+                     display: -webkit-box;
+                     -webkit-line-clamp: 3;
+                     -webkit-box-orient: vertical;
+                     overflow: hidden;
+                     text-overflow: ellipsis;
+                 }
+             </style>
+            <% blogs.forEach(item => { %>
+                <div class="col-md-6 col-lg-4" style="box-shadow: 0px 0px 0px 1px #ebebeb;" onclick="window.location.href='/blog/<%= item.seoDetails.slug %>'">
+                    <div class="blog-item">
+                        <div class="img-box">
+                            <a class='open-post blog-img' href='/blog/<%= item.seoDetails.slug %>'>
+                                <img class="img-fluid" src="<%= process.env.S3_BASE_URL + item.banner.image %>" alt="02 Blog">
+                            </a>
+                        </div>
+                        <div class="text-box">
+                            <a class='title-blog' href='/blog/<%= item.seoDetails.slug %>'>
+                                <h5><%= item.title %></h5>
+                            </a>
+                            <span class="blog-date"><%= item.postDate %></span>
+                             <div class="blog-description"><%- item.description %></div>
+                            <a class='btn-1 btn-3 link' aria-label="Read More-about the blog" href='/blog/<%= item.seoDetails.slug %>'><span>Read More</span></a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+    </div>
+</section>

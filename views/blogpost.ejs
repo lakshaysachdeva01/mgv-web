@@ -1,0 +1,660 @@
+<%- include('header'), {seoDetails} %>
+
+
+<section class="breadcrumb-header style-2" id="page" style="background-image: url(/assets/images/header/02_breadcrumb-header.jpg); ">
+  <div class="overlay" style="backdrop-filter: brightness(0.5);"></div>
+  <div class="container">
+      <div class="row">
+          <div class="col-md-8">
+              <div class="banner">
+                  <h1>A Fresh Perspective Awaits</h1>
+                  <ul>
+                      <li><a href='/'>Home</a></li>
+                      <li><i class="fas fa-angle-right"></i></li>
+                      <li>Blog</li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<!-- :: Single Blog -->
+<div class="single-blog-page py-100-70">
+<div class="container">
+      <div class="row">
+<div class="col-lg-8">
+  <div class="blog-item">
+    <div style=" box-shadow: 0px 0px 0px 1px #ebebeb;" class="img-box">
+      <div >
+        <% 
+                            // Function to convert a YouTube URL (watch or short form) into an embeddable URL
+                            function convertToEmbedUrl(url) {
+                                let videoId = "";
+                                if (url.includes("youtu.be")) {
+                                    // Handle short URL format (e.g., https://youtu.be/Tjxx80uYyUQ)
+                                    videoId = url.split("youtu.be/")[1]?.split("?")[0];
+                                } else if (url.includes("youtube.com/watch")) {
+                                    // Handle full URL format (e.g., https://www.youtube.com/watch?v=Tjxx80uYyUQ)
+                                    videoId = url.split("v=")[1]?.split("&")[0];
+                                }
+                                return videoId ? `https://www.youtube.com/embed/${videoId}` : "";
+                            }
+                            %>
+                            
+                            <% if (blogDetails?.banner?.bannerType === "VIDEO" && blogDetails?.banner?.video && blogDetails?.banner?.video !== "") { %>
+                              <!-- Render video if the banner type is VIDEO and video URL exists -->
+                              <iframe 
+                                  width="100%" 
+                                  height="433" 
+                                  src="<%= convertToEmbedUrl(blogDetails.banner.video) %>" 
+                                  title="YouTube video player" 
+                                  frameborder="0" 
+                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                  referrerpolicy="strict-origin-when-cross-origin" 
+                                  allowfullscreen>
+                              </iframe>
+                          <% } else if (blogDetails?.banner?.bannerType === "IMAGE" && blogDetails?.banner?.image) { %>
+                              <!-- Render image if the banner type is IMAGE and image URL exists -->
+                              <img 
+                                  style="padding-top: 0; width:100%; max-height: 85vh;" 
+                               src="<%= process.env.S3_BASE_URL + blogDetails.banner.image %>" 
+                                  alt="blog_banner">
+                          <% } %>
+                          
+                          </div>
+    </div>
+    <div class="text-box">
+      <h5><%= blogDetails.title %></h5>
+      <span class="blog-date"><%= blogDetails.postDate %></span>
+      <div class="blog-description"><%- blogDetails.description.replace(/<span[^>]*>/g, '').replace(/<\/span>/g, '').replace(/\n/g, '<br>') %></div>
+                              </div>
+                              
+
+                              <!-- Add this script to fix and render the table -->
+                              <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                  const blogDescription = document.querySelector('.blog-description');
+                                  
+                                  if (blogDescription) {
+                                    const content = blogDescription.innerHTML || '';
+                                    
+                                    // Check if content contains encoded table tags
+                                    if (content.includes('&lt;table') && content.includes('&lt;thead') && content.includes('&lt;tbody')) {
+                                      try {
+                                        // Create a temporary div to decode HTML entities
+                                        const tempDiv = document.createElement('div');
+                                        tempDiv.innerHTML = content;
+                                        let decodedContent = tempDiv.textContent;
+                                        
+                                        // Remove paragraph tags and clean up the HTML
+                                        decodedContent = decodedContent
+                                          .replace(/<\/?p>/g, '') // Remove <p> and </p> tags
+                                          .replace(/&nbsp;/g, '') // Remove &nbsp;
+                                          .replace(/\s+</g, '<')  // Remove whitespace before tags
+                                          .replace(/>\s+/g, '>')  // Remove whitespace after tags
+                                          .trim();
+                                        
+                                        // Replace the content with the cleaned table HTML
+                                        blogDescription.innerHTML = decodedContent;
+                                        
+                                        // Add the table-container class to the blog-description div
+                                        blogDescription.classList.add('table-container');
+                                      } catch (error) {
+                                        console.error('Error processing table HTML:', error);
+                                      }
+                                    }
+                                  }
+                                });
+                              </script>
+                              
+                              
+                              <style>
+                                /* Table styles */
+                                table {
+                                  width: 100%;
+                                  border-collapse: collapse;
+                                  font-size: 0.9rem;
+                                  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                                  border-radius: 4px;
+                                  overflow: hidden;
+                                  margin: 1.5rem 0;
+                                  border: 1px solid #dddee1 !important;
+                                }
+                                
+                                table th {
+                                  padding: 0.75rem 1rem;
+                                  text-align: left;
+                                  border: none !important;
+                                }
+                                
+                                table td {
+                                  padding: 0.75rem 1rem;
+                                  text-align: left;
+                                  color: black;
+                                  border-bottom: 1px dashed #dddee19e !important;
+                                }
+                              
+                                table th {
+                                  background-color: #f4f6f8 !important;
+                                  font-weight: 600;
+                                  color: black ;
+                                  border-bottom: 1px solid #f4f6f8 !important;
+                                }
+                                
+                                table .even-row {
+                                  background-color: white !important;
+                                }
+                                
+                                table .odd-row {
+                                  background-color: white !important;
+                                }
+                                
+                                /* Hover effect */
+                                table tbody tr:hover {
+                                  background-color: #f4f6f8 !important;
+                                }
+                                
+                                /* Responsive styles */
+                                @media (max-width: 640px) {
+                                  table {
+                                    display: block;
+                                    overflow-x: auto;
+                                    white-space: nowrap;
+                                  }
+                                  
+                                  table th,
+                                  table td {
+                                    padding: 0.5rem 0.75rem !important;
+                                  }
+                                }
+                                .facebook-embed , .instagram-embed {
+                                  margin: 20px 0;
+                                  display: flex;
+                                  justify-content: center;
+                                }
+                                
+                                .fb-video {
+                                  width: 100% !important;
+                                  max-width: 540px;
+                                  min-width: 300px;
+                                }
+                                
+                              </style>
+                              
+
+                              <% if (blogDetails?.multipleDescriptions?.length > 0) { %>
+                                <% blogDetails.multipleDescriptions.forEach(item => { %>
+                                  <div class="single-description">
+                                    <!-- Your existing EJS template line -->
+                              <div class="item-description"><%- (item.description || '').replace(/<span[^>]*>/g, '').replace(/<\/span>/g, '').replace(/\n/g, '<br>') %>
+                              </div>
+                              
+                              <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                  // Get all item-description elements
+                                  const itemDescriptions = document.querySelectorAll('.item-description');
+                                  
+                                  itemDescriptions.forEach(function(itemDescription) {
+                                    const content = itemDescription.innerHTML || '';
+                                    
+                                    // Check if content contains encoded table tags
+                                    if (content.includes('&lt;table') || content.includes('<table')) {
+                                      try {
+                                        // Step 1: Find the table part in the content
+                                        const tableStartIndex = content.indexOf('&lt;table');
+                                        const tableEndIndex = content.indexOf('&lt;/table&gt;') + '&lt;/table&gt;'.length;
+                                        
+                                        if (tableStartIndex !== -1 && tableEndIndex !== -1) {
+                                          // Extract the encoded table HTML
+                                          const encodedTableHtml = content.substring(tableStartIndex, tableEndIndex);
+                                          
+                                          // Create a temporary div to decode HTML entities
+                                          const tempDiv = document.createElement('div');
+                                          tempDiv.innerHTML = encodedTableHtml;
+                                          
+                                          // Get the decoded table HTML
+                                          let decodedTableHtml = tempDiv.textContent;
+                                          
+                                          // Clean up the table HTML
+                                          decodedTableHtml = decodedTableHtml
+                                            .replace(/&nbsp;/g, '') // Remove &nbsp;
+                                            .replace(/\s+</g, '<')  // Remove whitespace before tags
+                                            .replace(/>\s+/g, '>')  // Remove whitespace after tags
+                                            .trim();
+                                          
+                                          // Replace only the table part in the original content
+                                          const newContent = content.substring(0, tableStartIndex) + 
+                                                            decodedTableHtml + 
+                                                            content.substring(tableEndIndex);
+                                          
+                                          // Update the content
+                                          itemDescription.innerHTML = newContent;
+                                        }
+                                      } catch (error) {
+                                        console.error('Error processing table HTML in item-description:', error);
+                                      }
+                                    }
+                                  });
+                                });
+                              </script>
+                              
+                              <% if (item.instagram) { %>
+                                <div class="instagram-embed" style="justify-content: center;
+                                  display: flex
+                              ;">
+                                  <%- item.instagram %>
+                                </div>
+                                <script>
+                                  // Load Instagram's embed.js if not already loaded
+                                  if (!window.instgrm) {
+                                    const script = document.createElement('script');
+                                    script.src = 'https://www.instagram.com/embed.js';
+                                    script.async = true;
+                                    document.body.appendChild(script);
+                                  }
+                                </script>
+                              <% } %>
+                              
+                              
+                              <% if (item.facebook) { %>
+                                <div class="facebook-embed"  style="justify-content: center;
+                                display: flex
+                              ;">
+                                  <div class="fb-video" 
+                                       data-href="<%= item.facebook %>" 
+                                       data-width="540"
+                                       data-show-text="false"
+                                       data-allowfullscreen="true"></div>
+                                </div>
+                              <% } %>
+                              
+                              <div id="fb-root"></div>
+                              <script>
+                                (function(d, s, id) {
+                                  var js, fjs = d.getElementsByTagName(s)[0];
+                                  if (d.getElementById(id)) return;
+                                  js = d.createElement(s); js.id = id;
+                                  js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0";
+                                  js.async = true;
+                                  fjs.parentNode.insertBefore(js, fjs);
+                                }(document, 'script', 'facebook-jssdk'));
+                              </script>
+                              
+                              </div>
+                              
+                                  <% if (item?.singleImage?.image) { %>
+                                    <div>
+                                      <img src="<%= process.env.S3_BASE_URL + item.singleImage.image %>" 
+                                           style="height: auto; width: 100%; margin-top: 10px; margin-bottom: 10px;" 
+                                           alt="<%- item.singleImage.altTag || 'Image' %>">
+                                    </div>
+                                  <% } %>
+                              
+                                  <% if (item?.multipleImages?.length > 0) { 
+                                    let imageCount = item.multipleImages.length;
+                                    let gridColumns = imageCount === 1 ? '1fr' :
+                                                      imageCount === 2 ? 'repeat(2, 1fr)' :
+                                                      imageCount === 3 ? 'repeat(2, 1fr)' :
+                                                      imageCount === 4 ? 'repeat(2, 1fr)' :
+                                                      imageCount === 5 ? 'repeat(2, 1fr)' :
+                                                      'repeat(auto-fill, minmax(200px, 1fr))'; 
+                                  %>
+                                    <div class="multiple-images <%= 
+                                        imageCount === 1 ? 'single-image' :
+                                        imageCount === 2 ? 'two-images' :
+                                        imageCount === 3 ? 'three-images' :
+                                        imageCount === 4 ? 'four-images' :
+                                        imageCount === 5 ? 'five-images' :
+                                        'grid-layout' 
+                                    %>"
+                                    style="display: grid; gap: 15px; grid-template-columns: <%= gridColumns %>; align-items: stretch;">
+                                      
+                                      <% item.multipleImages.forEach((image, index) => { %>
+                                          <div class="image" style="position: relative; 
+                                              <%= imageCount > 1 ? 'height: 250px; overflow: hidden;' : '' %>">
+                                              
+                                              <img src="<%= process.env.S3_BASE_URL + image %>" alt="" class="image-size lightbox-trigger"
+                                                   style="width: 100%; <%= imageCount > 1 ? 'height: 100%; object-fit: cover;' : 'height: auto;' %>; border-radius: 8px; cursor: pointer; margin-bottom: 20px;"
+                                                   onclick="openLightbox('<%= process.env.S3_BASE_URL + image %>')">
+                                          </div>
+                                      <% }) %>
+                                    </div>
+                                  <% } %>
+                              
+                                  <!-- Lightbox -->
+                                  <div id="customLightbox" class="lightbox">
+                                    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+                                    <img id="lightboxImage" class="lightbox-content">
+                                  </div>
+                              
+                                  <style>
+                                    .lightbox {
+                                      display: none;
+                                      position: fixed;
+                                      z-index: 1000;
+                                      left: 0;
+                                      top: 0;
+                                      width: 100%;
+                                      height: 100%;
+                                      background-color: rgba(0, 0, 0, 0.8);
+                                      justify-content: center;
+                                      align-items: center;
+                                    }
+                              
+                                    .lightbox-content {
+                                      max-width: 90%;
+                                      max-height: 90%;
+                                      display: block;
+                                      object-fit: contain;
+                                      margin: auto;
+                                      border-radius: 10px;
+                                    }
+                              
+                                    .lightbox-close {
+                                      position: absolute;
+                                      top: 20px;
+                                      right: 20px;
+                                      font-size: 30px;
+                                      color: white;
+                                      cursor: pointer;
+                                      font-weight: bold;
+                                    }
+                                  </style>
+                              
+                                  <script>
+                                    function openLightbox(imageSrc) {
+                                        document.getElementById("lightboxImage").src = imageSrc;
+                                        document.getElementById("customLightbox").style.display = "flex";
+                                    }
+                              
+                                    function closeLightbox() {
+                                        document.getElementById("customLightbox").style.display = "none";
+                                    }
+                                  </script>
+                              
+                              
+                                  <!-- YouTube Video -->
+                                 <div>
+                                  <% 
+                                  // Function to convert a YouTube URL (watch or short form) into an embeddable URL
+                                  function convertToEmbedUrl(url) {
+                                      let videoId = "";
+                                      if (url.includes("youtu.be")) {
+                                          // Handle short URL format (e.g., https://youtu.be/Tjxx80uYyUQ)
+                                          videoId = url.split("youtu.be/")[1]?.split("?")[0];
+                                      } else if (url.includes("youtube.com/watch")) {
+                                          // Handle full URL format (e.g., https://www.youtube.com/watch?v=Tjxx80uYyUQ)
+                                          videoId = url.split("v=")[1]?.split("&")[0];
+                                      }
+                                      return videoId ? `https://www.youtube.com/embed/${videoId}` : "";
+                                  }
+                                  %>
+                                  
+                                  <% if (item?.youtube && item?.youtube !== "") { 
+                                      const embedUrl = convertToEmbedUrl(item.youtube); 
+                                      if (embedUrl) { %>
+                                          <iframe 
+                                          width="100%" 
+                                          height="433"
+                                          style="margin:25px 0" 
+                                              src="<%= embedUrl %>" 
+                                              title="YouTube video player" 
+                                              frameborder="0" 
+                                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                              referrerpolicy="strict-origin-when-cross-origin" 
+                                              allowfullscreen>
+                                          </iframe>
+                                      <% } else { %>
+                                          <p>Invalid YouTube URL provided.</p>
+                                      <% } 
+                                  } %>
+                                  
+                                 </div>
+                              
+                                  <!-- Button -->
+                                  <% if (item?.button && item?.button?.hyperLink !== "" && item?.button?.title !== "") { %> 
+                                    <div class="text-center">
+                                        <a href="<%= item?.button?.hyperLink %>" target="_blank" class="btn-1 btn-3" >
+                                            <span>
+                                                <%= item?.button?.title %>
+                                                <svg class="ms-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path class="stroke-white" d="M21.1059 12.2562H0.5V11.7443H21.1059H22.313L21.4594 10.8907L17.0558 6.48705L17.4177 6.12508L23.2929 12.0002L17.4177 17.8754L17.0558 17.5134L21.4594 13.1098L22.313 12.2562H21.1059Z" stroke="white" />
+                                                </svg>
+                                            </span>
+                                        </a>
+                                    </div>
+                                <% } %>
+                                
+                              
+                                <% }) %>
+                              <% } %>
+                              
+      
+    </div>
+  </div>
+ 
+  
+<div class="col-lg-4">
+  <div class="sidebar-blog ml-20">
+    <% if (latestblog && latestblog.length > 0) { %>
+    <div class="widget">
+      <div class="widget-title">
+        <h3>Recent Posts</h3>
+      </div>
+      <% latestblog.forEach(item => { %>
+      <div class="news-box" onclick="window.location.href='/blog-details/<%= item.seoDetails.slug %>'">
+        <div class="news-item">
+          <img class="img-fluid" src="<%= process.env.S3_BASE_URL + item.coverImage %>" alt="<%= item.title %>">
+          <div class="item-content">
+            <span><a href="/blog-details/<%= item.seoDetails.slug %>"><%= item.postDate %></a></span>
+            <a href="#" class="title-blog">
+              <h5><%= item.title %></h5>
+            </a>
+          </div>
+        </div>
+       
+      </div>
+      <% }) %>
+     
+    </div>
+    <% } %>
+             
+                  <div class="widget">
+                      <div class="widget-title">
+                          <h3>Tags</h3>
+                      </div>
+                      <div class="widget-body">
+                          <div class="tags">
+                              <ul>
+                                <% blogDetails.seoDetails.tags.forEach(tag => { %>
+                                  <li><a href="javascript:void(0)"><%= tag %></a></li>
+                                  <% }) %>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+</div>
+      </div>
+  </div>
+</div>
+ <!--====== PAGE TITLE PART START ======-->
+
+<style>
+.sidebar-blog{
+  align-items: flex-start;
+  position: sticky;
+  top: 100px;
+}
+
+
+  .gallery-container {
+    display: grid;
+    gap: 10px;
+    margin: 25px 0px;
+    grid-template-columns: repeat(2, 1fr); /* 2 images per row */
+    grid-auto-rows: auto; /* Let the row height auto-adjust based on content */
+  }
+  @media (max-width:550px) {
+    .blog-details{
+margin-top: 30px !important;
+    }
+  }
+  .gallery-item {
+    position: relative;
+    width: 100%; /* Ensure images take full width of the grid cell */
+    padding-top: 56%; /* Aspect ratio 16:9 (adjust if you need a different aspect ratio) */
+    overflow: hidden;
+    transition: all 0.3s ease; /* Smooth transition for resizing */
+  }
+  
+  .gallery-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure image fills the square */
+  }
+  
+  /* This class ensures the last image (if odd) spans 2 columns without adding extra height */
+  .gallery-item.grid-span-2 {
+    grid-column: span 2; /* Span across 2 columns */
+    padding-top: 54%; /* Ensure aspect ratio is maintained */
+  }
+
+
+@media (max-width:600px) {
+  .blog-description p, .description-block p{
+    font-size: 15px;
+    line-height: 26px;
+  }
+}
+.blog-details__content h3{
+  font-size: 42px;
+}
+
+@media (max-width:768px) {
+  .blog-details__content h3{
+    font-size: 30px;
+    line-height: 34px;
+  }
+}
+</style>
+
+<!--====== PAGE TITLE PART ENDS ======-->
+
+<!--====== BLOG DETAILS PART ENDS ======-->
+
+
+
+
+<%- include('./partials/enquire.ejs') %>
+
+<!-- <script>
+ 
+  document.querySelectorAll('.read-more-link').forEach(button => {
+    button.addEventListener('click', function toggleReview() {
+      const reviewText = this.closest('.testimonial-text');
+      const fullReview = reviewText.getAttribute('data-full-review');
+      const shortReview = fullReview.slice(0, 100) + '...';
+  
+      if (this.textContent === 'Read More') {
+        // Replace the content and reattach the event listener
+        reviewText.innerHTML = fullReview + ' <button class="read-more-link">Read Less</button>';
+      } else {
+        // Replace the content and reattach the event listener
+        reviewText.innerHTML = shortReview + ' <button class="read-more-link">Read More</button>';
+      }
+  
+      // Reattach the event listener to the new button
+      document.querySelectorAll('.read-more-link').forEach(button => {
+        button.addEventListener('click', toggleReview);
+      });
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function updateGridLayout() {
+      const galleryContainers = document.querySelectorAll('.gallery-container'); // Select all gallery containers
+      
+      galleryContainers.forEach(galleryContainer => {
+        const galleryItems = galleryContainer.querySelectorAll('.gallery-item');
+        
+        // Apply grid layout with 2 columns per row
+        galleryContainer.style.display = 'grid';
+        galleryContainer.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        galleryContainer.style.gap = '10px'; // Space between images
+        galleryContainer.style.gridAutoRows = 'auto'; // Let rows adjust height based on content
+  
+        // Handle the last image if the total count is odd
+        const totalImages = galleryItems.length;
+        if (totalImages % 2 !== 0) {
+          // Last image takes full width if odd number of images
+          galleryItems[totalImages - 1].classList.add('grid-span-2');
+        } else {
+          // Ensure no extra spanning for even images
+          galleryItems[totalImages - 1].classList.remove('grid-span-2');
+        }
+      });
+    }
+  
+    // Update the grid layout on load and resize
+    updateGridLayout();
+    window.addEventListener('resize', updateGridLayout);
+  });
+  
+  </script> -->
+ 
+  <!-- <style>
+    .swiper-container {
+      position: relative;
+      
+      max-height: 600px;
+      margin: 25px auto;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+    
+    .gallery-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+    
+    .swiper-navigation {
+      position: absolute;
+      bottom: 20px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 5px 10px;
+      border-radius: 10px;
+    }
+    
+    .custom-prev, .custom-next {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+    }
+    
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+      fill: white;
+    }
+    
+    .slide-counter {
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      margin: 0 10px;
+    }
+    
+  </style> -->
+
+<%- include('footer') %>

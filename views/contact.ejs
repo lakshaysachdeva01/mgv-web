@@ -1,0 +1,175 @@
+<%- include('header'), {seoDetails} %>
+
+ 
+        <!-- :: Breadcrumb Header -->
+        <section class="breadcrumb-header style-2" id="page" style="background-image: url(/assets/images/header/03_breadcrumb-header.jpg)">
+            <div class="overlay" style="backdrop-filter: brightness(0.5);"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="banner">
+                            <h1>Get in Touch</h1>
+                            <ul>
+                                <li><a href='/'>Home</a></li>
+                                <li><i class="fas fa-angle-right"></i></li>
+                                <li>contact</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+		
+		<!-- :: contact us -->
+		<div class="contact-us py-100">
+            <div class="container">
+                <div class="contact-info-content">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3 " >
+                            <div class="contact-box" >
+                                <i class="ar-icons-call"></i>
+                                <div class="box">
+                                    <a class="phone" href="tel:+971501560131">+971 50 156 0131</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="contact-box">
+                                <i class="ar-icons-email"></i>
+                                <div class="box">
+                                    <a class="mail" href="mailto:tech.mgvdubai@gmail.com">tech.mgvdubai@gmail.com</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                            <div class="contact-box">
+                                <i class="ar-icons-location"></i>
+                                <div class="box">
+                                    <p>VUNE 1327 Compass Building Al-hulaila,ALHulaila Industrial Zone-fz,Ras Al Khaimah, United Arab Emirates</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- :: Map -->
+                        <div class="map-box">
+                            <iframe src="https://maps.google.com/maps?q=manhatan&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+						<div class="add-comments">
+							<form  id="contactForm" action="/submit-contact" class="inner-add-comments form-contact-2">
+								<div class="row">
+									<div class="col-md-6 inner-add-comments-box">
+										<input type="text" name="<%= CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.name %>" placeholder="Name" required="">
+									</div>
+									<div class="col-md-6 inner-add-comments-box">
+										<input type="Email" name="<%= CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.email %>" placeholder="Email" required="">
+									</div>
+									<div class="col-md-6 inner-add-comments-box">
+										<input type="text" name="<%= CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.address %>" placeholder="Address" required="">
+									</div>
+                                    <div class="col-md-6 inner-add-comments-box">
+										<input type="text"type="tel" 
+                                        placeholder="Contact Number" 
+                                        required 
+                                        name="<%= CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.phone %>"
+                                        pattern="[0-9]{10}" 
+                                        title="Please enter a valid 10-digit contact number"
+                                        maxlength="10"
+                                        minlength="10"
+                                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);">
+									</div>
+
+									<div class="col-md-12 inner-add-comments-box">
+										<textarea name="<%= CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks %>"  placeholder="Your Message Here" required=""></textarea>
+									</div>
+									<div class="col-md-12 inner-add-comments-box last">
+										<button class="btn-1 btn-3 submit" type="submit"><span>Submit</span></button>
+										<span class="out-message"></span>
+									</div>
+								</div>
+							</form>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		  
+
+
+
+
+
+
+<script>
+// Listen for form submission
+document.getElementById('contactForm').addEventListener('submit', async function (e) { 
+    e.preventDefault(); // Prevent the default form submission
+
+    try {
+        const API_BASE_URL = "<%= API_BASE_URL %>";
+        const websiteID = "<%= websiteID %>";
+        const WEBSITEIDKEY = "<%= WEBSITE_ID_KEY %>";
+        const CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS = <%- JSON.stringify(CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS) %>;
+
+        const CREATE_CONTACT_ENQUIRY_END_POINT = `${API_BASE_URL}/website/contact-enquiry/create-contact-enquiry`;
+
+        const contactForm = e.target; // Reference to the form element
+        const WEBSITE_ID_KEY = WEBSITEIDKEY;
+
+        // Prepare the payload from the form fields
+        const payload = {
+            [CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.name]: contactForm.querySelector(
+                `input[name="${CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.name}"]`
+            ).value,
+            [CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.phone]: contactForm.querySelector(
+                `input[name="${CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.phone}"]`
+            ).value,
+            [CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.email]: contactForm.querySelector(
+                `input[name="${CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.email}"]`
+            ).value,
+            [CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.address]: contactForm.querySelector(
+                `input[name="${CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.address}"]`
+            ).value,
+            [CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks]: contactForm.querySelector(
+                `textarea[name="${CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks}"]`
+            ).value,
+            [WEBSITE_ID_KEY]: websiteID,
+        };
+
+        // Set headers for the request
+        const headers = new Headers({
+            "Content-Type": "application/json",
+        });
+
+        // Send POST request to the API
+        const response = await fetch(CREATE_CONTACT_ENQUIRY_END_POINT, {
+            method: "POST",
+            headers,
+            body: JSON.stringify(payload),
+        });
+
+        // Handle response
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Redirect to the thank-you page on success
+        sessionStorage.setItem("thankYouMessage", "We've Recieved Your Message and will Contact you soon.");
+        window.location.href = "/thankyou";
+    } catch (error) {
+        console.error("Form submission error", error);
+        // Optionally, you can show an error message or log the error
+    }
+});
+
+        
+        </script>
+
+
+<%- include('footer') %>

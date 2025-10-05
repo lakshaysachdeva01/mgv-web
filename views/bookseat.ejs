@@ -1,0 +1,65 @@
+<%- include('header'), {seoDetails} %>
+
+<!--====== PAGE TITLE PART START ======-->
+
+<div class="page-title-area bg_cover" style="background-image: url(assets/images/page-title-bg.jpg);">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title-content">
+                    <h1 class="title">Book Your Seat</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Book A Seat</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--====== PAGE TITLE PART ENDS ======-->
+
+<!--====== WRITE MASSAGE PART START ======-->
+
+<section class="write-massage-area pb-120">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="write-massage-content">
+                    <div class="write-massage-title">
+                        <h3 class="title">We'll follow up</h3>
+                    </div>
+                    <div class="write-massage-input">
+                        <form id="booktour">
+                            <%- include('./partials/book.ejs') %>
+                        </form>
+                    </div>
+
+                    <div id="alert-box" class="alert-box hidden">
+                        <span id="alert-message">Form submitted successfully!</span>
+                        <button id="alert-close">&times;</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="book-a-tour-info">
+                    <span>Need quick help?</span>
+                    <p>If you need assistance filling out the form, speak with a team member at our corporate office. We're here to help!</p>
+                    <h3 class="title" ><a href="tel:91+9669231006">+91 9669231006</a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- include('./partials/enquire.ejs') %>
+<!--====== WRITE MASSAGE PART ENDS ======-->
+
+<!--====== COMPANY LOGOS PART START ======-->
+
+<%- include('./partials/clientle(11).ejs') %>
+
+<%- include('footer') %>

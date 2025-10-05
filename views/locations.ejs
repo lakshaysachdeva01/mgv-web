@@ -1,0 +1,61 @@
+<%- include('header'), {seoDetails} %>
+
+<div class="page-title-area bg_cover mb-90" style="background-image: url(assets/images/page-title-bg.jpg);">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title-content">
+                    <h1 class="title">Locations</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Locations</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="news-2-area news-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <% location.forEach(item => { %>
+            <div class="col-lg-4 col-md-7 col-sm-9" >
+                <div class="news-item mt-30">
+                    <div class="news-thumb" onclick="window.location.href='/locationdetails/<%= item.basicDetails.name %>';">
+                        <img src="<%= process.env.S3_BASE_URL + item.basicDetails.logo %>" alt="karyasiddhi_bannerimage">
+                    </div>
+                    <div class="news-content" style="padding-bottom: 40px;">
+                        <ul>
+                           <li><%= item.basicDetails.city %></li>
+                        </ul>
+                        <h3 class="title" style="padding-top: 5px; padding-bottom:10px"><%= item.basicDetails.name %></h3>
+                        <ul style="line-height: 30px;">
+                            <li><%= item.basicDetails.address %></li>
+                         </ul>
+                         
+                        <a href="/locationdetails/<%= item.basicDetails.name %>" style="padding-top: 15px;     transform: translate(0px, 17px);"><i class="flaticon-right-arrow"></i></a>
+                        <div class="blog-details__share locations" style="justify-content: flex-end; transform: translate(10px, -20px);" >
+                            <ul>
+                                <li  style="margin-right: 0;"><a href="tel:<%= item.basicDetails.mobileNumber %>"><i class="fa fa-phone"></i></a></li>
+                                <li style="margin-right: 0;"><a href="https://api.whatsapp.com/send?phone=<%= item.basicDetails.mobileNumber %>&text=Hello,%20I’m%20reaching%20out%20to%20Karyasiddhi%20Co-working%20Space%20for%20more%20information.%20Could%20you%20please%20provide%20details%20about%20availability%20and%20other%20relevant%20information?" target="_blank"><i class="fa fa-whatsapp"></i></a></li>
+                                <li style="margin-right: 0;"><a href="mailto:<%= item.basicDetails.email %>"><i class="fa fa-envelope"></i></a></li>
+                                <li style="margin-right: 0;"><a href="<%= item.locationLink %>"><i class="fa fa-map-marker"></i></a></li>
+                                
+                            </ul>
+                        </div>
+            </div>
+                       
+                    </div>
+                </div>
+            
+            <% }) %>
+        </div>
+        </div>
+    </div>
+</section>
+
+
+<%- include('footer') %>

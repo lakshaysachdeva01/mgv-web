@@ -1,0 +1,348 @@
+<!-- Popup Overlay -->
+<div class="popup-overlay" id="popup-overlay">
+    <div class="popup-banner">
+       
+  
+        <!-- Desktop Swiper -->
+        <div class="popup-desktop-banner">
+            <div class="swiper popup-desktop-swiper" id="popup-desktop-swiper">
+                <div class="swiper-wrapper">
+                    <% popupbanners.forEach((slide, index) => { %>
+                        <div class="swiper-slide popup-slide">
+                            <img src="<%= process.env.S3_BASE_URL + slide.bannerImage.webView %>" alt="<%= slide.title %>"/>
+                        </div>
+                    <% }) %>
+                </div>
+                
+            </div>
+        </div>
+  
+        <!-- Mobile Swiper -->
+        <div class="popup-mobile-banner">
+            <div class="swiper popup-mobile-swiper" id="popup-mobile-swiper">
+                <div class="swiper-wrapper">
+                    <% popupbanners.forEach((slide, index) => { %>
+                        <div class="swiper-slide popup-slide">
+                            <img src="<%= process.env.S3_BASE_URL + slide.bannerImage.mobileView %>" alt="<%= slide.title %>"/>
+                        </div>
+                    <% }) %>
+                </div>
+                <div class="swiper-pagination popup-pagination-mobile"></div>
+               
+            </div>
+             
+        </div>
+        <button class="close-button" id="popup-close-btn">C L O S E</button>
+    </div>
+  </div>
+  
+  <!-- Styles -->
+  <style>
+    .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 999999;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+  
+    .popup-banner {
+        position: relative;
+        width: auto;
+        max-width: 90%;
+        height: 600px;
+        border-radius: 10px;
+    }
+  
+    .close-button{
+  background-color: transparent;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  border:none;
+  color: white;
+  width: 100%;
+  margin: 20px 0;
+    }
+  
+    .popup-close-btn {
+        position: absolute;
+        top: -25px;
+        right: 15px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        border: none;
+        height: 40px;
+        width: 40px;
+        font-size: 30px;
+        cursor: pointer;
+        padding: 0;
+        border-radius: 50%;
+        z-index: 1001;
+    }
+  
+    .popup-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+  
+    .popup-slide img {
+        height: 600px;
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
+        display: block;
+    }
+  
+    .swiper {
+        width: 100%;
+        height: 100%;
+    }
+  
+    .popup-desktop-banner {
+        display: block;
+    }
+  
+    .popup-mobile-banner {
+        display: none;
+    }
+  
+    .swiper-pagination {
+        bottom: 10px !important;
+    }
+  
+    @media (max-width: 768px) {
+        .popup-desktop-banner {
+            display: none;
+        }
+        .popup-mobile-banner {
+            display: block;
+        }
+        .popup-banner {
+            max-width: 95%;
+        }
+        .popup-close-btn {
+            top: -25px;
+        }
+        .popup-slide img {
+            height: 100%;
+            max-height: 500px;
+            width: 100%;
+            max-width: 90%;
+            justify-content: center;
+        }
+    }
+  </style>
+  
+  
+  
+  <!-- Scripts -->
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Verify Swiper is loaded
+    if (typeof Swiper === 'undefined') {
+        console.error('Swiper library not loaded! Check CDN or file path.');
+        return;
+    }
+  
+    const popupOverlay = document.getElementById("popup-overlay");
+    const popupCloseBtn = document.getElementById("popup-close-btn");
+  
+    // Pass popupbanners length from server to client
+    const popupBannersCount = <%= popupbanners.length %>;
+  
+    // Initialize Swiper instances
+    let desktopSwiper, mobileSwiper;
+    function initSwipers() {
+        desktopSwiper = new Swiper('#popup-desktop-swiper', {
+            slidesPerView: 1,
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.popup-pagination-desktop',
+                clickable: true,
+            },
+            on: {
+                init: () => console.log('Desktop Swiper initialized'),
+                slideChange: () => console.log('Desktop Swiper slide changed')
+            }
+        });
+  
+        mobileSwiper = new Swiper('#popup-mobile-swiper', {
+            slidesPerView: 1,
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.popup-pagination-mobile',
+                clickable: true,
+            },
+            on: {
+                init: () => console.log('Mobile Swiper initialized'),
+                slideChange: () => console.log('Mobile Swiper slide changed')
+            }
+        });
+    }
+  
+    // Show popup
+    function showPopup() {
+        console.log('Showing popup');
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        
+        popupOverlay.style.display = "flex";
+        setTimeout(() => {
+            popupOverlay.style.opacity = "1";
+            if (!desktopSwiper || !mobileSwiper) {
+                initSwipers();
+            } else {
+                desktopSwiper.update();
+                mobileSwiper.update();
+            }
+        }, 100);
+    }
+  
+    // Close popup
+    function closePopup() {
+        console.log('Closing popup');
+        popupOverlay.style.opacity = "0";
+        setTimeout(() => {
+            popupOverlay.style.display = "none";
+            // Restore body scroll
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+            
+            if (desktopSwiper) desktopSwiper.autoplay.stop();
+            if (mobileSwiper) mobileSwiper.autoplay.stop();
+        }, 300);
+        sessionStorage.setItem("popupClosed", "true");
+    }
+  
+    // Check if popup should show
+    if (!sessionStorage.getItem("popupClosed") && popupBannersCount > 0) {
+        setTimeout(showPopup, 500);
+    } else {
+        console.log('No popup shown: Either already closed or no banners available');
+    }
+  
+    // Prevent spacebar and other key scrolling
+    function preventScroll(e) {
+        if (popupOverlay.style.display === "flex") {
+            // Prevent spacebar (32), page up (33), page down (34), end (35), home (36), arrow keys (37-40)
+            if ([32, 33, 34, 35, 36, 37, 38, 39, 40].includes(e.keyCode)) {
+                e.preventDefault();
+            }
+        }
+    }
+
+    // Event listeners
+    popupCloseBtn.addEventListener("click", closePopup);
+    popupOverlay.addEventListener("click", function (e) {
+        if (e.target === popupOverlay) {
+            closePopup();
+        }
+    });
+    
+    // Prevent keyboard scrolling when popup is open
+    document.addEventListener('keydown', preventScroll, false);
+  });
+  </script>
+
+
+ <!-- :: Header -->
+ <section class="header" id="page">
+    <div class="header-carousel owl-carousel owl-theme">
+        <div class="sec-hero display-table" style="background-image: url(assets/images/header/01_header.jpg)">
+            <div class="table-cell">
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="banner">
+                                <div class="top-handline">Ready To make your dream!</div>
+                                <h1 class="handline">The Best Solution For Industry Business</h1>
+                                <p class="about-website">Gazolin Are A Industry &amp; Manufacturing Services Provider Institutions. Suitable For Factory, Manufacturing, Industry, Engineering, Construction And Any Related Industry Care Field.</p>
+                                <ul class="header-list-features">
+                                    <li class="item">
+                                        <i class="fas fa-check"></i><h5>100% Satisfaction Guarantee</h5>
+                                    </li>
+                                    <li class="item">
+                                        <i class="fas fa-check"></i><h5>Quality Control System</h5>
+                                    </li>
+                                </ul>
+                                <div class="btn-box">
+                                    <a class="btn-1 move-section" href="#start"><span>Let's Start</span></a>
+                                    <a class='btn-1 btn-2 ml-30' href='01_services.html'><span>Our Services</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sec-hero display-table" style="background-image: url(assets/images/header/03_header.jpg)">
+            <div class="table-cell">
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="banner">
+                                <div class="top-handline">40 years of experience we provide services</div>
+                                <h1 class="handline">Industry a variety of high quality products</h1>
+                                <p class="about-website">Gazolin Are A Industry &amp; Manufacturing Services Provider Institutions. Suitable For Factory, Manufacturing, Industry, Engineering, Construction And Any Related Industry Care Field.</p>
+                                <div class="btn-box">
+                                    <a class='btn-1 btn-2' href='01_about-us.html'><span>About Us</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sec-hero display-table" style="background-image: url(assets/images/header/02_header.jpg)">
+            <div class="table-cell">
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="banner">
+                                <div class="top-handline">Quality &amp; Integrity Service Agency</div>
+                                <h1 class="handline">Provide Effective Building Solutions!</h1>
+                                <p class="about-website">Gazolin Are A Industry &amp; Manufacturing Services Provider Institutions. Suitable For Factory, Manufacturing, Industry, Engineering, Construction And Any Related Industry Care Field.</p>
+                                <ul class="header-list-features">
+                                    <li class="item">
+                                        <i class="fas fa-check"></i><h5>Accurate Testing Processes</h5>
+                                    </li>
+                                    <li class="item">
+                                        <i class="fas fa-check"></i><h5>Highly Professional Staff</h5>
+                                    </li>
+                                </ul>
+                                <div class="btn-box">
+                                    <a class='btn-1 btn-2' href='01_request-quote.html'><span>Request Quote</span></a>
+                                    <a class='btn-1 btn-3 ml-30' href='01_about-us.html'><span>Read More</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+ 

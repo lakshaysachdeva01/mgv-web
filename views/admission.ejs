@@ -1,0 +1,229 @@
+<%- include('header'),{seoDetails} %>
+
+<!-- Admission Form Section -->
+<div class="Courses" style="padding-top: 75px;">
+    <section class="Admission">
+        <div class="container">
+            <div class="row" style="justify-content: space-between;">
+                <!-- Left Side - Content (lg-8) -->
+                <div class="col-lg-6           d-flex flex-column justify-content-center" data-aos="fade-up">
+                    <h1 style="    font-size: 47px;
+    line-height: 52px;
+    font-weight: 700;
+    margin-bottom:24px;
+    color:#2c024f">Shape Your Child's Future at Alphabetz Preschool Dongargarh!</h1>
+                    <p>Enroll Now at the Best Preschool in Dongargarh for Exceptional Early Learning</p>
+                    <p>
+                        At Alphabetz Preschool Dongargarh, we provide a strong foundation in a loving, safe, and supportive 
+                        environment, ensuring every child’s growth and setting the stage for lifelong learning.
+                    </p>
+
+                    <h4 style="    font-size: 32px;
+                    line-height: 36px;
+                    font-weight: 700;
+                    margin-bottom:24px;
+                    color:#2c024f">Why Choose Alphabetz Preschool Dongargarh?</h4>
+                    <ul>
+                        <li><strong>Innovative Smart Learning Tools</strong> – Engaging educational technology to inspire creativity and curiosity.</li>
+                        <li><strong>International Curriculum Standards</strong> – Following global best practices to ensure a well-rounded education.</li>
+                        <li><strong>Safe and Nurturing Environment</strong> – A secure and caring atmosphere where your child feels loved and valued.</li>
+                        <li><strong>Holistic Child Development</strong> – Focusing on cognitive, emotional, social, and physical growth.</li>
+                    </ul>
+                </div>
+
+                <!-- Right Side - Admission Form (lg-4) -->
+                <div class="col-lg-5">
+                    <div class="form-container">
+                        <form id="booktour" >
+                            <div class="mb-3">
+                                <input type="text" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.name %>" placeholder="Child Name *" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="number" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.age %>" placeholder="Age of Child">
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.parentname %>" placeholder="Parent Name *" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="tel" 
+                                       name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.phone %>" 
+                                       placeholder="Contact No. *" 
+                                       required 
+                                       pattern="[0-9]{10}" 
+                                       title="Please enter a valid 10-digit phone number"
+                                       maxlength="10">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <input type="email" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.email %>" placeholder="Email ID">
+                            </div>
+                            <div class="mb-3">
+                                <textarea name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks %>" placeholder="Remarks / Comments (if any)"></textarea>
+                            </div>
+                            <div class="form-group" style="display: none;" >
+                                <input type="hidden"  name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.serviceType %>" value="Admission Enquiry">
+                                <input type="hidden" id="websiteProjectId" name="websiteProjectId" value="67cac379ec284e3110dda756">
+                            </div>
+    
+                            <div class="text-center">
+                                <button type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- CSS Styling -->
+<style>
+    .form-container {
+        background: #fff;
+        padding: 40px 30px;
+        border-radius: 20px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+.Courses p{
+    color: #4b4b4b;
+    font-size: 18px;
+    line-height: 31px;
+    margin-bottom: 20px;
+}
+
+    .form-container h2 {
+        color: #2c024f;
+        font-weight: bold;
+    }
+
+    .form-container form input, 
+    .form-container form textarea {
+        width: 100%;
+        padding: 22px;
+        margin-bottom: 6px;
+        border: 2px solid #d13352;
+        border-radius: 18px;
+        font-size: 16px;
+    }
+
+    .form-container form textarea {
+        height: 120px;
+        resize: none;
+    }
+
+    .form-container form button {
+        background: #d13352;
+        color: white;
+        padding: 25px 20px;
+        border-radius: 18px;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+strong{
+    color:#2c024f;
+}
+
+    li{
+        padding: 10px 0;
+        font-size: 18px;
+        line-height: 22px;
+    }
+    .form-container form button:hover {
+        background: #c12242;
+    }
+    @media (max-width:768px) {
+        .Admission h1{
+        font-size: 32px !important;
+        }
+        .Admission p{
+            font-size: 16px !important;
+            }
+            .Admission li{
+                font-size: 16px !important;
+                }
+                .Admission h4{
+                    font-size: 28px !important;
+                    }       
+    }
+
+</style>
+<script>       
+    document.getElementById('booktour').addEventListener('submit', async function (e) {
+        e.preventDefault(); // Prevent the default form submission
+    
+        try {
+            const API_BASE_URL = "<%= API_BASE_URL %>";
+            const websiteID = "<%= websiteID %>";
+            const WEBSITEIDKEY = "<%= WEBSITE_ID_KEY %>";
+            const BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS = <%- JSON.stringify(BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS) %>;
+    
+            const CREATE_BOOKING_ENQUIRY_END_POINT = `${API_BASE_URL}/website/service-enquiry/create-service-enquiry`;
+    
+            const booktour = e.target; // Reference to the form element
+            const WEBSITE_ID_KEY = WEBSITEIDKEY;
+    
+            // Prepare the payload from the form fields
+            const payload = {
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.name]: booktour.querySelector(
+                    `input[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.name}"]`
+                ).value,
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.parentname]: booktour.querySelector(
+                    `input[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.parentname}"]`
+                ).value,
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.age]: booktour.querySelector(
+                    `input[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.age}"]`
+                ).value,
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.phone]: booktour.querySelector(
+                    `input[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.phone}"]`
+                ).value,
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.serviceType]: booktour.querySelector(
+                    `input[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.serviceType}"]`
+                ).value,
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.email]: booktour.querySelector(
+                    `input[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.email}"]`
+                ).value,
+                [BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks]: booktour.querySelector(
+                    `textarea[name="${BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks}"]`
+                ).value,
+                [WEBSITE_ID_KEY]: websiteID,
+            };
+    
+            // Set headers for the request
+            const headers = new Headers({
+                "Content-Type": "application/json",
+            });
+    
+            // Send POST request to the API
+            const response = await fetch(CREATE_BOOKING_ENQUIRY_END_POINT, {
+                method: "POST",
+                headers,
+                body: JSON.stringify(payload),
+            });
+    
+            // Handle response
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+    
+            const data = await response.json();
+    
+            // Redirect to thank-you page on successful submission
+            sessionStorage.setItem("thankYouMessage", "We've Recieved Your Admission inquiry and will Reach out to you soon");
+
+            window.location.href = "/thankyou";
+    
+            // Reset the form fields
+            booktour.reset();
+        } catch (error) {
+            console.error("Form submission error:", error);
+            // Optionally, handle errors here
+        }
+    });
+    
+</script>
+<%- include('footer') %>

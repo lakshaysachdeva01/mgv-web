@@ -1,0 +1,197 @@
+<%- include('header') %>
+
+<!-- Career Form Section -->
+<div class="career-form-container" style="padding: 75px 0; max-width:1200px; margin:2px auto">
+    <div class="container">
+        <h2 class="text-center mb-3" style="color:#2c024f; font-size:50px;  font-weight:500">Join Our Team</h2>
+        <p class="text-center mb-2">Fill out the form below to apply for a position at our company</p>
+        <form id="careerform">
+            <div class="row">
+                <div class="col-lg-6">
+                    <input type="text" name="<%= CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.name %>" placeholder="Name *" required>
+                </div>
+                <div class="col-lg-6">
+                    <input type="tel" 
+       name="<%= CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.phone %>" 
+       placeholder="Contact No. *" 
+       required 
+       pattern="[0-9]{10}" 
+       title="Please enter a valid 10-digit phone number"
+       maxlength="10"
+       minlength="10"
+       oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);">
+
+                </div>
+                <div class="col-lg-6">
+                    <input type="email" name="<%= CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.email %>" placeholder="Email *" required>
+                </div>
+                <div class="col-lg-6">
+                    <input type="text" name="<%= CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.qualification %>" placeholder="Qualification *" required>
+                </div>
+                <div class="col-lg-6">
+                    <input type="number" name="<%= CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.experience %>" placeholder="Year of Experience *" required>
+                </div>
+                <div class="col-lg-6">
+                    <input type="text" name="<%= CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.applied %>" placeholder="Applied For (Job Position) *" required>
+                </div>
+                <div class="col-lg-12">
+                    <input type="file" name="<%= CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.resume %>" required>
+                </div>
+                <div class="col-lg-12">
+                    <textarea name="<%= CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks %>" placeholder="Remarks"></textarea>
+                </div>
+            </div>
+            <div class="text-center mt-1">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- CSS Styling -->
+<style>
+   
+
+    form {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form input, form textarea {
+        width: 100%;
+        padding: 20px;
+        margin-bottom: 24px;
+        border: 2px solid #d13352;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    form textarea {
+        height: 100px;
+        resize: none;
+    }
+
+    form button {
+        background: #d13352;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 8px;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    form button:hover {
+        background: #c12242;
+    }
+</style>
+<script>
+           
+    document.getElementById('careerform').addEventListener('submit', async function (e) {
+        e.preventDefault(); // Prevent default form submission
+    
+        try {
+            const API_BASE_URL = "<%= API_BASE_URL %>";
+            const websiteID = "<%= websiteID %>";
+            const WEBSITEIDKEY = "<%= WEBSITE_ID_KEY %>";
+            const CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS = <%- JSON.stringify(CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS) %>;
+            
+            const UPLOAD_FILES_END_POINT = `${API_BASE_URL}/third-party/file-upload/upload-files`;
+            const CREATE_CAREER_ENQUIRY_END_POINT = `${API_BASE_URL}/website/career-enquiry/create-career-enquiry`;
+    
+            const careerform = e.target; // Reference to the form element
+            const WEBSITE_ID_KEY = WEBSITEIDKEY;
+    
+            // -------------------------------------------
+            // 1. Upload File
+            const uploadFileData = new FormData();
+            const fileInput = careerform.querySelector(
+                `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.resume}"]`
+            ).files[0];
+    
+            if (!fileInput) {
+                throw new Error("Please upload a resume file.");
+            }
+    
+            uploadFileData.append("file", fileInput);
+    
+            const fileUploadResponse = await fetch(UPLOAD_FILES_END_POINT, {
+                method: "POST",
+                body: uploadFileData,
+            });
+    
+            if (!fileUploadResponse.ok) {
+                throw new Error(`File upload failed! Status: ${fileUploadResponse.status}`);
+            }
+    
+            const fileUploadData = await fileUploadResponse.json();
+            const uploadedResume =
+                fileUploadData?.data?.length > 0
+                    ? fileUploadData?.data[0]?.imageNames[0]
+                    : "";
+    
+            if (!uploadedResume) {
+                throw new Error("File upload did not return a valid file name.");
+            }
+    
+            // -------------------------------------------
+            // 2. Prepare Form Payload
+            const payload = {
+                [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.name]: careerform.querySelector(
+                    `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.name}"]`
+                ).value,
+                [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.phone]: careerform.querySelector(
+                    `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.phone}"]`
+                ).value,
+                [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.qualification]: careerform.querySelector(
+                    `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.qualification}"]`
+                ).value,
+                [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.expeience]: careerform.querySelector(
+                    `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.experience}"]`
+                ).value,
+                [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.applied]: careerform.querySelector(
+                    `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.applied}"]`
+                ).value,
+                [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.email]: careerform.querySelector(
+                    `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.email}"]`
+                ).value,
+                [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks]: careerform.querySelector(
+                    `textarea[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks}"]`
+                ).value,
+                [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.resume]: uploadedResume,
+                [WEBSITE_ID_KEY]: websiteID,
+            };
+    
+            // -------------------------------------------
+            // 3. Submit the Form Data
+            const headers = new Headers({
+                "Content-Type": "application/json",
+            });
+    
+            const response = await fetch(CREATE_CAREER_ENQUIRY_END_POINT, {
+                method: "POST",
+                headers,
+                body: JSON.stringify(payload),
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Form submission failed! Status: ${response.status}`);
+            }
+    
+            const data = await response.json();
+    
+            // Redirect to the thank-you page on success
+            sessionStorage.setItem("thankYouMessage", "We've Recieved Your Request and will Reach out to you soon");
+            window.location.href = "/thankyou";
+        } catch (error) {
+            console.error("Form submission error:", error);
+            // Optionally, you can handle error logging or UI enhancements here
+        }
+    });
+    
+    
+ 
+ </script>
+<%- include('footer') %>

@@ -1,0 +1,352 @@
+<!-- Popup Structure -->
+<div class="custom-popup">
+    <div class="popup-content">
+        <!-- Close Button -->
+        <span class="close-popup">&times;</span>
+
+        <div class="inner-popup-content">
+            <!-- Media Container (Image or Video) -->
+            <div class="media-container">
+                <img src="" alt="" class="popup-image" style="display: none;">
+                <iframe src="" frameborder="0" allowfullscreen class="popup-video" style="display: none;"></iframe>
+            </div>
+            <div class="data-count">
+                <span class="current-index">1</span> of <span class="total-count">n</span>
+            </div>
+        </div>
+        <!-- Navigation Buttons -->
+        <button class="nav-button prev-button">&#10094;</button>
+        <button class="nav-button next-button">&#10095;</button>
+    </div>
+</div>
+
+<!-- Popup Styles -->
+<style>
+    /* Popup Overlay */
+    .custom-popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        z-index: 99999 !important;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .custom-popup.open {
+        display: flex;
+    }
+
+    .inner-popup-content{
+        border-radius: 10px;
+        overflow: hidden;
+        text-align: center;
+        position: relative;
+    }
+    /* Popup Content */
+    .popup-content {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 10px;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    /* Media Container */
+    .media-container {
+        position: relative;
+        width: 100%;
+        height: 600px;
+    }
+
+    .popup-image,
+    .popup-video {
+        width: 100%;
+        height: 600px;
+        display: none;
+        border-radius: 10px;
+        margin: 0 auto;
+    }
+
+    .popup-video {
+        width: 1000px;
+        height: 600px;
+        object-fit: cover;
+        border: none;
+    }
+
+    /* Close Button */
+    .close-popup {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 24px;
+        color: #fff;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1001;
+    }
+
+    /* Data Count */
+    .data-count {
+        font-size: 14px;
+        color: #fff;
+        text-align: right;
+        padding: 8px 0;
+        border-radius: 20px;
+        z-index: 1001;
+    }
+
+    /* Navigation Buttons */
+    .nav-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        font-size: 22px;
+        cursor: pointer;
+        padding: 10px;
+        color: #fff;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1001;
+    }
+
+    .nav-button:hover {
+        background: rgba(34, 34, 34, 0.753);
+    }
+
+    .prev-button {
+        left: 10px;
+    }
+
+    .next-button {
+        right: 10px;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 800px) {
+        .popup-content {
+            max-width: 100%;
+            max-height: 90%;
+            justify-content: center;
+        }
+    
+        .inner-popup-content{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        /* Media Container */
+        .media-container {
+            width: 95%;
+            height: auto;
+        }
+    
+        .popup-image,
+        .popup-video {
+            width: 95%;
+            height: auto;
+            display: none;
+            border-radius: 10px;
+            margin: 0 auto;
+        }
+    
+        .popup-video {
+            width: 350px;
+            height: 200px;
+            object-fit: cover;
+            border: none;
+        }
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const popup = document.querySelector('.custom-popup');
+        const closePopup = document.querySelector('.close-popup');
+        const mediaContainer = document.querySelector('.media-container');
+        const popupImage = document.querySelector('.popup-image');
+        const popupVideo = document.querySelector('.popup-video');
+        const prevButton = document.querySelector('.prev-button');
+        const nextButton = document.querySelector('.next-button');
+        const currentIndexDisplay = document.querySelector('.current-index');
+        const totalCountDisplay = document.querySelector('.total-count');
+    
+        let currentIndex = 0;
+        let mediaItems = [];
+    
+        // Initialize Media Items
+        function initMediaItems() {
+            const triggers = document.querySelectorAll('.popup-trigger');
+            mediaItems = []; // Reset mediaItems array
+            triggers.forEach((trigger) => {
+                if (trigger.style.display !== 'none') { // Only include visible items
+                    const type = trigger.getAttribute('data-type');
+                    const src = trigger.getAttribute('data-src');
+                    mediaItems.push({ type, src, element: trigger });
+    
+                    // Add Click Event to Trigger
+                    trigger.addEventListener('click', () => {
+                        const filteredIndex = mediaItems.findIndex(item => item.element === trigger);
+                        openPopup(filteredIndex);
+                    });
+                }
+            });
+    
+            // Update Total Count
+            totalCountDisplay.textContent = mediaItems.length;
+        }
+    
+        // Open Popup
+        function openPopup(index) {
+            currentIndex = index;
+            updateMediaDisplay();
+            popup.classList.add('open');
+            // Prevent background scrolling
+            document.body.style.overflow = 'hidden';
+        }
+    
+        // Close Popup
+        function closePopupFunc() {
+            // Stop video playback when closing
+            if (popupVideo.style.display === 'block') {
+                // For iframe videos (like YouTube)
+                if (popupVideo.tagName === 'IFRAME') {
+                    const videoSrc = popupVideo.src;
+                    popupVideo.src = ''; // This stops the video
+                    setTimeout(() => {
+                        popupVideo.src = videoSrc; // Reset src for next time
+                    }, 100);
+                }
+                // For HTML5 video elements
+                else if (popupVideo.tagName === 'VIDEO') {
+                    popupVideo.pause();
+                    popupVideo.currentTime = 0;
+                }
+            }
+            
+            popup.classList.remove('open');
+            popupImage.style.display = 'none';
+            popupVideo.style.display = 'none';
+            // Restore background scrolling
+            document.body.style.overflow = '';
+        }
+    
+        // Update Media Display
+        function updateMediaDisplay() {
+            const media = mediaItems[currentIndex];
+            if (media.type === 'image') {
+                popupImage.src = media.src;
+                popupImage.style.display = 'block';
+                popupVideo.style.display = 'none';
+            } else if (media.type === 'video') {
+                // For iframe videos, we need to reset the src to ensure proper loading
+                if (popupVideo.tagName === 'IFRAME') {
+                    popupVideo.src = media.src;
+                } 
+                // For HTML5 video elements
+                else if (popupVideo.tagName === 'VIDEO') {
+                    popupVideo.src = media.src;
+                    popupVideo.load(); // Ensure the video is ready to play
+                }
+                
+                popupVideo.style.display = 'block';
+                popupImage.style.display = 'none';
+            }
+    
+            // Update Data Count
+            currentIndexDisplay.textContent = currentIndex + 1;
+        }
+    
+        // Next Media
+        function nextMedia() {
+            // Stop current video if playing
+            if (popupVideo.style.display === 'block') {
+                if (popupVideo.tagName === 'VIDEO') {
+                    popupVideo.pause();
+                }
+            }
+            
+            currentIndex = (currentIndex + 1) % mediaItems.length;
+            updateMediaDisplay();
+        }
+    
+        // Previous Media
+        function prevMedia() {
+            // Stop current video if playing
+            if (popupVideo.style.display === 'block') {
+                if (popupVideo.tagName === 'VIDEO') {
+                    popupVideo.pause();
+                }
+            }
+            
+            currentIndex = (currentIndex - 1 + mediaItems.length) % mediaItems.length;
+            updateMediaDisplay();
+        }
+    
+        // Keyboard Navigation
+        document.addEventListener('keydown', function (e) {
+            if (popup.classList.contains('open')) {
+                // Prevent default scrolling behavior for scroll keys
+                if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(e.key)) {
+                    e.preventDefault();
+                }
+                
+                if (e.key === 'ArrowRight') {
+                    nextMedia();
+                } else if (e.key === 'ArrowLeft') {
+                    prevMedia();
+                } else if (e.key === 'Escape') {
+                    closePopupFunc();
+                }
+            }
+        });
+    
+        // Close Popup on Background Click
+        popup.addEventListener('click', function (e) {
+            if (e.target === popup) {
+                closePopupFunc();
+            }
+        });
+
+        // Prevent mouse wheel scrolling when popup is open
+        document.addEventListener('wheel', function (e) {
+            if (popup.classList.contains('open')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    
+        // Close Button
+        closePopup.addEventListener('click', closePopupFunc);
+    
+        // Next Button
+        nextButton.addEventListener('click', nextMedia);
+    
+        // Previous Button
+        prevButton.addEventListener('click', prevMedia);
+    
+        // Initialize Media Items
+        initMediaItems();
+    
+        // Expose initMediaItems to Global Scope
+        window.initMediaItems = initMediaItems;
+    });
+</script>

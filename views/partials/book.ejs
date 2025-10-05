@@ -1,0 +1,168 @@
+<div class="row">
+    <div class="col-lg-6">
+        <div class="input-box mt-10">
+            <input type="text" placeholder="Name" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.name %>" required>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="input-box mt-10">
+            <input type="text" placeholder="Company/business Name" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.businessname %>" required>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="input-box mt-10">
+            <input type="text" placeholder="Business category" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.businesscategory %>" required>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="input-box mt-10">
+            <input type="text" placeholder="Contact Number" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.phone %>" required>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="input-box mt-10">
+            <input type="text" placeholder="Email Address" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.email %>" required>
+        </div>
+    </div>
+    <div class="col-lg-6" style="max-height: 80px;">
+        <div class="input-box mt-10">
+            <!-- Multi-select dropdown -->
+            <select id="service" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.service %>" multiple>
+                <option value="Coworking Seat">Coworking Seat</option>
+                <option value="Private Cabin">Private Cabin</option>
+                <option value="Meeting Room">Meeting Room</option>
+                <option value="One Day Pass">One Day Pass</option>
+                <option value="Weekly Pass">Weekly Pass</option>
+            </select>
+            <input type="hidden" id="service-comma-separated" name="service-comma-separated" />
+            <input type="hidden" id="service-type" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.serviceType %>" value="">
+        </div>            
+    </div>
+    
+    <div class="col-lg-6 num-seats ">
+        <div class="input-box mt-10">
+
+            <select id="num-seats" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.numSeats %>" required>
+                <option value="" disabled selected>Select number of seats</option>
+                <option value="1" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.numSeats %>">1</option>
+                <option value="2" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.numSeats %>">2</option>
+                <option value="3-5" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.numSeats %>">3-5</option>
+                <option value="6-9" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.numSeats %>">6-9</option>
+                <option value="10-15" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.numSeats %>">10-15</option>
+                <option value="16-20" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.numSeats %>">16-20</option>
+            </select>
+            
+        </div>
+    </div>
+    <div class="col-lg-6 preferred-location">
+        <div class="input-box mt-10">
+            <select id="preferred-location" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.preferredLocation %>" required>
+                <option value="" disabled selected>Select a preferred location</option>
+                <% location.forEach(item => { %>
+
+                <option value="<%= item.basicDetails.name %>" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.preferredLocation %>"><%= item.basicDetails.name %></option>
+              <% }) %>
+            </select>
+        </div>
+    </div>
+    <div class="form-group" style="display: none;" >
+        <input type="hidden" id="websiteProjectId" name="websiteProjectId" value="67777610906e9b81e76e962f">
+    </div>
+    <div class="col-lg-12">
+        <div class="input-box mt-10">
+            <textarea  cols="30" rows="10" placeholder="Message" name="<%= BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks %>" required></textarea>
+            <button class="main-btn main-btn-2">Send message</button>
+        </div>
+    </div>
+</div>
+                            
+<!-- Include Choices.js CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+
+<!-- Include Choices.js JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const serviceSelect = document.getElementById('service');
+        const hiddenInput = document.getElementById('service-comma-separated');
+
+        // Function to update and log selected services
+        function updateSelectedServices() {
+            const selectedServices = Array.from(serviceSelect.selectedOptions).map(option => option.value).join(',');
+            hiddenInput.value = selectedServices; // Update hidden input value
+            console.log('Selected Services:', selectedServices); // Log to console
+        }
+
+        // Listen for changes in the select element
+        serviceSelect.addEventListener('change', updateSelectedServices);
+    });
+
+   
+
+    document.getElementById('service').addEventListener('change', function() {
+        // Get selected options
+        const selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
+        const selectedCount = selectedOptions.length;
+        
+        let serviceType = '';
+
+        if (selectedCount > 2) {
+            serviceType = 'All';
+        } else if (selectedOptions.includes('Coworking Seat') && selectedCount === 1) {
+            serviceType = 'Workstation Only';
+        } else if (selectedOptions.includes('Private Cabin') && selectedCount === 1) {
+            serviceType = 'Cabin Only';
+        } else if (selectedOptions.includes('Coworking Seat') && selectedOptions.includes('Private Cabin')) {
+            serviceType = 'Workstation + Cabin';
+        } else if (selectedOptions.includes('One Day Pass') || selectedOptions.includes('Weekly Pass')) {
+            serviceType = 'Short Term Pass';
+        } else if (selectedOptions.includes('Meeting Room') && selectedCount === 1) {
+            serviceType = 'Meeting Room';
+        } else {
+            serviceType = 'Custom Selection';
+        }
+
+        // Update the hidden service-type input
+        document.getElementById('service-type').value = serviceType;
+        
+        // Optionally, update the comma-separated input if needed
+        document.getElementById('service-comma-separated').value = selectedOptions.join(',');
+    });
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const serviceElement = document.querySelector('#service');
+    
+        // Initialize Choices.js on the select element
+        const choicesInstance = new Choices(serviceElement, {
+            removeItemButton: true,          // Adds a cross button to remove selected tags
+            placeholderValue: 'Select a service', // Initial placeholder text
+            searchEnabled: true,             // Enables search functionality
+            noResultsText: 'No services found', // Text for no results
+            itemSelectText: '',              // Removes the "Press to select" text in choices dropdown
+        });
+    
+        // Add event listener for changes
+        serviceElement.addEventListener('change', function () {
+            const selectedItems = choicesInstance.getValue(true); // Get selected items
+            const inputElement = serviceElement.closest('.choices').querySelector('input.choices__input');
+    
+            if (inputElement) {
+                // Remove the placeholder if any option is selected
+                if (selectedItems.length > 0) {
+                    inputElement.removeAttribute('placeholder');
+                } else {
+                    // Restore the placeholder if no options are selected
+                    inputElement.setAttribute('placeholder', 'Select a service');
+                }
+            }
+        });
+    });
+    
+
+
+      
+
+    
+</script>

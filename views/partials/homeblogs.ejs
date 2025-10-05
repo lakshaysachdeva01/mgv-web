@@ -1,0 +1,140 @@
+<style>
+    .Courses_Slider-2 {
+      position: relative;
+      overflow: hidden;
+      padding-top: 40px;
+      height: 100%;
+      width: 100%;
+    }
+  
+    .Courses_Slider-2 .swiper-slide {
+      flex-shrink: 0;
+      width: auto;
+      max-width: 100%;
+  width: 100% !important;
+    }
+  
+     .swiper-button-prev, .swiper-button-next {
+      width: 35px;
+      height: 35px;
+      background: #E33d5c;
+      border-radius: 56%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ffffff;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      position: absolute;
+      top: 56%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      z-index: 10;
+    }
+    .Courses_Slider-2 p{
+      padding:  0;
+    }
+    .Courses_Slider-2 h4{
+      font-size: 30px;
+    }
+
+    @media (max-width:600px) {
+      .Courses_Slider-2 h4{
+        font-size: 22px;
+        line-height: 26px;
+      }
+    }
+  
+    .Courses_Slider-2 h5{
+      padding-top: 10px;
+      font-size: 18px;
+      color:#1f0b45
+    }
+    .swiper-button-prev { left: -65px; }
+    .swiper-button-next { right: -65px; }
+  
+    .swiper-button-prev::after, .swiper-button-next::after {
+      font-size: 20px;
+      color: #ffffff;
+    }
+    @media (max-width:1150px) {
+      .swiper-button-prev ,.swiper-button-next{
+        display: none;
+      }
+    }
+    
+  </style>
+  
+  <section class="Courses blogcourses" style="padding: 0; padding-bottom:0px; background:none">
+    <div class="container" style="position:relative">
+      <div class="d-flex justify-content-center align-items-center text-center flex-column mx-auto" data-aos="fade-up">
+        <h1>Blogs & Insights</h1>
+        <p>A collection of ideas, experiences, and wisdom to spark your curiosity</p>
+      </div>
+  
+      <div class="Courses_Slider Courses_Slider-2 swiper-container" data-aos="fade-up">
+        <div class="swiper-wrapper" style="display: flex;">
+          <div class="swiper-slide" >
+            <% blogs.forEach(item => { %>
+                <div onclick="window.location.href='/blog/<%= item.seoDetails.slug %>';">
+                  <div class="d-flex flex-column position-relative">
+                    <figure>
+                        <img 
+                        style="padding-top: 0; width:100%" 
+                        src="<%= process.env.S3_BASE_URL + item.banner.image %>" 
+                        alt="blog_banner">
+                    </figure>
+                    <div class="d-flex flex-column " style="padding: 25px;">
+                      <h4 style="padding-bottom:20px"><%= item.title %></h4>
+                      <%- item.description.slice(0,85).concat("...") %>
+                      <div style="padding-top: 20px;">
+                        <a href="/blog/<%= item.seoDetails.slug %>" class="hover3" style="justify-content:left">
+                          Explore More<i class="fa fa-arrow-right-long"></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="position-absolute"></div>
+                  </div>
+                </div>
+                <% }) %>
+          </div>
+  
+       
+        </div>
+  
+        
+      </div>
+      <!-- Navigation Buttons -->
+      <div class="swiper-button-prev"><i class="fa fa-chevron-left"></i></div>
+      <div class="swiper-button-next"><i class="fa fa-chevron-right"></i></div>
+    </div>
+  </section>
+  
+
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> 
+ <script>
+    var swiper = new Swiper('.Courses_Slider-2', {
+      slidesPerView: 1,
+      spaceBetween: 0,
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      breakpoints: {
+        
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 30,
+        },
+      }
+    });
+  </script>
+  

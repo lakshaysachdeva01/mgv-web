@@ -1,0 +1,171 @@
+<style>
+  .Courses_Slider-1 {
+    position: relative;
+    overflow: hidden;
+    padding-top: 40px;
+  }
+
+  .Courses_Slider-1 .swiper-slide {
+    flex-shrink: 0;
+    width: 300px !important;
+    min-width: 300px !important;
+    margin: 12px;
+
+  }
+
+  .Courses_Slider-1 .swiper-slide .d-flex {
+    width:300px;
+  }
+
+  .swiper-button-prev, .swiper-button-next {
+    width: 35px;
+    height: 35px;
+    background: #E33d5c;
+    border-radius: 56%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 56%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 10;
+  }
+  .Courses_Slider p{
+    padding: 14px 0 20px 0;
+  
+  }
+  .Courses_Slider .desc{
+    color: #565656 !important;
+    font-size: 15px !important;
+    line-height: 26px;
+  }
+  .Courses_Slider-1 h4{
+    font-size: 30px;
+    color: #E33d5c !important;
+  }
+
+  .Courses_Slider-1 img{
+    width: 100%;
+    object-fit: cover;
+  }
+  .Courses_Slider-1 figure{
+    max-height: 200px;
+  width: 98%;
+  height: 100%;
+  margin-top: 3px;
+  margin-left: 3px;
+}
+
+.Courses_Slider-1 p{
+  padding-top: 5px !important;
+}
+  .Courses_Slider span{
+    padding-top: 10px;
+    font-size: 18px;
+    color:#1f0b45
+  }
+  .swiper-button-prev { left: -65px; }
+  .swiper-button-next { right: -65px; }
+
+  .swiper-button-prev::after, .swiper-button-next::after {
+    font-size: 20px;
+    color: #ffffff;
+  }
+  @media (max-width:1150px) {
+    .swiper-button-prev ,.swiper-button-next{
+      display: none;
+    }
+  }
+  
+</style>
+
+<section class="Courses paddingcourses" >
+  <div class="container" style="position:relative">
+    <div class="d-flex justify-content-center align-items-center text-center flex-column mx-auto" data-aos="fade-up">
+      <h1>Our Courses</h1>
+      <p style="padding-bottom: 0;">Nurturing Young Minds with Tailored Learning Programs for Every Age Group</p>
+    </div>
+
+    <div class="Courses_Slider Courses_Slider-1 " data-aos="fade-up">
+      <div class="swiper-wrapper" style="display: flex;">
+        <div class="swiper-slide" >
+          <div class="d-flex flex-column position-relative" style=" justify-content:center; align-items:center">
+            <figure style=" margin-left: 9px;" ><img class="w-100" src="assets/images/slider/courses_1.webp" alt="courses_1"></figure>
+            <div class="d-flex flex-column text-center">
+              <h4>Playgroup <span>(Age 1.5-3)</span></h4>
+              
+              <p class="desc">Early exploration through play-based learning.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="d-flex flex-column position-relative" >
+            <figure><img class="w-100" src="assets/images/slider/courses_2.webp" alt="courses_2"></figure>
+            <div class="d-flex flex-column text-center">
+              <h4>Nursery <span>(Age 3-4)</span></h4>
+              <p class="desc">Building foundational skills through creativity and fun activities.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="d-flex flex-column position-relative"  >
+            <figure><img class="w-100" src="assets/images/slider/courses_3.webp" alt="courses_3"></figure>
+            <div class="d-flex flex-column text-center">
+              <h4>Jr. KG <span>(Age 4-5)</span></h4>
+              <p class="desc">Developing social, cognitive, and motor skills for the next stage.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="d-flex flex-column position-relative" >
+            <figure><img class="w-100" src="assets/images/slider/courses_2.webp" alt="courses_2"></figure>
+            <div class="d-flex flex-column text-center">
+              <h4>Sr. KG <span>(Age 5-6)</span></h4>
+              <p class="desc">Preparing for formal education with independant and critical thinking.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+    </div>
+    <!-- Navigation Buttons
+    <div class="swiper-button-prev"><i class="fa fa-chevron-left"></i></div>
+    <div class="swiper-button-next"><i class="fa fa-chevron-right"></i></div> -->
+  </div>
+</section>
+<!-- autoplay: {
+  delay: 2000,
+  disableOnInteraction: false,
+}, -->
+<!-- Swiper JS -->
+<!-- <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+  var swiper = new Swiper('.Courses_Slider', {
+    slidesPerView: 4,
+    spaceBetween: 0,
+    loop: true,
+    
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    breakpoints: {
+      
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      1024: {
+        slidesPerView: 4,
+        spaceBetween: 30,
+      },
+    }
+  });
+</script> -->

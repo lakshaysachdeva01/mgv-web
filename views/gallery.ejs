@@ -1,0 +1,306 @@
+<%- include('header'), {seoDetails} %>
+<style>
+    .form-switch .switch {
+        cursor: pointer;
+        position: relative;
+        width: 55px;
+        height: 30px;
+    }
+    
+    .form-switch .switch input:checked + .switch__slider {
+        background-color: #e33d5c;
+    }
+    
+    .form-switch .switch input:checked + .switch__slider::before {
+        transform: translateX(25px);
+        background-color: white;
+    }
+    
+    .form-switch .switch input {
+        z-index: 5;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+    
+    .form-switch .switch__slider {
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        max-width: 60px;
+        height: 30px;
+        background-color: #1f0b45ef;
+        transition: .3s;
+        border-radius: 30px;
+    }
+    
+
+
+    .breadcrumb-item{
+        margin: 0 5px;
+    }
+    .breadcrumb-item+.breadcrumb-item::before {
+    float: left;
+    padding-right: var(--bs-breadcrumb-item-padding-x);
+    color: var(--bs-breadcrumb-divider-color);
+    content: var(--bs-breadcrumb-divider, "") !important;
+}
+
+
+    .gallery-breadcrumb::-webkit-scrollbar {
+        display: none;
+    
+    }
+
+
+    .breadcrumb-item.active {
+       color: #F57009 !important;
+       background-color: #1f0b45;
+    }
+    
+    .breadcrumb-item:hover {
+       color: white !important;
+    }
+
+    
+    @media (max-width:768px) {
+        .page-title-content {
+            overflow-x: auto;
+            display: flex;
+            justify-content: flex-start;
+            padding-left: 0px;
+        }
+    }
+    
+    .form-switch .switch__slider::before {
+        content: "";
+        position: absolute;
+        height: 24px;
+        width: 24px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        border-radius: 100%;
+        box-shadow: 0px 10px 40px 0px #0000000D;
+        transition: .3s;
+    }
+    
+ 
+    
+    .gallery-container {
+        column-count: 3;
+        gap: 20px;
+    }
+    
+    .gallery-thumb {
+        margin-bottom: 20px;
+    }
+    
+    @media (max-width:992px) {
+        .gallery-container {
+            max-width: 800px;
+            margin: 2px auto;
+            column-count: 2;
+            gap: 30px;
+        }
+    }
+    
+    @media (max-width:700px) {
+        .gallery-container {
+            max-width: 500px;
+            margin: 2px auto;
+            column-count: 1;
+            gap: 30px;
+        }
+    }
+    
+    @media (max-width:500px) {
+        .gallery-container {
+            max-width: 500px;
+            margin: 2px auto;
+            column-count: 1;
+            gap: 0px;
+        }
+        .gallery-thumb {
+            margin-bottom: 14px !important;
+        }
+    }
+</style>
+<section class="breadcrumb-header style-2" id="page" style="background-image: url(/assets/images/header/02_breadcrumb-header.jpg); ">
+    <div class="overlay" style="backdrop-filter: brightness(0.5);"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="banner">
+                    <h1>Moments That Define Us</h1>
+                    <ul>
+                        <li><a href='/'>Home</a></li>
+                        <li><i class="fas fa-angle-right"></i></li>
+                        <li>Gallery</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  
+
+<div class="page-title-area bg_cover mb-30 mt-30" style="margin-top: 20px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title-content">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb gallery-breadcrumb" id="galleryTabs" style="justify-content: center;">
+                            <li class="breadcrumb-item active btn-1 btn-3 "] data-filter="all"><span>All</span></li>
+                            <li class="breadcrumb-item btn-1 btn-3 " data-filter="videos"><span>Videos</span></li>
+                            <% gallery.forEach((album) => { %>
+                                <% if (album.mediaDetails.mediaType === "IMAGE") { %>
+                                    <li class="breadcrumb-item btn-1 btn-3 " data-filter="<%= album.title.toLowerCase() %>"><span><%= album.title %></span></li>
+                                <% } %>
+                            <% }); %>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="gallery-area gallery-page masonry" style="padding-bottom: 120px;">
+    <div class="container">
+        <div class="gallery-itmes">
+            <div class="rows">
+                <!-- Gallery Container -->
+                <div class="gallery-container state-gallery">
+                    <% gallery.slice().reverse().forEach((album) => { %>
+                        <% if (album.mediaDetails.mediaType === "IMAGE" && album.mediaDetails.images.length > 0) { %>
+                            <% album.mediaDetails.images.slice().reverse().forEach((image) => { %>
+                                <div class="gallery-thumb image-item popup-trigger" data-type="image" data-src="https://technolitics-s3-bucket.s3.ap-south-1.amazonaws.com/websitebuilder-s3-bucket/<%= image %>" data-title="<%= album.title.toLowerCase() %>">
+                                    <img src="https://technolitics-s3-bucket.s3.ap-south-1.amazonaws.com/websitebuilder-s3-bucket/<%= image %>" 
+                                         alt="<%= album.title %>" style="width: 100%;" />
+                                </div>
+                            <% }); %>
+                        <% } %>
+                        <% if (album.mediaDetails.mediaType === "VIDEO" && album.mediaDetails.videoLink) { 
+                            function convertToEmbedUrl(url) {
+                                let videoId = "";
+                                if (url.includes("youtu.be")) {
+                                    videoId = url.split("youtu.be/")[1]?.split("?")[0];
+                                } else if (url.includes("youtube.com/watch")) {
+                                    videoId = url.split("v=")[1]?.split("&")[0];
+                                }
+                                return videoId ? `https://www.youtube.com/embed/${videoId}` : "";
+                            }
+                            const embedUrl = convertToEmbedUrl(album.mediaDetails.videoLink);
+                        %>
+                            <% if (embedUrl) { %>
+                                <div class="gallery-thumb video-item popup-trigger" data-type="video" data-src="<%= embedUrl %>" data-title="videos" style="margin-bottom: 20px; display:flex; flex-direction:column">
+                                    <div class="thumbnail-container">
+                                        <img src="https://img.youtube.com/vi/<%= embedUrl.split('/').pop() %>/0.jpg" 
+                                             alt="<%= album.title %>" class="thumbnail-image" />
+                                        <div class="play-button">▶</div>
+                                    </div>
+                                </div>
+                            <% } else { %>
+                                <p>Invalid YouTube URL provided.</p>
+                            <% } %>
+                        <% } %>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .thumbnail-container {
+        position: relative;
+        width: 100%;
+    }
+    
+    .thumbnail-image {
+        width: 100%;
+        height: 230px !important;
+        object-fit: cover;
+        display: block;
+    }
+    
+    .play-button {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-self: center;
+        font-size: 40px;
+        color: white;
+        border: 2px solid white;
+        height: 72px;
+        width: 72px;
+       padding-top: 20px;
+        border-radius: 50%;
+        cursor: pointer;
+        top: 34%;
+        left: 42%;
+    }
+    
+    h3.video-title {
+        font-family: "Paytone One", sans-serif;
+        font-size: 20px !important;
+        text-align: left !important;
+        color: #1f0b45;
+        margin-top: 10px;
+    }
+    
+   
+   
+</style>
+<script>document.addEventListener('DOMContentLoaded', function () {
+    const galleryItems = document.querySelectorAll('.gallery-thumb');
+    const galleryBreadcrumbs = document.querySelectorAll('#galleryTabs .breadcrumb-item');
+    const videoTitles = document.querySelectorAll('.video-title');
+
+    // Filter Gallery Functionality
+    function filterGallery(filter) {
+        galleryItems.forEach(item => {
+            const itemTitle = item.getAttribute('data-title');
+            if (filter === 'all') {
+                item.style.display = 'flex';
+                if (item.classList.contains('video-item')) {
+                    const title = item.querySelector('.video-title');
+                    if (title) title.style.display = 'none';
+                }
+            } else if (filter === 'videos' && item.classList.contains('video-item')) {
+                item.style.display = 'flex';
+                const title = item.querySelector('.video-title');
+                if (title) title.style.display = 'block';
+            } else if (filter !== 'videos' && itemTitle === filter && !item.classList.contains('video-item')) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        // Reinitialize Media Items for Popup
+        initMediaItems();
+    }
+
+    galleryBreadcrumbs.forEach((item) => {
+        item.addEventListener('click', function (event) {
+            event.preventDefault();
+            galleryBreadcrumbs.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            const filter = this.getAttribute('data-filter');
+            filterGallery(filter);
+        });
+    });
+
+    // Set default filter to 'All'
+    filterGallery('all');
+});
+</script>
+
+<%- include('footer') %>  

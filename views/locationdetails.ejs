@@ -1,0 +1,380 @@
+<%- include('header'), {seoDetails} %>
+
+ <!--====== PAGE TITLE PART START ======-->
+
+ <div class="page-title-area bg_cover" style="background-image: url(/assets/images/page-title-bg.jpg);">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title-content">
+                    <h1 class="title"> <%= filtered.basicDetails.name %>  </h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><%= filtered.basicDetails.name %></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--====== PAGE TITLE PART ENDS ======-->
+
+<style>
+  .gallery-container {
+    display: grid;
+    gap: 10px;
+    margin: 25px 0px;
+    grid-template-columns: repeat(2, 1fr); /* 2 images per row */
+    grid-auto-rows: auto; /* Let the row height auto-adjust based on content */
+  }
+  
+  .gallery-item {
+    position: relative;
+    width: 100%; /* Ensure images take full width of the grid cell */
+    padding-top: 56%; /* Aspect ratio 16:9 (adjust if you need a different aspect ratio) */
+    overflow: hidden;
+    transition: all 0.3s ease; /* Smooth transition for resizing */
+  }
+  
+  .gallery-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure image fills the square */
+  }
+  
+  /* This class ensures the last image (if odd) spans 2 columns without adding extra height */
+  .gallery-item.grid-span-2 {
+    grid-column: span 2; /* Span across 2 columns */
+    padding-top: 28%; /* Ensure aspect ratio is maintained */
+  }
+  
+  
+</style>
+<!--====== BLOG DETAILS PART ENDS ======-->
+
+<section class="blog-details detailspage" style="padding-bottom: 0;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="blog-details__main">
+                    <div class="blog-details__image">
+                        <img style="padding-top: 0;" src="<%= process.env.S3_BASE_URL + filtered.basicDetails.logo %>" alt="karyasiddhi_banner">
+                    </div><!-- /.blog-details__image -->
+                    <div class="blog-details__content">
+                        <ul>
+                            <li><%= filtered.basicDetails.city %></li>
+                         </ul>
+                        <h3 style="padding-bottom: 0px; margin-bottom:20px"> <%= filtered.basicDetails.name %></h3>
+                        <ul style="line-height: 30px; padding-bottom:40px; border-bottom:1px solid #e4e4ee">
+                            <li><%= filtered.basicDetails.address %></li>
+                         </ul>
+                         <div class="blog-details__share locations ficon"  >
+                            <ul>
+                                <li><a href="tel:<%= filtered.basicDetails.mobileNumber %>"><i class="fa fa-phone"></i></a></li>
+                                <li><a href="https://api.whatsapp.com/send?phone=<%= filtered.basicDetails.mobileNumber %>&text=Hello,%20I’m%20reaching%20out%20to%20Karyasiddhi%20Co-working%20Space%20for%20more%20information.%20Could%20you%20please%20provide%20details%20about%20availability%20and%20other%20relevant%20information?"  target="_blank"><i class="fa fa-whatsapp"></i></a></li>
+                                <li><a href="mailto:<%= filtered.basicDetails.email %>"><i class="fa fa-envelope"></i></a></li>
+                                <li><a href="<%= filtered.locationLink %>"><i class="fa fa-map-marker"></i></a></li>
+                                
+                            </ul>
+                        </div>
+                        <div class="blog-description"  ><%- filtered.description %></div>
+                        
+                        
+             <div class="description-block" >
+              <% filtered.multipleDescriptions.forEach(function(item) { %>
+                <div class="single-description">
+                  <p><%- item.description %></p>
+              
+                  <% if (item.singleImage && item.singleImage.image) { %>
+                    <!-- Display Single Image -->
+                    <div class="single-image-container">
+                      <img  style="padding-top:10px ;  padding-bottom:10px;" src="<%= process.env.S3_BASE_URL + item.singleImage.image %>" alt="Single Image" class="single-image">
+                    </div>
+                  <% } %>
+              
+                  <% 
+                  // Function to convert a YouTube URL (watch or short form) into an embeddable URL
+                  function convertToEmbedUrl(url) {
+                      let videoId = "";
+                      if (url.includes("youtu.be")) {
+                          // Handle short URL format (e.g., https://youtu.be/Tjxx80uYyUQ)
+                          videoId = url.split("youtu.be/")[1]?.split("?")[0];
+                      } else if (url.includes("youtube.com/watch")) {
+                          // Handle full URL format (e.g., https://www.youtube.com/watch?v=Tjxx80uYyUQ)
+                          videoId = url.split("v=")[1]?.split("&")[0];
+                      }
+                      return videoId ? `https://www.youtube.com/embed/${videoId}` : "";
+                  }
+                  %>
+                  
+                  <% if (item?.youtube && item?.youtube !== "") { 
+                      const embedUrl = convertToEmbedUrl(item.youtube); 
+                      if (embedUrl) { %>
+                          <iframe 
+                          style="padding: 20px 0;"
+                          width="100%" 
+                          height="433" 
+                              src="<%= embedUrl %>" 
+                              title="YouTube video player" 
+                              frameborder="0" 
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                              referrerpolicy="strict-origin-when-cross-origin" 
+                              allowfullscreen>
+                          </iframe>
+                      <% } else { %>
+                          <p>Invalid YouTube URL provided.</p>
+                      <% } 
+                  } %>    
+
+
+                  <% if (item.multipleImages && item.multipleImages.length > 0) { %>
+
+
+                   <div class="gallery-container" id="galleryContainer">
+                      <% item.multipleImages.forEach(function(image, index) { %>
+                        <div class="gallery-item">
+                          <a class="image-popup" href="<%= process.env.S3_BASE_URL + image %>">
+                            <img src="<%= process.env.S3_BASE_URL + image %>" alt="karyasiddhi_blogimages">
+                          </a>
+                        </div>
+                      <% }); %>
+                    </div>
+                    
+                    
+                  <% } %>
+                  
+              
+                  <% if (item.button && item.button.hyperLink && item.button.title) { %>
+                    <div class="button">
+                    <a style="line-height: 55px;" href="<%= item.button.hyperLink %>" class="main-btn main-btn-2"><%= item.button.title %></a>
+                </div>
+                  <% } %> <!-- Only display the button if both hyperLink and title exist -->
+              
+                </div>
+              <% }); %>
+              
+          </div>
+                    </div><!-- /.blog-details__content -->
+                    <div class="blog-details__meta">
+                        <!-- /.blog-details__tags -->
+                        
+                               
+                    
+                    </div><!-- /.blog-details__meta -->
+                </div><!-- /.blog-details__main -->
+
+
+                <% if (adbanner && adbanner.length > 0) { %>
+                    <div class="swiper-container" id="ad-banner-swiper"  style="margin-bottom: -35px;" >
+                      <div class="swiper-wrapper">
+                        <% adbanner.forEach((slide) => { %>
+                          <% if (slide.bannerImage && slide.bannerImage.webView) { %>
+                            <div class="swiper-slide">
+                              <div class="ad-banner">
+                                <img style="padding-bottom:0;" src="<%= process.env.S3_BASE_URL + slide.bannerImage.webView %>" alt="<%= slide.title %>">
+                              </div>
+                            </div>
+                          <% } else { %>
+                            <div class="swiper-slide">
+                              <div class="ad-banner">
+                                <p>No image available for <%= slide.title %></p>
+                              </div>
+                            </div>
+                          <% } %>
+                        <% }) %>
+                      </div>
+                    </div>
+                  <% } else { %>
+                    <p>No ad banners available.</p>
+                  <% } %>
+                  
+                  <!-- Testimonial Swiper -->
+                  <div class="swiper-container" id="testimonial-swiper">
+                    <div class="swiper-wrapper">
+                      <% testimonial.forEach((slide) => { %>
+                        <div class="swiper-slide">
+                          <div class="blog-author">
+                            <div class="blog-author__image">
+                              <img src="<%= process.env.S3_BASE_URL + slide.image %>" alt="<%= slide.name %>">
+                            </div>
+                            <div class="blog-author__content">
+                              <h3 style="margin-bottom: 0;"><%= slide.name %></h3>
+                              <span style="padding-top: 0px; font-size:16px" class="rate"><%= slide.companyProfile %></span>
+                              <p class="testimonial-text" data-full-review="<%= slide.review %>">
+                                <%= slide.review.length > 100 ? slide.review.slice(0, 100) + '... ' : slide.review %>
+                                <% if (slide.review.length > 100) { %>
+                                  <button class="read-more-link">Read More</button>
+                                <% } %>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      <% }) %>
+                    </div>
+                  </div>
+
+
+
+                  <section class="write-massage-area enquire" >
+                    <div class="container">
+                        <div class="row">
+                            <div >
+                                <div class="write-massage-content">
+                                    <div class="write-massage-title" style="padding-bottom: 10px;">
+                                        <h3 class="title" style="padding-bottom: 20px;">Get a call Back</h3>
+                                    </div>
+                                    <div class="write-massage-input">
+                                        <form id="booktour">
+                                            <%- include('./partials/book.ejs') %>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                  </section>
+
+
+            </div><!-- /.col-lg-8 -->
+
+
+
+
+             <div class="col-lg-4 col-md-6 col-sm-7 sidebar-fix">
+                    <div class="sidebar">
+                        <div class="sidebar__single sidebar__post">
+                            <h3 class="sidebar__title">More Locations</h3><!-- /.sidebar__title -->
+                            <div class="sidebar__post-wrap">
+                                
+                              <% location.forEach(item => { %>
+                                <div class="sidebar__post__single item explore">
+                                    <div class="sidebar__post-image">
+                                        <div class="inner-block"><img style="    height: 90px;
+    width: 90px;
+    object-fit: cover;" src="<%= process.env.S3_BASE_URL + item.basicDetails.logo %>" alt="karyasiddhi_bannerimage"></div>
+                                        <!-- /.inner-block -->
+                                    </div><!-- /.sidebar__post-image -->
+                                    <div class="sidebar__post-content">
+                                        <h4 class="sidebar__post-title"><a style="font-size: 18px;" href="/locationdetails/<%= item.basicDetails.name %>"><%= item.basicDetails.name %></a></h4>
+                                        <p style="line-height:20px"><%= item.basicDetails.city %></p>
+                                       
+                                    </div><!-- /.sidebar__post-content -->
+                                </div ><!-- /.sidebar__post__single -->
+                                <% }) %>  
+                            </div><!-- /.sidebar__post-wrap -->
+                        </div><!-- /.sidebar__single -->
+
+
+
+                     
+
+                    </div><!-- /.sidebar -->
+                </div>
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.blog-details -->
+
+
+<%- include('./partials/enquire.ejs') %>
+<!--====== BLOG DETAILSSTART ======-->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Ad Banner Swiper
+    var adBannerSwiper = new Swiper('#ad-banner-swiper', {  // Use ID selector
+      loop: true,
+      autoplay: {
+        delay: 3000, // 3 seconds for autoplay
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      }
+    });
+  
+    // Initialize Testimonial Swiper
+    var testimonialSwiper = new Swiper('#testimonial-swiper', {  // Use ID selector
+      loop: true,
+      autoplay: {
+        delay: 5000, // 5 seconds for autoplay
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      }
+    });
+  });
+  
+  document.querySelectorAll('.read-more-link').forEach(button => {
+    button.addEventListener('click', function toggleReview() {
+      const reviewText = this.closest('.testimonial-text');
+      const fullReview = reviewText.getAttribute('data-full-review');
+      const shortReview = fullReview.slice(0, 100) + '...';
+  
+      if (this.textContent === 'Read More') {
+        // Replace the content and reattach the event listener
+        reviewText.innerHTML = fullReview + ' <button class="read-more-link">Read Less</button>';
+      } else {
+        // Replace the content and reattach the event listener
+        reviewText.innerHTML = shortReview + ' <button class="read-more-link">Read More</button>';
+      }
+  
+      // Reattach the event listener to the new button
+      document.querySelectorAll('.read-more-link').forEach(button => {
+        button.addEventListener('click', toggleReview);
+      });
+    });
+  });
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function updateGridLayout() {
+      const galleryContainers = document.querySelectorAll('.gallery-container'); // Select all gallery containers
+      
+      galleryContainers.forEach(galleryContainer => {
+        const galleryItems = galleryContainer.querySelectorAll('.gallery-item');
+        
+        // Apply grid layout with 2 columns per row
+        galleryContainer.style.display = 'grid';
+        galleryContainer.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        galleryContainer.style.gap = '10px'; // Space between images
+        galleryContainer.style.gridAutoRows = 'auto'; // Let rows adjust height based on content
+  
+        // Handle the last image if the total count is odd
+        const totalImages = galleryItems.length;
+        if (totalImages % 2 !== 0) {
+          // Last image takes full width if odd number of images
+          galleryItems[totalImages - 1].classList.add('grid-span-2');
+        } else {
+          // Ensure no extra spanning for even images
+          galleryItems[totalImages - 1].classList.remove('grid-span-2');
+        }
+      });
+    }
+  
+    // Update the grid layout on load and resize
+    updateGridLayout();
+    window.addEventListener('resize', updateGridLayout);
+  });
+  
+
+  </script>
+  
+  
+<%- include('footer') %>
