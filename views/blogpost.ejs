@@ -311,67 +311,18 @@
                                     style="display: grid; gap: 15px; grid-template-columns: <%= gridColumns %>; align-items: stretch;">
                                       
                                       <% item.multipleImages.forEach((image, index) => { %>
-                                          <div class="image" style="position: relative; 
+                                          <div class="image popup-trigger" data-type="image" data-src="<%= process.env.S3_BASE_URL + image %>" 
+                                               style="position: relative; cursor: pointer;
                                               <%= imageCount > 1 ? 'height: 250px; overflow: hidden;' : '' %>">
                                               
-                                              <img src="<%= process.env.S3_BASE_URL + image %>" alt="" class="image-size lightbox-trigger"
-                                                   style="width: 100%; <%= imageCount > 1 ? 'height: 100%; object-fit: cover;' : 'height: auto;' %>; border-radius: 8px; cursor: pointer; margin-bottom: 20px;"
-                                                   onclick="openLightbox('<%= process.env.S3_BASE_URL + image %>')">
+                                              <img src="<%= process.env.S3_BASE_URL + image %>" alt="" class="image-size"
+                                                   style="width: 100%; <%= imageCount > 1 ? 'height: 100%; object-fit: cover;' : 'height: auto;' %>; border-radius: 8px; margin-bottom: 20px;">
                                           </div>
                                       <% }) %>
                                     </div>
                                   <% } %>
                               
-                                  <!-- Lightbox -->
-                                  <div id="customLightbox" class="lightbox">
-                                    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-                                    <img id="lightboxImage" class="lightbox-content">
-                                  </div>
-                              
-                                  <style>
-                                    .lightbox {
-                                      display: none;
-                                      position: fixed;
-                                      z-index: 1000;
-                                      left: 0;
-                                      top: 0;
-                                      width: 100%;
-                                      height: 100%;
-                                      background-color: rgba(0, 0, 0, 0.8);
-                                      justify-content: center;
-                                      align-items: center;
-                                    }
-                              
-                                    .lightbox-content {
-                                      max-width: 90%;
-                                      max-height: 90%;
-                                      display: block;
-                                      object-fit: contain;
-                                      margin: auto;
-                                      border-radius: 10px;
-                                    }
-                              
-                                    .lightbox-close {
-                                      position: absolute;
-                                      top: 20px;
-                                      right: 20px;
-                                      font-size: 30px;
-                                      color: white;
-                                      cursor: pointer;
-                                      font-weight: bold;
-                                    }
-                                  </style>
-                              
-                                  <script>
-                                    function openLightbox(imageSrc) {
-                                        document.getElementById("lightboxImage").src = imageSrc;
-                                        document.getElementById("customLightbox").style.display = "flex";
-                                    }
-                              
-                                    function closeLightbox() {
-                                        document.getElementById("customLightbox").style.display = "none";
-                                    }
-                                  </script>
+                                 
                               
                               
                                   <!-- YouTube Video -->
@@ -443,7 +394,7 @@
         <h3>Recent Posts</h3>
       </div>
       <% latestblog.forEach(item => { %>
-      <div class="news-box" onclick="window.location.href='/blog-details/<%= item.seoDetails.slug %>'">
+      <div class="news-box" style="margin-bottom: 20px;" onclick="window.location.href='/blog-details/<%= item.seoDetails.slug %>'">
         <div class="news-item">
           <img class="img-fluid" src="<%= process.env.S3_BASE_URL + item.coverImage %>" alt="<%= item.title %>">
           <div class="item-content">
@@ -549,112 +500,5 @@ margin-top: 30px !important;
 
 
 
-
-<%- include('./partials/enquire.ejs') %>
-
-<!-- <script>
- 
-  document.querySelectorAll('.read-more-link').forEach(button => {
-    button.addEventListener('click', function toggleReview() {
-      const reviewText = this.closest('.testimonial-text');
-      const fullReview = reviewText.getAttribute('data-full-review');
-      const shortReview = fullReview.slice(0, 100) + '...';
-  
-      if (this.textContent === 'Read More') {
-        // Replace the content and reattach the event listener
-        reviewText.innerHTML = fullReview + ' <button class="read-more-link">Read Less</button>';
-      } else {
-        // Replace the content and reattach the event listener
-        reviewText.innerHTML = shortReview + ' <button class="read-more-link">Read More</button>';
-      }
-  
-      // Reattach the event listener to the new button
-      document.querySelectorAll('.read-more-link').forEach(button => {
-        button.addEventListener('click', toggleReview);
-      });
-    });
-  });
-
-  document.addEventListener('DOMContentLoaded', function () {
-    function updateGridLayout() {
-      const galleryContainers = document.querySelectorAll('.gallery-container'); // Select all gallery containers
-      
-      galleryContainers.forEach(galleryContainer => {
-        const galleryItems = galleryContainer.querySelectorAll('.gallery-item');
-        
-        // Apply grid layout with 2 columns per row
-        galleryContainer.style.display = 'grid';
-        galleryContainer.style.gridTemplateColumns = 'repeat(2, 1fr)';
-        galleryContainer.style.gap = '10px'; // Space between images
-        galleryContainer.style.gridAutoRows = 'auto'; // Let rows adjust height based on content
-  
-        // Handle the last image if the total count is odd
-        const totalImages = galleryItems.length;
-        if (totalImages % 2 !== 0) {
-          // Last image takes full width if odd number of images
-          galleryItems[totalImages - 1].classList.add('grid-span-2');
-        } else {
-          // Ensure no extra spanning for even images
-          galleryItems[totalImages - 1].classList.remove('grid-span-2');
-        }
-      });
-    }
-  
-    // Update the grid layout on load and resize
-    updateGridLayout();
-    window.addEventListener('resize', updateGridLayout);
-  });
-  
-  </script> -->
- 
-  <!-- <style>
-    .swiper-container {
-      position: relative;
-      
-      max-height: 600px;
-      margin: 25px auto;
-      overflow: hidden;
-      border-radius: 20px;
-    }
-    
-    .gallery-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 20px;
-    }
-    
-    .swiper-navigation {
-      position: absolute;
-      bottom: 20px;
-      right: 10px;
-      display: flex;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 5px 10px;
-      border-radius: 10px;
-    }
-    
-    .custom-prev, .custom-next {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 5px;
-    }
-    
-    .nav-icon {
-      width: 24px;
-      height: 24px;
-      fill: white;
-    }
-    
-    .slide-counter {
-      color: white;
-      font-size: 14px;
-      font-weight: bold;
-      margin: 0 10px;
-    }
-    
-  </style> -->
 
 <%- include('footer') %>

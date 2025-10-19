@@ -1,31 +1,91 @@
 <%- include('header'), {seoDetails} %>
 
-<body style="overflow: hidden;"><div class="Courses" style="padding-top: 0px; ">
-    <div  style="max-width: 1250px; margin: 0 auto" style="display:flex; justify-content:center; align-items:center; height:100%">
-        <div class="row flex-deouti padd-left new-padding-bottom">
-            <div class="col-lg-6 align-self-center">
-            <div class="abou-heding">
-            <h1 class="h1error" style="   
-        color: #110028;
+<style>
+    .fullscreen-message-page {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        margin-top: -120px;
+        background: linear-gradient(135deg, #0b0733 0%, #1d1e2a 50%, #1a1c2f 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+       
+    }
+    
+    .message-content {
+        text-align: center;
+        padding: 40px;
+        padding-top: 150px;
+        max-width: 700px;
+        animation: fadeInUp 0.6s ease-out;
+    }
+    
+    .message-content h1 {
+        color: #ffffff;
         font-size: 80px;
         font-weight: 700;
-        padding-bottom: 38px;">Thank You! </h1>
-            <p id="thank-you-message" style="margin-bottom: 40px;  color: #110028;"></p>
+        margin-bottom: 30px;
+        text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
     
-            <a href="/" class="hover1" id="getStartedAnchor"> Home</a>
-            </div>
-            </div>
-            <div class="col-lg-6 align-self-center">
-            <div class="content-holder">
+    .message-content p {
+        color: #e0e0e0;
+        font-size: 18px;
+        line-height: 1.6;
+        margin-bottom: 40px;
+    }
+    
+    .message-content .btn-home {
+        display: inline-block;
+        padding: 15px 40px;
+        background: #FC5220;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(252, 82, 32, 0.3);
+    }
+    
+    .message-content .btn-home:hover {
+        background: #e04718;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(252, 82, 32, 0.4);
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .message-content h1 {
+            font-size: 50px;
+        }
+        
+        .message-content p {
+            font-size: 16px;
+        }
+    }
+</style>
 
-            </div>
-            </div>
-            </div>
+<div class="fullscreen-message-page">
+    <div class="message-content">
+        <h1>Thank You!</h1>
+        <p id="thank-you-message">Thank you for reaching out to us. We've received your message and our team will get back to you shortly.</p>
+        <a href="/" class="btn-home">Back to Home</a>
     </div>
-      
-
 </div>
-</body>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {

@@ -1,0 +1,251 @@
+<%- include('header', {seoDetails}) %>
+
+
+     <!-- :: Breadcrumb Header -->
+     <section class="breadcrumb-header" id="page" style="background-image: url(/assets/images/header/01_breadcrumb-header.jpg)">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="banner">
+                        <h1><%= categoryName ? categoryName + ' Products' : 'Our Products' %></h1>
+                        <ul>
+                            <li><a href='/'>Home</a></li>
+                            <li><i class="fas fa-angle-right"></i></li>
+                            <% if (categoryName) { %>
+                                <li><%= categoryName %></li>
+                            <% } else { %>
+                                <li>Products</li>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<!-- CATEGORY FILTER TABS
+================================================== -->
+<% if (categories && categories.length > 0) { %>
+<section style=" padding: 40px 0; margin-bottom: 30px;">
+    <div class="container">
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 1200px; margin: 0 auto;">
+            <button onclick="filterProducts('all')" class="category-tab active" data-category="all" style="padding: 0px 14px; background: #FC5220; border: 2px solid #FC5220; border-radius: 25px; color: white; text-decoration: none; font-weight: 500; font-size: 14px; height:40px; transition: all 0.3s ease; cursor: pointer;">All Products</button>
+            <% categories.forEach(category => { %>
+                <button onclick="filterProducts('<%= category._id %>')" class="category-tab" data-category="<%= category._id %>" style="padding: 0px 14px; background: white; border: 2px solid #e9ecef; border-radius: 25px; color: #6c757d; text-decoration: none; font-weight: 500; font-size: 14px; transition: all 0.3s ease; cursor: pointer;"><%= category.name %></button>
+            <% }) %>
+        </div>
+    </div>
+</section>
+<% } %>
+
+<!-- PRODUCTS GRID
+================================================== -->
+<style>
+    /* Image Placeholder */
+    .image-placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(198, 164, 70, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .image-placeholder i {
+        font-size: 25px;
+        color: #c6a446;
+    }
+    
+    .blog-img {
+        position: relative;
+        width: 100%;
+        padding-top: 75%; /* Maintain aspect ratio */
+        overflow: hidden;
+    }
+    
+.category-name{
+    color: #FC5220 !important;
+}
+
+    .category-name:hover{
+        color: #59612a !important;
+    }
+
+    .blog-img img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        max-height: none !important;
+        object-fit: cover;
+    }
+    .products-section{
+        padding-top: 0px !important;
+    }
+</style>
+
+
+<!-- :: Blog -->
+<section class="blog" style="padding-bottom: 50px;">
+    <div class="container">
+        <div class="row">
+             <style>
+                 .blog-img img {
+                     width: 100%;
+                     padding-top: 10px;
+                     max-height: 280px;
+                     object-fit: cover;
+                 }
+                 .blog-description{
+                     display: -webkit-box;
+                     -webkit-line-clamp: 3;
+                     -webkit-box-orient: vertical;
+                     overflow: hidden;
+                     text-overflow: ellipsis;
+                 }
+                 
+                 .blog-description span , .blog-description p, .blog-description h4{
+                     font-size: 15px !important; 
+                     line-height: 28px !important;
+                     color: #7c7c7c !important;
+                 }
+                 
+                 .title-blog h5 {
+                     display: -webkit-box;
+                     -webkit-line-clamp: 1;
+                     -webkit-box-orient: vertical;
+                     overflow: hidden;
+                     text-overflow: ellipsis;
+                 }
+             </style>
+               <% if (products && products.length > 0) { %>
+                <% products.forEach((item, index) => { %>
+                <div class="col-md-6 col-lg-4 product-item" data-category="<%= item.category ? item.category._id : 'uncategorized' %>" data-wow-delay="<%= (index % 3 + 1) * 100 + 100 %>ms">
+                    <div class="blog-item">
+                        <a href='/product/<%= item.seoDetails.slug %>'>
+                            <div class="blog-img">
+                                <% if (item.arrays && item.arrays.arrayOne && item.arrays.arrayOne[0]) { %>
+                                    <img class="img-fluid" src="<%= S3_BASE_URL + item.arrays.arrayOne[0] %>" alt="<%= item.title %>">
+                                <% } else { %>
+                                    <div class="image-placeholder">
+                                        <i class="fa-solid fa-image"></i>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </a>
+                        <div class="text-box">
+                            <a class='title-blog' href='/product/<%= item.seoDetails.slug %>'>
+                                <h5 style="margin-bottom: 10px;"><%= item.title %></h5>
+                            </a>
+                            <span ><% if (item.category && item.category.name) { %>
+                                <a href="/product/<%= item.seoDetails.slug %>" class="text-uppercase category-name fw-bold display-31"><%= item.category.name %></a>
+                            <% } else { %>
+                                <a href="/product/<%= item.seoDetails.slug %>" class="text-uppercase fw-bold display-31">Product</a>
+                            <% } %></span>
+                            <span class="blog-date"><%= item.postDate %></span>
+                            <div class="blog-description" style="padding-top: 5px;"><%- item.description %></div>
+                            <a class='btn-1 btn-3 link' aria-label="Read More-about the product" href='/product/<%= item.seoDetails.slug %>'><span>Read More</span></a>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+                <% } else { %>
+                    <div class="col-12 text-center py-5">
+                        <p class="display-28">No products available at the moment.</p>
+                    </div>
+                <% } %>
+    </div>
+</section>
+
+
+
+
+<script>
+
+
+// Product Filtering Function
+function filterProducts(categoryId) {
+    // Update active tab
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.classList.remove('active');
+        tab.style.background = 'white';
+        tab.style.borderColor = '#e9ecef';
+        tab.style.color = '#6c757d';
+    });
+    
+    // Highlight active tab
+    const activeTab = document.querySelector(`[data-category="${categoryId}"]`);
+    if (activeTab) {
+        activeTab.classList.add('active');
+        activeTab.style.background = '#FC5220';
+        activeTab.style.borderColor = '#FC5220';
+        activeTab.style.color = 'white';
+    }
+    
+    // Filter products
+    const productItems = document.querySelectorAll('.product-item');
+    let visibleCount = 0;
+    
+    productItems.forEach(item => {
+        const itemCategory = item.getAttribute('data-category');
+        
+        if (categoryId === 'all' || itemCategory === categoryId) {
+            item.style.display = 'block';
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            
+            // Smooth fade-in animation
+            setTimeout(() => {
+                item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+            }, 50);
+            
+            visibleCount++;
+        } else {
+            item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(-20px)';
+            
+            setTimeout(() => {
+                item.style.display = 'none';
+            }, 300);
+        }
+    });
+    
+    // Update URL without page refresh
+    const newUrl = categoryId === 'all' ? '/products' : `/products?category=${categoryId}`;
+    window.history.pushState({ category: categoryId }, '', newUrl);
+    
+    // Update page title
+    const categoryName = activeTab ? activeTab.textContent : 'All Products';
+    document.title = `${categoryName} - Passary Refractories`;
+    
+    console.log(`Filtered to ${categoryName}: ${visibleCount} products visible`);
+}
+
+// Handle browser back/forward buttons
+window.addEventListener('popstate', function(event) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('category') || 'all';
+    filterProducts(category);
+});
+
+// Initialize filter based on URL on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('category') || 'all';
+    
+    if (category !== 'all') {
+        filterProducts(category);
+    }
+});
+</script>
+
+<%- include('footer') %>

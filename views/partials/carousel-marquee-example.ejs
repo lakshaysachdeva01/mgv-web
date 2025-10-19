@@ -1,0 +1,107 @@
+<!-- 
+    CAROUSEL MARQUEE COMPONENT - USAGE EXAMPLE
+    ==========================================
+    
+    This is a reusable carousel/marquee component with:
+    - Auto-scroll animation (infinite loop)
+    - Manual drag/swipe support
+    - Pause on hover
+    - Smooth transitions
+    
+    HOW TO USE:
+    -----------
+    
+    1. Include the component at the top of your page:
+       <%- include('carousel-marquee') %>
+    
+    2. Create the carousel structure:
+       
+       <div class="carousel-marquee-container" data-speed="30" data-gap="20">
+           <div class="carousel-marquee-wrapper">
+               <div class="carousel-marquee-item">
+                   <!-- Your content here -->
+               </div>
+               <div class="carousel-marquee-item">
+                   <!-- Your content here -->
+               </div>
+               <!-- Add more items -->
+           </div>
+       </div>
+    
+    ATTRIBUTES:
+    -----------
+    data-speed: Animation speed in seconds (default: 30)
+    data-gap: Gap between items in pixels (default: 20)
+    
+    EXAMPLE 1: Image Carousel
+    --------------------------
+-->
+
+<%- include('carousel-marquee') %>
+
+<div class="carousel-marquee-container" data-speed="40" data-gap="20">
+    <div class="carousel-marquee-wrapper">
+        <div class="carousel-marquee-item">
+            <img src="/assets/images/01.jpg" alt="Item 1" style="width: 400px; height: 300px; object-fit: cover; border-radius: 8px;">
+        </div>
+        <div class="carousel-marquee-item">
+            <img src="/assets/images/02.jpg" alt="Item 2" style="width: 400px; height: 300px; object-fit: cover; border-radius: 8px;">
+        </div>
+        <div class="carousel-marquee-item">
+            <img src="/assets/images/03.jpg" alt="Item 3" style="width: 400px; height: 300px; object-fit: cover; border-radius: 8px;">
+        </div>
+    </div>
+</div>
+
+<!-- 
+    EXAMPLE 2: Logo Carousel
+    -------------------------
+-->
+
+<div class="carousel-marquee-container" data-speed="25" data-gap="40">
+    <div class="carousel-marquee-wrapper">
+        <div class="carousel-marquee-item">
+            <img src="/assets/images/sponsors/01_sponsors.png" alt="Sponsor 1" style="height: 80px;">
+        </div>
+        <div class="carousel-marquee-item">
+            <img src="/assets/images/sponsors/02_sponsors.png" alt="Sponsor 2" style="height: 80px;">
+        </div>
+        <div class="carousel-marquee-item">
+            <img src="/assets/images/sponsors/03_sponsors.png" alt="Sponsor 3" style="height: 80px;">
+        </div>
+    </div>
+</div>
+
+<!-- 
+    EXAMPLE 3: Card Carousel
+    -------------------------
+-->
+
+<div class="carousel-marquee-container" data-speed="35" data-gap="30">
+    <div class="carousel-marquee-wrapper">
+        <div class="carousel-marquee-item">
+            <div style="width: 350px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <h3>Card Title 1</h3>
+                <p>Card content goes here...</p>
+            </div>
+        </div>
+        <div class="carousel-marquee-item">
+            <div style="width: 350px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <h3>Card Title 2</h3>
+                <p>Card content goes here...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 
+    FEATURES:
+    ---------
+    ✅ Auto-scrolls infinitely
+    ✅ Pauses on hover
+    ✅ Drag to scroll manually (mouse & touch)
+    ✅ Smooth animations
+    ✅ Responsive
+    ✅ Reusable anywhere
+-->
+

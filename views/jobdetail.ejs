@@ -1,0 +1,685 @@
+<%- include('header'), {seoDetails} %>
+   <!-- PAGE TITLE
+        ================================================== -->
+
+
+        <section class="breadcrumb-header" id="page" style="background-image: url(/assets/images/header/01_breadcrumb-header.jpg)">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="banner">
+                            <h1>Work With Us!</h1>
+                            <ul>
+                                <li><a href='/'>Home</a></li>
+                                <li><i class="fas fa-angle-right"></i></li>
+                                <li>Career</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<% if (job) { %>
+<!-- Job Details -->
+<section id="jobDetails" class="job-details pt-60 pb-90">
+    <div class="container">
+        <div class="row">
+            <!-- Full Width Content -->
+            <div class="col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+                <div class="job-detail-content">
+                    <!-- Job Header -->
+                    <div class="job-header">
+                        <!-- Job Tags -->
+                        <div class="job-tags">
+                            <% if (job.category?.name) { %>
+                            <span class="job-tag"><%= job.jobPosition %></span>
+                            <% } %>
+                            <% if (job.workMode) { %>
+                            <span class="job-tag"><%= job.workMode.replace('_', ' ') %></span>
+                            <% } %>
+                        </div>
+                        
+                        <h1 class="job-title"><%= job.title %></h1>
+                        <% if (job.subTitle) { %>
+                        <p class="job-subtitle"><%= job.subTitle %></p>
+                        <% } %>
+                        
+                        <!-- Key Details -->
+                        <div class="job-key-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Designation</span>
+                                <span class="detail-value">
+                                    <%= job.jobPosition %>
+                                </span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Experience</span>
+                                <span class="detail-value"><%= job.experienceLevel || '' %></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job Description -->
+                    <% if (job.description) { %>
+                    <div class="job-section">
+                        <h3 class="job-section-title">Job Description</h3>
+                        <div class="job-description">
+                            <%- job.description %>
+                        </div>
+                    </div>
+                    <% } %>
+
+
+               
+               
+
+ <div class="job-section">
+                        <h3 class="job-section-title">Highlights</h3>
+                    <div class="">
+                        <div class="row">
+                            <div class="col-12 col-md-4 mb-4">
+                                <div class="property-detail-feature-list-item d-flex align-items-center">
+                                    <i  class="fa-solid fa-user-tie"></i>
+                                    <div>
+                                        <h6 class="fs-6 m-0">Job Position</h6>
+                                        <h6 class="fs-6 mt-1" style="margin-top: 6px; color: grey; font-weight: 500; font-size: 16px;">
+                                            <%= job.jobPosition %>
+                                        </h6>
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 mb-4">
+                                <div class="property-detail-feature-list-item d-flex align-items-center">
+                                    <i class="fa-solid fa-clock"></i>
+                                    <div>
+                                        <h6 class="fs-6 m-0">Work Mode</h6>
+                                        <h6 class="fs-6 mt-1" style="margin-top: 6px; color: grey; font-weight: 500; font-size: 16px;">
+                                            <%= String(job.workMode || '')
+                                                .trim() // Remove extra spaces
+                                                .replace(/_/g, ' ') // Replace underscores with spaces
+                                                .toLowerCase() // Convert to lowercase
+                                                .replace(/\b\w/g, char => char.toUpperCase()) // Capitalize first letter of each word
+                                            %>
+                                        </h6>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-md-4 mb-4">
+                                <div class="property-detail-feature-list-item d-flex align-items-center">
+                                    <i class="fa-solid fa-sack-xmark"></i>
+                                    <div>
+                                        <h6 class="fs-6 m-0">Salary Range</h6>
+                                        <h6 class="fs-6 mt-1" style=" margin-top: 6px; color: grey; font-weight: 500; font-size: 16px;" ><%=job.salary.minimumValue%>₹-<%=job.salary.maximumValue%>₹ </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <% if (job.qualification && job.qualification.length > 0) { %>
+                            <div class="col-12 col-md-4 mb-4">
+                                <div class="property-detail-feature-list-item d-flex align-items-center">
+                                    <i class="fa-solid fa-award"></i>
+                                    <div>
+                                        <h6 class="fs-6 m-0">Qualification</h6>
+
+                                        <h6 class="fs-6 mt-1" style=" margin-top: 6px; color: grey; font-weight: 500; font-size: 16px;" >
+                                            <% if (job.qualification && Array.isArray(job.qualification.qualificationStandard) && job.qualification.qualificationStandard.length > 0) { %>
+                                                <%= job.qualification.qualificationStandard.map(q => q.title).join(' | ') %>
+                                            <% } else { %>
+                                                <!-- Do not display anything if no data -->
+                                            <% } %>
+                                            </h6>
+                                            <h6 class="fs-7 mb-0" style="color: grey; font-size: 16px;">
+                                            <% if (job.qualification && Array.isArray(job.qualification.qualificationRequired) && job.qualification.qualificationRequired.length > 0) { %>
+                                                <%= job.qualification.qualificationRequired.join(' | ') %>
+                                            <% } else { %>
+                                                <!-- Do not display anything if no data -->
+                                            <% } %>
+                                            </h6>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                    
+                            <% if (job.experienceLevel) { %>
+                            <div class="col-12 col-md-4 mb-4">
+                                <div class="property-detail-feature-list-item d-flex align-items-center">
+                                    <i class="fa-solid fa-clock-rotate-left"></i>
+                                    <div style="display: flex; justify-content: center; align-items: center;">
+                                        <div style="display: flex; flex-direction: column; text-align: center;">
+                                            <h6 class="fs-6 m-0" style="margin-bottom: 0;">Experience</h6>
+                                            <h6 class="fs-6 mt-1" style=" margin-top: 6px; color: grey; font-weight: 500; font-size: 16px;"><%= job.experienceLevel %></h6>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                </div>
+                            </div>
+                            <% } %>
+                            <% if (job.gender) { %>
+                            <div class="col-12 col-md-4 mb-4">
+                                <div class="property-detail-feature-list-item d-flex align-items-center">
+                                    <i class="fa-solid fa-mars-and-venus"></i>
+                                    <div>
+                                        <h6 class="fs-6 m-0">Preferred Gender</h6>
+                                        <h6 class="fs-6 mt-1" style=" margin-top: 6px; color: grey; font-weight: 500; font-size: 16px;"><%=job.gender%></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+                    </div>
+
+
+                    <!-- Job Application Form -->
+                    <div class="job-section">
+                        <h3 class="job-section-title">Apply for this Position</h3>
+                        <div class="job-application-form">
+                            <p class="form-description">Fill out the form below to apply for this position. We'll review your application and get back to you soon.</p>
+                            <div class="add-comments">
+                                <form id="jobApplicationForm" class="inner-add-comments form-contact-2">
+                                    <div class="row" style="margin: 0 -15px;">
+                                        <div class="col-md-6 inner-add-comments-box" style="padding: 0 15px; margin-bottom: 20px;">
+                                            <input type="text" name="<%= JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.NAME %>" placeholder="Full Name*" required="" style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                                        </div>
+                                        
+                                        <div class="col-md-6 inner-add-comments-box" style="padding: 0 15px; margin-bottom: 20px;">
+                                            <input type="tel" name="<%= JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NUMBER %>" placeholder="Contact Number*" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" maxlength="10" required="" style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                                        </div>
+                                        
+                                        <div class="col-md-6 inner-add-comments-box" style="padding: 0 15px; margin-bottom: 20px;">
+                                            <input type="email" name="<%= JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL %>" placeholder="Email Address*" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address" required="" style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                                        </div>
+                                        
+                                        <div class="col-md-6 inner-add-comments-box" style="padding: 0 15px; margin-bottom: 20px;">
+                                            <input type="file" id="resumeUpload" name="<%= JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.RESUME %>" accept=".pdf,.doc,.docx" required="" style="display: none;">
+                                            <input type="text" id="resumePlaceholder" placeholder="Upload Resume*" readonly="" style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; cursor: pointer; background-color: #fff;">
+                                        </div>
+                                        
+                                        <div class="col-md-12 inner-add-comments-box" style="padding: 0 15px; margin-bottom: 20px;">
+                                            <input type="hidden" name="<%= JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.JOB_ID %>" value="<%= job._id %>">
+                                            <textarea name="<%= JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.MESSAGE %>" placeholder="Tell us about yourself and why you're interested in this position" style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; min-height: 100px; resize: vertical;"></textarea>
+                                        </div>
+                                        
+                                        <div class="col-md-12 inner-add-comments-box last" style="padding: 0 15px;">
+                                            <button class="btn-1 btn-3 submit" type="submit" id="jobApplicationSubmitBtn" style=" font-weight: 600; display: inline-block;">
+                                                <span id="jobApplicationBtnText">Submit</span>
+                                                <span class="submit-loader" id="jobApplicationSubmitLoader" style="display: none;">
+                                                    <svg width="20" height="20" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+                                                        <g fill="none" fill-rule="evenodd">
+                                                            <g transform="translate(1 1)" stroke-width="2">
+                                                                <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
+                                                                <path d="M36 18c0-9.94-8.06-18-18-18">
+                                                                    <animateTransform
+                                                                        attributeName="transform"
+                                                                        type="rotate"
+                                                                        from="0 18 18"
+                                                                        to="360 18 18"
+                                                                        dur="1s"
+                                                                        repeatCount="indefinite"/>
+                                                                </path>
+                                                            </g>
+                                                        </g>
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                            <span class="out-message"></span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <p class="form-messege mt-3"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<% } else { %>
+<!-- Job Not Found -->
+<section id="jobNotFound" class="job-not-found pt-120 pb-120">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+                <div class="not-found-content">
+                    <i class="fa fa-briefcase" style="font-size: 64px; color: #ccc; margin-bottom: 30px;"></i>
+                    <h2>Job Not Found</h2>
+                    <p>The job you're looking for doesn't exist or has been removed.</p>
+                    <a href="/jobs" class="btn btn__primary">View All Jobs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<% } %>
+
+<style>
+.job-detail-content {
+
+    border-radius: 8px;
+   
+   
+}
+
+
+.pt-60{
+    padding-top: 60px;
+}
+
+
+.fa-solid{
+    font-size: 30px ;
+    padding-right: 14px;
+}
+
+.job-header {
+    margin-bottom: 40px;
+}
+
+.job-tags {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.job-tag {
+    font-size: 13px;
+    text-transform: capitalize;
+    border: 1px solid #F57009;
+    color: #F57009;
+    padding: 3px 10px;
+    margin-right: 10px;
+    background: transparent;
+}
+
+.job-title {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.job-subtitle {
+    font-size: 16px;
+    margin-bottom: 30px;
+    color: #6b7280;
+}
+
+.job-key-details {
+    display: flex;
+    gap: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.detail-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.detail-value {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.job-section {
+    margin-bottom: 40px;
+}
+
+.job-section-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    padding-left: 15px;
+    position: relative;
+}
+
+.job-section-title:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #F57009;
+    border-radius: 2px;
+}
+
+.job-description {
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+.salary-info {
+    background: #f7fafc;
+    padding: 20px;
+    border-radius: 8px;
+
+}
+
+.salary-range {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.salary-amount {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.salary-period {
+    font-size: 16px;
+}
+
+.qualification-info {
+    background: #f7fafc;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.qualification-item {
+    margin-bottom: 20px;
+}
+
+.qualification-item h4 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.qualification-item ul {
+   
+    padding: 0;
+}
+
+.qualification-item li {
+    padding: 5px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.qualification-item li:before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #F57009;
+    font-weight: bold;
+}
+
+.location-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.location-info li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+}
+
+.location-info li:before {
+    content: '📍';
+    position: absolute;
+    left: 0;
+}
+
+.job-application-form {
+    background: #f7fafc;
+    padding: 30px;
+    border-radius: 8px;
+}
+
+.job-application-form {
+    background: #f7fafc;
+    padding: 30px;
+    border-radius: 8px;
+}
+
+.form-description {
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+.btn__primary {
+    background-color: #F57009;
+    border-color: #F57009;
+    font-weight: 600;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn__primary:hover {
+    background-color: #F57009;
+    border-color:#F57009;
+}
+
+/* Responsive adjustments for full-width layout */
+
+.not-found-content {
+    padding: 60px 20px;
+}
+
+.not-found-content h2 {
+    margin-bottom: 15px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .job-detail-content {
+        padding: 20px;
+    }
+    
+    .job-title {
+        font-size: 32px;
+    }
+    
+    .job-section-title {
+        font-size: 24px;
+    }
+    
+    .job-key-details {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .job-application-form {
+        padding: 20px;
+    }
+}
+
+/* Form Validation Styles */
+.form-control:invalid:not(:placeholder-shown) {
+    border-color: #ddd;
+}
+
+.form-control:valid:not(:placeholder-shown) {
+    border-color: #28a745;
+}
+
+/* Loader Styles */
+.submit-loader {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.submit-loader svg {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+</style>
+
+<script>
+// Phone number validation and custom file upload
+document.addEventListener('DOMContentLoaded', function() {
+    const phoneInput = document.querySelector('input[name="<%= JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NUMBER %>"]');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+        });
+    }
+
+    // Custom file upload functionality
+    const fileInput = document.getElementById('resumeUpload');
+    const resumePlaceholder = document.getElementById('resumePlaceholder');
+
+    if (resumePlaceholder && fileInput) {
+        // Click placeholder to open file browser
+        resumePlaceholder.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        // Update placeholder text when file is selected
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                resumePlaceholder.value = this.files[0].name;
+            } else {
+                resumePlaceholder.value = '';
+            }
+        });
+    }
+});
+
+// Job Application Form Submission
+document.getElementById('jobApplicationForm').addEventListener('submit', async function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    const submitBtn = document.getElementById('jobApplicationSubmitBtn');
+    const btnText = document.getElementById('jobApplicationBtnText');
+    const loader = document.getElementById('jobApplicationSubmitLoader');
+
+    try {
+        const API_BASE_URL = "<%= API_BASE_URL %>";
+        const websiteID = "<%= websiteID %>";
+        const WEBSITEIDKEY = "<%= WEBSITE_ID_KEY %>";
+        const JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS = <%- JSON.stringify(JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS) %>;
+        
+        const UPLOAD_FILES_END_POINT = `${API_BASE_URL}/third-party/file-upload/upload-files`;
+        const CREATE_JOB_APPLICATION_END_POINT = `${API_BASE_URL}/website/job-application/create-job-application`;
+
+        const jobApplicationForm = e.target; // Reference to the form element
+        const WEBSITE_ID_KEY = WEBSITEIDKEY;
+
+        // Show loader
+        btnText.style.display = 'none';
+        loader.style.display = 'inline-block';
+        submitBtn.disabled = true;
+
+        // -------------------------------------------
+        // 1. Upload File
+        const uploadFileData = new FormData();
+        const fileInput = jobApplicationForm.querySelector(
+            `input[name="${JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.RESUME}"]`
+        ).files[0];
+
+        if (!fileInput) {
+            throw new Error("Please upload a resume file.");
+        }
+
+        uploadFileData.append("file", fileInput);
+
+        const fileUploadResponse = await fetch(UPLOAD_FILES_END_POINT, {
+            method: "POST",
+            body: uploadFileData,
+        });
+
+        if (!fileUploadResponse.ok) {
+            throw new Error(`File upload failed! Status: ${fileUploadResponse.status}`);
+        }
+
+        const fileUploadData = await fileUploadResponse.json();
+        const uploadedResume =
+            fileUploadData?.data?.length > 0
+                ? fileUploadData?.data[0]?.imageNames[0]
+                : "";
+
+        if (!uploadedResume) {
+            throw new Error("File upload did not return a valid file name.");
+        }
+
+        // -------------------------------------------
+        // 2. Prepare Form Payload
+        const payload = {
+            [JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.NAME]: jobApplicationForm.querySelector(
+                `input[name="${JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.NAME}"]`
+            ).value,
+            [JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NUMBER]: jobApplicationForm.querySelector(
+                `input[name="${JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NUMBER}"]`
+            ).value,
+            [JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL]: jobApplicationForm.querySelector(
+                `input[name="${JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL}"]`
+            ).value,
+            [JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.MESSAGE]: jobApplicationForm.querySelector(
+                `textarea[name="${JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.MESSAGE}"]`
+            ).value,
+            [JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.RESUME]: uploadedResume,
+            [JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.JOB_ID]: jobApplicationForm.querySelector(
+                `input[name="${JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.JOB_ID}"]`
+            ).value,
+            [JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS.FORM_TYPE]: "career-enquiry",
+            [WEBSITE_ID_KEY]: websiteID,
+        };
+
+        // -------------------------------------------
+        // 3. Submit the Form Data
+        const headers = new Headers({
+            "Content-Type": "application/json",
+        });
+
+        const response = await fetch(CREATE_JOB_APPLICATION_END_POINT, {
+            method: "POST",
+            headers,
+            body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Form submission failed! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Redirect to the thank-you page on success
+        sessionStorage.setItem("thankYouMessage", "We've Received Your Request and will Reach out to you soon");
+        window.location.href = "/thankyou";
+    } catch (error) {
+        console.error("Form submission error:", error);
+        // Reset button state
+        btnText.style.display = 'inline';
+        loader.style.display = 'none';
+        submitBtn.disabled = false;
+        
+        // Show error message
+        const formMessage = document.querySelector('.form-messege');
+        if (formMessage) {
+            formMessage.textContent = error.message || "An error occurred. Please try again.";
+            formMessage.style.color = "#dc3545";
+        }
+    }
+});
+</script>
+
+<%- include('footer') %>

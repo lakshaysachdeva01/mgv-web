@@ -17,6 +17,39 @@
     </div>
 </section>
 
+<style>
+    .blog-description-clamp h1, .blog-description-clamp h2, .blog-description-clamp h3, .blog-description-clamp h4, .blog-description-clamp h5, .blog-description-clamp h6{
+        display: none;
+    }
+.blog-description-clamp, .blog-description-clamp span , .blog-description-clamp p{
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+}
+
+.title-blog h5 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.blog-item .img-box img {
+    height: 240px;
+    object-fit: cover;
+    width: 100%;
+}
+
+@media (min-width: 1000px) {
+    .blog-item .img-box img {
+        height: 290px;
+    }
+}
+</style>
 <!-- :: Blog -->
 <section class="blog py-100-70">
     <div class="container">
@@ -26,16 +59,75 @@
                     <h2>Latest Insights</h2>
                     <h3 style="width: 90%;">Stories of Innovation, Growth & Global Impact</h3>
                 </div>
-                <div class="col-lg-5 d-flex align-items-center">
+                <div  class="col-lg-5 d-flex align-items-center">
                     <p class="sec-explain">Explore our latest insights, portfolio stories, and industry updates that shape the future of innovation and growth.</p>
+                    
+
+   
+          
+
+
                 </div>
+            </div>
+            
+       
+            <div class="page-title-content" style="width: 100%; margin-top: 20px;">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb gallery-breadcrumb" id="blogTabs" style=" gap: 8px;">
+                        <li class="breadcrumb-item active btn-1 btn-3" data-filter="all"><span>All</span></li>
+                        <li class="breadcrumb-item btn-1 btn-3" data-filter="blog"><span>Blogs</span></li>
+                        <li class="breadcrumb-item btn-1 btn-3" data-filter="news"><span>News</span></li>
+                        <li class="breadcrumb-item btn-1 btn-3" data-filter="event"><span>Events</span></li>
+                    </ol>
+                </nav>
             </div>
         </div>
         <div class="row">
              <style>
+               .breadcrumb  .btn-1{
+        padding: 0 !important;
+        line-height: 40px !important;
+        height: 40px !important;
+        border-radius: 50px;
+        min-width: 120px !important;
+    }
+    
+    .breadcrumb-item{
+        margin: 0 5px;
+    }
+    .breadcrumb-item+.breadcrumb-item::before {
+        float: left;
+        padding-right: var(--bs-breadcrumb-item-padding-x);
+        color: var(--bs-breadcrumb-divider-color);
+        content: var(--bs-breadcrumb-divider, "") !important;
+    }
+
+    .gallery-breadcrumb::-webkit-scrollbar {
+        display: none;
+    }
+
+    .breadcrumb-item.active {
+       color: #F57009 !important;
+       background-color: #1f0b45;
+    }
+    
+    .breadcrumb-item:hover {
+       color: white !important;
+    }
+    
+    @media (max-width:768px) {
+        .page-title-content {
+            overflow-x: auto;
+            display: flex;
+            justify-content: flex-start;
+            padding-left: 0px;
+        }
+    }
                  .blog-img img {
                      width: 100%;
+                     margin-top: 10px;
                      max-height: 280px;
+                     overflow: hidden;
                      object-fit: cover;
                  }
                  .blog-description{
@@ -46,8 +138,8 @@
                      text-overflow: ellipsis;
                  }
              </style>
-            <% blogs.forEach(item => { %>
-                <div class="col-md-6 col-lg-4" style="box-shadow: 0px 0px 0px 1px #ebebeb;" onclick="window.location.href='/blog/<%= item.seoDetails.slug %>'">
+            <% blogs.forEach((item, index) => { %>
+                <div class="col-md-6 col-lg-4 blog-item-container" data-category="<%= item.category || 'BLOG' %>" style="box-shadow: 0px 0px 0px 1px #ebebeb;" onclick="window.location.href='/blog/<%= item.seoDetails.slug %>'">
                     <div class="blog-item">
                         <div class="img-box">
                             <a class='open-post blog-img' href='/blog/<%= item.seoDetails.slug %>'>
@@ -59,7 +151,7 @@
                                 <h5><%= item.title %></h5>
                             </a>
                             <span class="blog-date"><%= item.postDate %></span>
-                             <div class="blog-description"><%- item.description %></div>
+                             <div class="blog-description blog-description-clamp"><%- item.description %></div>
                             <a class='btn-1 btn-3 link' aria-label="Read More-about the blog" href='/blog/<%= item.seoDetails.slug %>'><span>Read More</span></a>
                         </div>
                     </div>
@@ -67,3 +159,99 @@
             <% }) %>
     </div>
 </section>
+
+<script>
+// URL Type to API Category Mapping
+const typeToCategory = {
+    'blog': 'BLOG',
+    'news': 'NEWS_FEED', 
+    'event': 'EVENT'
+};
+
+// API Category to URL Type Mapping
+const categoryToType = {
+    'BLOG': 'blog',
+    'NEWS_FEED': 'news',
+    'EVENT': 'event'
+};
+
+// Blog Filtering Function
+function filterBlogs(filterType) {
+    // Convert URL type to API category for filtering
+    const apiCategory = typeToCategory[filterType] || filterType;
+    
+    // Update active tab (remove inline styles, let CSS handle it)
+    document.querySelectorAll('#blogTabs .breadcrumb-item').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Highlight active tab
+    const activeTab = document.querySelector(`#blogTabs [data-filter="${filterType}"]`);
+    if (activeTab) {
+        activeTab.classList.add('active');
+    }
+    
+    // Filter blog items
+    const blogItems = document.querySelectorAll('.blog-item-container');
+    let visibleCount = 0;
+    
+    blogItems.forEach(item => {
+        const itemCategory = item.getAttribute('data-category');
+        
+        if (filterType === 'all' || itemCategory === apiCategory) {
+            item.style.display = 'block';
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            
+            // Smooth fade-in animation
+            setTimeout(() => {
+                item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+            }, 50);
+            
+            visibleCount++;
+        } else {
+            item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(-20px)';
+            
+            setTimeout(() => {
+                item.style.display = 'none';
+            }, 300);
+        }
+    });
+    
+    // Update URL without page refresh
+    const newUrl = filterType === 'all' ? '/posts' : `/posts?type=${filterType}`;
+    window.history.pushState({ filterType: filterType }, '', newUrl);
+    
+    console.log(`Filtered to ${filterType}: ${visibleCount} blogs visible`);
+}
+
+// Add click event listeners to tabs
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('#blogTabs .breadcrumb-item').forEach(tab => {
+        tab.addEventListener('click', function(e) {
+            e.preventDefault();
+            const filterType = this.getAttribute('data-filter');
+            filterBlogs(filterType);
+        });
+    });
+    
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', function(event) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type') || 'all';
+        filterBlogs(type);
+    });
+    
+    // Initialize filter based on URL on page load
+    const urlParams = new URLSearchParams(window.location.search);
+    const type = urlParams.get('type') || 'all';
+    
+    if (type !== 'all') {
+        filterBlogs(type);
+    }
+});
+</script>

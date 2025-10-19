@@ -1,77 +1,60 @@
 <footer class="footer">
   <div class="container">
       <div class="row">
-          <div class="col-sm-12 col-md-6 col-lg-3">
+          <div class="col-sm-12 col-md-6 col-lg-4">
               <div class="logo">
-                  <img class="img-fluid" src="assets/images/logo/01_logo.png" alt="Footer Logo">
-                  <p>Gazolin Are A Industry &amp; Manufacturing Services Provider Institutions. Suitable For Factory, Manufacturing, Industry, Engineering, Construction And Any Related Industry Care Field.</p>
+                  <img class="img-fluid" src="/assets/images/logo/download.png" alt="MGV_logo_footer">
+                  <p>Leading industrial and construction solutions provider in UAE & India. Supplying oil & gas equipment, building materials, electricals, and more.
+                </p>
               </div>
           </div>
           <div class="col-sm-6 col-md-6 col-lg-2">
               <div class="footer-title">
-                  <h4>Quick Link</h4>
+                  <h4>Quick Links</h4>
               </div>
               <ul class="links">
-                  <li><a href='01_about-us.html'>About Us</a></li>
-                  <li><a href='01_team.html'>Meet Our Team</a></li>
-                  <li><a href="02_blog.html">Read All News</a></li>
-                  <li><a href='01_projects.html'>Our Projects</a></li>
-                  <li><a href='01_contact.html'>Contact</a></li>
-                  <li><a href='01_careers.html'>Careers</a></li>
+                  <li><a href='/about'>About Us</a></li>
+                  <li><a href='/products'>Our Products</a></li>
+                  <li><a href='/gallery'>Projects &amp; Gallery</a></li>
+                  <li><a href='/blogs'>Blogs &amp; News</a></li>
+                  <li><a href='/career'>Careers</a></li>
+                  <li><a href='/contact'>Contact Us</a></li>
               </ul>
           </div>
-          <div class="col-sm-6 col-md-6 col-lg-2">
+          <div class="col-sm-6 col-md-6 col-lg-3">
               <div class="footer-title">
-                  <h4>Industries</h4>
+                  <h4>Industries We Serve</h4>
               </div>
               <ul class="links">
-                  <li><a href='01_single-services.html'>Retail &amp; Consumer</a></li>
-                  <li><a href='01_single-services.html'>Sciences &amp; Healthcare</a></li>
-                  <li><a href='01_single-services.html'>Industrial &amp; Chemical</a></li>
-                  <li><a href='01_single-services.html'>Power Generation</a></li>
-                  <li><a href='01_single-services.html'>Food &amp; Beverage</a></li>
-                  <li><a href='01_single-services.html'>Oil &amp; Gas</a></li>
+                  <li><a href='/products'>Oil &amp; Gas</a></li>
+                  <li><a href='/products'>Petrochemical &amp; Refinery</a></li>
+                  <li><a href='/products'>Construction &amp; Infrastructure</a></li>
+                  <li><a href='/products'>Power &amp; Energy</a></li>
+                  <li><a href='/products'>Industrial &amp; Mechanical</a></li>
+                  <li><a href='/products'>Water &amp; Wastewater</a></li>
               </ul>
           </div>
-          <div class="col-sm-6 col-md-6 col-lg-2">
+          <div class="col-sm-6 col-md-6 col-lg-3">
               <div class="footer-title">
-                  <h4>Product</h4>
+                  <h4>Product Categories</h4>
               </div>
               <ul class="links">
-                  <li><a href='01_services.html'>Services</a></li>
-                  <li><a href='01_sponsors.html'>Sponsors</a></li>
-                  <li><a href='error-page.html'>Error Page</a></li>
-                  <li><a href='01_faqs.html'>FAQs</a></li>
-                  <li><a href='01_shop.html'>Shop</a></li>
-              </ul>
-          </div>
-          <div class="col-sm-12 col-md-6 col-lg-3">
-              <div class="footer-title">
-                  <h4>Newsletter</h4>
-              </div>
-              <div class="newsletter">
-                  <p>Sign up for industry alerts, our latest news, thoughts, and insights from Gazolin.</p>
-                  <form>
-                      <input type="email" name="email" placeholder="Your Email Address" required="">
-                      <button type="submit"><i class="fas fa-arrow-right"></i></button>
-                  </form>
-              </div>
-              <ul class="icon">
-                  <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                  <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                  <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                  <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
+                  <% if (categories && categories.length > 0) { %>
+                      <% categories.slice(0, 6).forEach(category => { %>
+                          <li><a href='/products?category=<%= category._id %>'><%= category.name %></a></li>
+                      <% }) %>
+                  <% } else { %>
+                      <li><a href='/products'>All Products</a></li>
+                  <% } %>
               </ul>
           </div>
       </div>
   </div>
   <div class="copyright">
       <div class="container">
-          <p>@ 2024 Gazolin. With Love by <a href="https://1.envato.market/AR-Coder">AR-Coder</a></p>
+          <p>© 2025 <a href="/">Magic Global Ventures</a> All Rights Reserved.</p>
           <ul>
-              <li><a href="#">Terms &amp; Conditions </a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Sitemap</a></li>
+            <li style="font-size: 18px;" class="text-white ">Made with  <i class="fa-solid fa-heart"></i>  by <a class="text-primary text-white-hover" href="https://technolitics.com">Technolitics</a></;li>
           </ul>
       </div>
   </div>

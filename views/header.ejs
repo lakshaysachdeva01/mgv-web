@@ -5,23 +5,38 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="Gazolin is a Industry & Manufacturing HTML Template. Designed with great attention to details, flexibility and performance. It is ultra professional, smooth and sleek, with a clean modern layout. Gazolin specially designed for Automotive, Construction, Factories, Industrial, Industrial Business, Industrial Chemicals, Industrial Corporate, Industrial Engineering, Industrial Factory, Industrial HTML5, Industry, Machinery, Manufacturing, Mechanical Engineering, Power Energy, Services Company and other Industry & Manufacturing related services. Gazolin comes with most advanced and latest web technologies, enjoyable UX and the most beautiful design trends. Our template provides a platform to simply edit elements, choose styles and play around with the look and feel of your site. Build beautiful, intelligent websites with over 03+ Homepage Concepts ready to go or combine, build a layout has never been easier. There is a huge range of +34 styled pages waiting for your customization, anything you can think of can be built with our template. If you are searching for innovative, modern and clean HTML5 template, you must choose Gazolin. Gazolin comes with necessary features and pages. Gazolin comes with necessary features for Industrial websites such as about pages, Testimonials, Clients, questions & answers, work, services, team & single team profiles, awesome blog pages and more. This HTML template can easily satisfy all of your needs.">
-        <meta name="keywords" content="Automotive, Construction, Factories, Industrial, Industrial Business, Industrial Chemicals, Industrial Corporate, Industrial Engineering, Industrial Factory, Industrial HTML5, Industry, Machinery, Manufacturing, Mechanical Engineering, Power Energy">
+      
+
+          <!-- SEO Meta Tags -->
+    <title>
+        <%= seoDetails?.title || 'Magic Global Ventures' %>
+    </title>
+    <meta name="description" content="<%= seoDetails?.metaDescription || '' %>">
+    <meta name="keywords" content="<%= seoDetails?.keywords || '' %>">
+
+    <!-- Open Graph meta tags for social sharing -->
+    <meta property="og:title" content="<%= seoDetails?.title || '' %>">
+    <meta property="og:description" content="<%= seoDetails?.metaDescription || '' %>">
+    <meta property="og:image" content="<%= seoDetails?.metaImage || '' %>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= seoDetails?.canonical || '' %>">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="<%= seoDetails?.canonical || '' %>">
+
+
+    <link href="/assets/images/favicon.ico" rel="icon">
 
         <!-- :: Bootstrap CSS -->
         <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-
-        <!-- :: Favicon -->
-        <link rel="icon" type="image/png" href="/assets/images/favicon.png">
-
-        <!-- :: Title -->
-        <title>Magic Global Ventures</title>
 
         <!-- :: Google Fonts -->
         <link rel="stylesheet" href="/css2?family=Barlow:wght@400;500;600;700&family=Heebo:wght@400;500;600;700&display=swap">
 
         <!-- :: Fontawesome -->
         <link rel="stylesheet" href="/assets/fonts/fontawesome/css/all.min.css">
+        <!-- :: Fontawesome CDN (backup) -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         <!-- :: Flaticon -->
         <link rel="stylesheet" href="/assets/fonts/flaticon/style.css">
@@ -73,10 +88,10 @@
         </div>
         
         <!-- :: All Navbar -->
-        <header class="all-navbar fixed-top">
+        <header class="all-navbar <%= typeof isHomePage !== 'undefined' && isHomePage ? 'home-transparent' : '' %> fixed-top">
             <!-- :: Navbar -->
             <nav class="nav-bar">
-                <div class="container">
+                <div class="container webp-0">
                     <div class="content-box d-flex align-items-center justify-content-between">
                         <div class="logo">
                             <a class='logo-nav' href='/'>
@@ -91,34 +106,220 @@
                         </div>
                         <div class="nav-bar-links" id="open-nav-bar-menu">
                             <ul class="level-1">
-                                <li class="item-level-1 has-menu">
-                                    <a href="/" class="link-level-1 color-active">Home</a>
+                                <li class="item-level-1">
+                                    <a href="/" class="link-level-1 <%= typeof activePage !== 'undefined' && activePage === 'home' ? 'color-active' : '' %>">Home</a>
                                 </li>
                                 <li class="item-level-1">
-                                    <a class='link-level-1' href='/gallery'>Gallery</a>
+                                    <a class='link-level-1 <%= typeof activePage !== "undefined" && activePage === "about" ? "color-active" : "" %>' href='/about'>About</a>
                                 </li>
+                              
+                                    <li class="item-level-1 has-menu">
+                                        <a href="/products" class="link-level-1 <%= typeof activePage !== 'undefined' && activePage === 'products' ? 'color-active' : '' %>">Products</a>
+                                        <ul class="level-2">
+                                            <% if (categories && categories.length > 0) { %>
+                                                <% categories.forEach(category => { %>
+                                                    <li class="item-level-2"><a class='link-level-2' href="/products?category=<%= category._id %>"><%= category.name %></a></li>
+                                                <% }) %>
+                                            <% } %>
+                                        </ul>
+                                    </li>
                                 <li class="item-level-1 has-menu">
-                                    <a href="/blogs" class="link-level-1">Blog</a>
+                                    <a href="/posts" class="link-level-1 <%= typeof activePage !== 'undefined' && (activePage === 'posts' || activePage === 'news' || activePage === 'events' || activePage === 'blogs') ? 'color-active' : '' %>">Posts</a>
+                                    <ul class="level-2">
+                                        <li class="item-level-2">
+                                            <a class='link-level-2' href='posts?type=news'>News</a>
+                                        </li>
+                                        <li class="item-level-2">
+                                            <a class='link-level-2' href='posts?type=event'>Events</a>
+                                        </li>
+                                        <li class="item-level-2">
+                                            <a class='link-level-2' href='posts?type=blog'>Blogs</a>
+                                        </li>
+                                      
+                                    </ul>
+                                </li>
+                                <li class="item-level-1">
+                                    <a class='link-level-1 <%= typeof activePage !== "undefined" && activePage === "gallery" ? "color-active" : "" %>' href='/gallery'>Gallery</a>
                                 </li>
                                
                                 <li class="item-level-1">
-                                    <a class='link-level-1' href='/contact'>Contact</a>
+                                    <a class='link-level-1 <%= typeof activePage !== "undefined" && activePage === "career" ? "color-active" : "" %>' href='/career'>Career</a>
+                                </li>
+                                <li class="item-level-1">
+                                    <a class='link-level-1 <%= typeof activePage !== "undefined" && activePage === "contact" ? "color-active" : "" %>' href='/contact'>Contact</a>
                                 </li>
                             </ul>
                         </div>
                         <ul class="nav-bar-tools d-flex align-items-center justify-content-between">
-                            <li class="item">
-                                <span class="search-icon open"><i class="fas fa-search"></i></span>
-                            </li>
+                            
                             <li class="item phone">
-                                <div class="nav-bar-contact">
+                                <div class="nav-bar-contact contact-flip-wrapper">
+                                    <!-- Country Flag (Flips) -->
+                                    <div class="flag-flip-container">
+                                        <div class="flag-item active">
+                                            <img src="https://flagcdn.com/in.svg" alt="India" class="country-flag">
+                                        </div>
+                                        <div class="flag-item">
+                                            <img src="https://flagcdn.com/ae.svg" alt="UAE" class="country-flag">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Separator -->
+                                    <span class="separator"></span>
+                                    
+                                    <!-- Phone Icon -->
                                     <i class="ar-icons-phone"></i>
-                                    <div class="content-box">
-                                        <span>Phone Number</span>
-                                        <a href="tel:01212843661">0121284 3661</a>
+                                    
+                                    <!-- Contact Info (Flips) -->
+                                    <div class="content-box phone-flip-container">
+                                        <div class="phone-flip-wrapper">
+                                            <div class="phone-item active">
+                                                <span>Contact Number</span>
+                                                <a href="tel:+919039266159">+91 90392 66159</a>
+                                            </div>
+                                            <div class="phone-item">
+                                                <span>Contact Number</span>
+                                                <a href="tel:+971501560131">+971 50 156 0131</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </li>
+                            
+                            <style>
+                                .contact-flip-wrapper {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 12px;
+                                }
+                                
+                                /* Flag Flip Animation */
+                                .flag-flip-container {
+                                    position: relative;
+                                    width: 40px;
+                                    height: 30px;
+                                    overflow: hidden;
+                                    border-radius: 1px;
+                                }
+                                
+                                .flag-item {
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    width: 100%;
+                                    height: 100%;
+                                    opacity: 0;
+                                    transform: scale(0.5) rotate(180deg);
+                                    transition: opacity 0.5s ease, transform 0.5s ease;
+                                }
+                                
+                                .flag-item.active {
+                                    opacity: 1;
+                                    transform: scale(1) rotate(0deg);
+                                    position: relative;
+                                }
+                                
+                                .flag-item.exiting {
+                                    opacity: 0;
+                                    transform: scale(0.5) rotate(-180deg);
+                                }
+                                
+                                .country-flag {
+                                    width: 40px;
+                                    height: 100%;
+                                    object-fit: cover;
+                                    border-radius: 4px;
+                                }
+                                
+                                /* Separator */
+                                .contact-flip-wrapper .separator {
+                                    width: 1px;
+                                    height: 30px;
+                                    background-color: rgba(255, 255, 255, 0.3);
+                                    display: block;
+                                }
+                                
+                                /* Phone Icon */
+                                .contact-flip-wrapper .ar-icons-phone {
+                                    font-size: 24px;
+                                }
+                                
+                                /* Phone Number Flip Animation */
+                                .phone-flip-container {
+                                    position: relative;
+                                    height: 40px;
+                                    overflow: hidden;
+                                    padding-left: 0 !important;
+                                }
+                                
+                                .phone-flip-wrapper {
+                                    position: relative;
+                                }
+                                
+                                .phone-item {
+                                    opacity: 0;
+                                    transform: translateY(20px);
+                                    transition: opacity 0.5s ease, transform 0.5s ease;
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    width: 100%;
+                                }
+                                
+                                .phone-item.active {
+                                    opacity: 1;
+                                    transform: translateY(0);
+                                    position: relative;
+                                }
+                                
+                                .phone-item.exiting {
+                                    opacity: 0;
+                                    transform: translateY(-20px);
+                                }
+                                
+                                .phone-item a {
+                                    pointer-events: auto;
+                                    cursor: pointer;
+                                    text-decoration: none;
+                                }
+                                
+                                .phone-item a:hover {
+                                    text-decoration: underline;
+                                }
+                            </style>
+                            
+                            <script>
+                                (function() {
+                                    const phoneItems = document.querySelectorAll('.phone-item');
+                                    const flagItems = document.querySelectorAll('.flag-item');
+                                    let currentIndex = 0;
+                                    
+                                    function flipContact() {
+                                        const currentPhone = phoneItems[currentIndex];
+                                        const currentFlag = flagItems[currentIndex];
+                                        const nextIndex = (currentIndex + 1) % phoneItems.length;
+                                        const nextPhone = phoneItems[nextIndex];
+                                        const nextFlag = flagItems[nextIndex];
+                                        
+                                        // Exit current (both phone and flag)
+                                        currentPhone.classList.add('exiting');
+                                        currentFlag.classList.add('exiting');
+                                        
+                                        setTimeout(() => {
+                                            currentPhone.classList.remove('active', 'exiting');
+                                            currentFlag.classList.remove('active', 'exiting');
+                                            
+                                            // Enter next (both phone and flag)
+                                            nextPhone.classList.add('active');
+                                            nextFlag.classList.add('active');
+                                            currentIndex = nextIndex;
+                                        }, 500);
+                                    }
+                                    
+                                    // Flip every 3 seconds
+                                    setInterval(flipContact, 3000);
+                                })();
+                            </script>
                             <li class="item">
                                 <span class="menu-icon open"><i class="fas fa-list"></i></span>
                             </li>
@@ -128,53 +329,46 @@
             </nav>
         </header>
         
-        <!-- :: Search Box -->
-        <div class="search-box">
-            <form>
-                <input type="search" placeholder="Search Here....." required="">
-                <button type="submit"><i class="fas fa-search"></i></button>
-            </form>
-            <span class="search-box-icon exit"><i class="fas fa-times"></i></span>
-        </div>
+     
         
         <!-- :: Menu Box -->
         <div class="menu-box">
             <div class="inner-menu">
                 <div class="website-info">
-                    <a class='logo' href='index.htm'><img class="img-fluid" src="assets/images/logo/02_logo.png" alt="02 Logo"></a>
-                    <p>Gazolin Are A Industry &amp; Manufacturing Services Provider Institutions. Suitable For Factory, Manufacturing, Industry, Engineering, Construction And Any Related Industry Care Field.</p>
+                    <a class='logo' href='/'><img class="img-fluid" src="/assets/images/logo/download.png" alt="MGV Logo"></a>
+                    <p>Leading industrial and construction solutions provider in UAE & India. Supplying oil & gas equipment, building materials, electricals, and more.</p>
                 </div>
                 <div class="contact-info">
                     <h4>Contact Info</h4>
                     <div class="contact-box">
                         <i class="ar-icons-call"></i>
                         <div class="box">
-                            <a class="phone" href="tel:01212843661">0121284 3661</a>
-                            <a class="phone" href="tel:01029134630">0102913 4630</a>
+                            <a class="phone" href="tel:+971501560131">+971 50 156 0131 (UAE)</a>
+                            <a class="phone" href="tel:+919039266159">+91 90392 66159 (India)</a>
                         </div>
                     </div>
                     <div class="contact-box">
                         <i class="ar-icons-email"></i>
                         <div class="box">
-                            <a class="mail" href="mailto:support@Gazolin.com">Support@Gazolin.com</a>
-                            <a class="mail" href="mailto:mailbox@ar-coder.com">MailBox@AR-Coder.com</a>
+                            <a class="mail" href="mailto:tech.mgvdubai@gmail.com">tech.mgvdubai@gmail.com</a>
                         </div>
                     </div>
                     <div class="contact-box">
                         <i class="ar-icons-location"></i>
                         <div class="box">
-                            <p>14D Street Brooklyn,</p>
-                            <p>New York.</p>
+                            <p>VUNE 1327 Compass Building Al-hulaila,</p>
+                            <p>ALHulaila Industrial Zone-fz, Ras Al Khaimah,</p>
+                            <p>United Arab Emirates</p>
                         </div>
                     </div>
                 </div>
                 <div class="follow-us">
                     <h4>Follow Us</h4>
                     <ul class="icon-follow">
-                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                        <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                        <li><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
                     </ul>
                 </div>
                 <span class="menu-box-icon exit"><i class="fas fa-times"></i></span>

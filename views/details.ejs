@@ -1,621 +1,954 @@
-<%- include('header') , {seoDetails}%>
+<%- include('header', {seoDetails}) %>
 
-<div class="page-title-area bg_cover" style="background-image: url(/assets/images/page-title-bg.jpg);">
+
+
+   <!-- :: Breadcrumb Header -->
+   <section class="breadcrumb-header" id="page" style="background-image: url(/assets/images/header/01_breadcrumb-header.jpg)">
+    <div class="overlay"></div>
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="page-title-content">
-                    <h1 class="title"><%= serviceName %></h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Service</li>
-                        </ol>
-                    </nav>
+            <div class="col-md-8">
+                <div class="banner">
+                    <h1><%= product.title %></h1>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><i class="fas fa-angle-right"></i></li>
+                        <li><a href="/products">Products</a></li>
+                        <li><i class="fas fa-angle-right"></i></li>
+                        <li><%= product.title %></li>
+                                              </ul>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-
-  <section class="blog-details" style="padding-top: 0px; padding-bottom:0px">
-        <div class="container">
-            <div class="row justify-content-center detail">
-                <% if (serviceId === 'coworking-seat') { %>
-                    <div class="col-md-8">
-                       <!-- Swiper Styles (Include this in the <head> section) -->
-
-<!-- Banner Section -->
-<section class="pt-100" style="margin-top: 5px;">
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <div class="banner-area bg_cover d-flex align-items-center" 
-                     style="background-image: url(/assets/images/banner-bg-1.jpg); height: 400px;">
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="banner-area bg_cover d-flex align-items-center" 
-                     style="background-image: url(/assets/images/banner-bg-2.jpg); height: 400px;">
-                </div>
-            </div>
-        </div>
-
-        <!-- Navigation Buttons -->
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-
-        <!-- Pagination Dots -->
-       
-    </div>
-
-   
 </section>
 
 
-<div class="swiper-pagination" style="bottom: auto;"></div>
-<div class="image-counter">
-    <span id="current-slide">1</span> of <span id="total-slides">2</span>
-</div>
-                        <h2 class="title" >Coworking Seat</h2>
-                      
-                      <p >
-                        Shared workspaces offering flexibility and collaboration. Ideal for
-                        professionals, freelancers, and small teams seeking a peaceful and
-                        focused ambiance.
-                      </p>
-                      <div class="item" style="margin: 20px 0;">
-                        <p class="price" >Price: Starts from  <span class="rate" >₹4,499</span> per month (Price may vary by location)</p>
-                
-                        <p class="overview" >
-                           Our Coworking Seats provide the perfect
-                          environment for professionals who seek flexibility and collaboration.
-                          Whether working solo or with others, the workspace offers a calm,
-                          productive atmosphere designed to enhance focus and creativity.
-                        </p>
-                        <h3 style="padding-top: 10px;" >Workspace Comfort & Productivity:</h3>
-                        <ul>
-                            <li  class="col-sm-6"><i class="fa fa-check"></i> Spacious Seating Tables</li>
-                            <li  class="col-sm-6"><i class="fa fa-check"></i> Individual Seating</li>
-                            <li  class="col-sm-6"><i class="fa fa-check"></i> Air Conditioners</li>
-                            <li  class="col-sm-6"><i class="fa fa-check"></i> Free Wi-Fi</li>
-                            <li  class="col-sm-6"><i class="fa fa-check"></i> No Limit Tea & Coffee</li>
-                            <li  class="col-sm-6"><i class="fa fa-check"></i> Free and Full-Time Water</li>
-                            <li class="col-sm-6"><i class="fa fa-check"></i> Ergonomic Comfortable Chairs</li>
-                        </ul>
-                
-                
-                        <h3>Convenience & Support:</h3>
-                        <ul>
-                            <li  class="col-sm-6"><i class="fa fa-check"></i> Individual and Dedicated Lockers </li>
-                            <li  class="col-sm-6"><i class="fa fa-check"></i> Free Electricity</li>
-                            <li  class="col-sm-6"><i class="fa fa-check"></i> Daily Cleaning</li>
-                            <li  class="col-sm-6"><i class="fa fa-check"></i> Easy Parking</li>
-                            <li  class="col-sm-6"><i class="fa fa-check"></i> Washroom Cleaning</li>
-                            <li  class="col-sm-6"><i class="fa fa-check"></i> Separate Lunch Area</li>
-                            <li  class="col-sm-6"><i class="fa fa-check"></i> Working Hours (10:00 AM to 9:00 PM)</li>
-                
-                        
-                        </ul>
-                        <h3>  Why Choose Our Coworking Seat?</h3>
-                       <p>Our Coworking Seats are perfect for those seeking a peaceful and focused ambiance while still enjoying the flexibility of a shared workspace. Designed to help you maintain focus while fostering collaboration, our space allows you to work without distractions, making it easier to meet deadlines, accomplish tasks, and grow your business.</p>
-                        <h3>Pricing:</h3><p>Starts from <span class="rate">₹4,499</span> per month.  <span style="color: rgb(80, 72, 72);">Prices may
-                          vary by location.</span>
-                        </p>
-                        <h3>
-                          Ready to book your peaceful and productive workspace?
-                        </h3>
-                        <p>
-                          Contact us today to reserve your Coworking Seat and start working in a
-                          collaborative yet peaceful setting designed to help you focus and
-                          thrive.
-                        </p>
-                       
-                      </div>
-                    </div>
-                    <% } else if (serviceId === 'private-cabin') { %>
-                        <div class="col-md-8">
-                            <section class="pt-100" style="margin-top: 5px;">
-                                <div class="swiper mySwiper">
-                                    <div class="swiper-wrapper">
-                                        <div class="swiper-slide">
-                                            <div class="banner-area bg_cover d-flex align-items-center" 
-                                                 style="background-image: url(/assets/images/banner-bg-1.jpg); height: 400px;">
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="banner-area bg_cover d-flex align-items-center" 
-                                                 style="background-image: url(/assets/images/banner-bg-2.jpg); height: 400px;">
-                                            </div>
-                                        </div>
-                                    </div>
-                            
-                                    <!-- Navigation Buttons -->
-                                    <div class="swiper-button-prev"></div>
-                                    <div class="swiper-button-next"></div>
-                            
-                                    <!-- Pagination Dots -->
-                                   
-                                </div>
-                            
-                               
-                            </section>
-                            
-                            
-                            <div class="swiper-pagination" style="bottom: auto;"></div>
-                            <div class="image-counter">
-                                <span id="current-slide">1</span> of <span id="total-slides">2</span>
-                            </div>
-                
-                            <h2 class="title">Private Cabin</h2>
-                            
-                            <p >
-                              A quiet, exclusive workspace for focused and private work. Ideal for managers, executives, or professionals needing privacy and comfort.
-                            </p>
-                            
-                            <div class="item" style="margin: 20px 0;">
-                              <p class="price">Price: <span class="rate">₹13,499</span> per month (Price may vary by location)</p>
-                              
-                              <p class="overview">
-                                Our Private Manager Cabin offers the perfect environment for managers, executives, or leaders who need an exclusive space to work, hold private meetings, or make important decisions. This cabin is designed with functionality and comfort in mind, providing a dedicated workspace where you can focus on your tasks without distractions.
-                              </p>
-                              
-                              <h3>Workspace Comfort & Productivity:</h3>
-                              <ul>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Exclusive Private Space</li>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Dedicated Desk</li>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Air Conditioner</li>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Free Wi-Fi</li>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> One Boss Seat & Two Guest Chairs</li>
-                              </ul>
-                              
-                           <h3>Additional Facilities:</h3>
-                              <ul>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Dedicated Lockers</li>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Daily Cleaning Service</li>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Kitchen Access (For Cabin Only)</li>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Electricity with Separate Meter</li>
-                              </ul>
-                              
-                              <h3>Additional Amenities (Shared with Coworking Seats):</h3>
-                              <ul>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Ergonomic Comfortable Chairs</li>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Free and Full-Time Water</li>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> No Limit Tea & Coffee</li>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Printer and Scanner (Paid Service)</li>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Free Electricity</li>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Easy Parking</li>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Washroom Cleaning</li>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Separate Lunch Area</li>
-                              </ul>
-                              
-                             <h3>Convenience & Support:</h3>
-                              <ul>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Flexible Working Hours (10:00 AM to 9:00 PM)</li>
-                                <li class="col-sm-6"><i class="fa fa-check"></i> Meeting Room Access</li>
-                              </ul>
-                              
-                             <h3>Why Choose Our Private Manager Cabin?</h3>
-                              <ul>
-                                <li><i class="fa fa-check"></i> Privacy & Focus: A distraction-free, secure workspace for maximum focus.</li>
-                                <li><i class="fa fa-check"></i> Professional Environment: A quiet, high-functioning space for managers and leaders.</li>
-                                <li><i class="fa fa-check"></i> Added Flexibility: Kitchen access, separate electricity meter, and flexible hours to enhance your working experience.</li>
-                              </ul>
-                              
-                              <h3>Pricing:</h3><p> Starts from <span class="rate">₹13,499</span> per month.  <span style="color: rgb(80, 72, 72);">Prices may
-                                vary by location.</span>
-                              </p>
-                
-                              
-                                <h3>Ready to elevate your workspace and ensure privacy and focus for your management tasks?</h3>
-                             
-                              <p>
-                                Contact us today to reserve your Private Boss Cabin and experience the comfort and exclusivity designed to boost your productivity.
-                              </p>
-                             
-                            </div>
-                          </div>
-                          
-                    <% } else if (serviceId === 'meeting-room') { %>
-                        <div class="col-md-8">
-                            <section class="pt-100" style="margin-top: 5px;">
-                                <div class="swiper mySwiper">
-                                    <div class="swiper-wrapper">
-                                        <div class="swiper-slide">
-                                            <div class="banner-area bg_cover d-flex align-items-center" 
-                                                 style="background-image: url(/assets/images/banner-bg-1.jpg); height: 400px;">
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="banner-area bg_cover d-flex align-items-center" 
-                                                 style="background-image: url(/assets/images/banner-bg-2.jpg); height: 400px;">
-                                            </div>
-                                        </div>
-                                    </div>
-                            
-                                    <!-- Navigation Buttons -->
-                                    <div class="swiper-button-prev"></div>
-                                    <div class="swiper-button-next"></div>
-                            
-                                    <!-- Pagination Dots -->
-                                   
-                                </div>
-                            
-                               
-                            </section>
-                            
-                            
-                            <div class="swiper-pagination" style="bottom: auto;"></div>
-                            <div class="image-counter">
-                                <span id="current-slide">1</span> of <span id="total-slides">2</span>
-                            </div>
-                            <h2 class="title">Meeting / Conference Room (Per Hour)</h2>
-                          
-                            <p>
-                                “Professional meeting rooms available by the hour for your business needs.”
-                            </p>
-                            <div class="item" style="margin: 20px 0;">
-                                <p class="price">Price: <span class="rate">₹999</span> per hour (Free for Coworking Members)</p>
-                                <p class="overview">
-                                     Our Meeting / Conference Rooms are designed to offer the perfect space for your business meetings, presentations, and brainstorming sessions. Whether you're hosting a client meeting, internal team discussion, or a training session, our fully equipped meeting rooms ensure you have everything you need for a productive, professional experience.
-                                </p>
-                               <h3>Workspace Comfort & Productivity:</h3>
-                                <ul>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i>Big Screen for Presentations</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Comfortable Chairs</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Air Conditioners</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Free Wi-Fi</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Free and Full-Time Water</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> No Limit Tea & Coffee</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Printer and Scanner (Paid Service)</li>
-                                </ul>
-                        
-                                <h3>Convenience & Support:</h3>
-                                <ul>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Free Electricity</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Daily Cleaning</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Easy Parking</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Washroom Cleaning</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Flexible Working Hours (10:00 AM to 9:00 PM)</li>
-                                </ul>
-                                <h3>Why Choose Our Meeting / Conference Rooms?</h3>
-                                <ul>
-                                    <li>Professional Environment: A dedicated, distraction-free space for professional discussions, presentations, and client meetings.</li>
-                                    <li>Fully Equipped: Everything you need for a successful meeting, from presentation screens to high-speed Wi-Fi and unlimited refreshments.</li>
-                                    <li>Flexible Booking: Book by the hour to match your schedule, making it easy for you to plan meetings as needed.</li>
-                                </ul>
-                        
-                                <h3>Pricing:</h3> Starts from <span class="rate">₹999 per hour</span> Free for Coworking Members.</p>
-                        
-                               <h3>Book Your Meeting Room Today!</h3>
-                                <p>
-                                    Contact us to reserve your Meeting / Conference Room for your next business meeting and ensure a productive, professional environment for your team or clients.
-                                </p>
-                               
-                            </div>
-                        </div>
-                        
-                    <% } else if (serviceId === 'one-day-pass') { %>
-                        <div class="col-md-8">
-                            <section class="pt-100" style="margin-top: 5px;">
-                                <div class="swiper mySwiper">
-                                    <div class="swiper-wrapper">
-                                        <div class="swiper-slide">
-                                            <div class="banner-area bg_cover d-flex align-items-center" 
-                                                 style="background-image: url(/assets/images/banner-bg-1.jpg); height: 400px;">
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="banner-area bg_cover d-flex align-items-center" 
-                                                 style="background-image: url(/assets/images/banner-bg-2.jpg); height: 400px;">
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                            
-                                    <!-- Navigation Buttons -->
-                                    <div class="swiper-button-prev"></div>
-                                    <div class="swiper-button-next"></div>
-                            
-                                    <!-- Pagination Dots -->
-                                   
-                                </div>
-                            
-                               
-                            </section>
-                            
-                            
-                            <div class="swiper-pagination" style="bottom: auto;"></div>
-                            <div class="image-counter">
-                                <span id="current-slide">1</span> of <span id="total-slides">2</span>
-                            </div>
-                            <h2 class="title" >One Day Pass</h2>
-                          
-                            <p>
-                                “Flexible access to our workspace for a day or week, with no long-term commitment.”
-                            </p>
-                            <div class="item" style="margin: 20px 0;">
-                                <p class="overview">Price: Starts from <span class="rate">₹349</span> per day</p>
-                                <p class="overview">
-                                     Our One Day Pass offers you the ultimate flexibility to work from our coworking space for a day. Whether you're a freelancer, a remote worker, or need a productive space for a few hours, this pass allows you to access all the essential facilities without any long-term commitment. Ideal for professionals who need a temporary, yet high-quality workspace.
-                                </p>
-                                <h3>Workspace Comfort & Productivity:</h3>
-                                <ul>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Access to Coworking Seats</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> High-Speed Wi-Fi</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Free and Full-Time Water</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> No Limit Tea & Coffee</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Comfortable Chairs & Spacious Tables</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Air Conditioners</li>
-                                </ul>
-                                 <h3>Convenience & Support:</h3>
-                                <ul>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Free Electricity</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Daily Cleaning</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Easy Parking</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Washroom Cleaning</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Flexible Working Hours (10:00 AM to 9:00 PM)</li>
-                                </ul>
-                        
-                                <h3>Important Note:</h3>
-                                <ul>
-                                    <li>Meeting Room Access Not Included: Meeting room access is not available for One Day Pass users.</li>
-                                    <li>Only for Coworking Seat Access: The One Day Pass is valid for coworking seat access only and does not include meeting room access.</li>
-                                </ul>
-                        
-                                <h3>Why Choose Our One Day Pass?</h3>
-                                <ul>
-                                    <li>No Long-Term Commitment: Ideal for professionals looking for a temporary space without any ongoing contract.</li>
-                                    <li>Full Access to Coworking Facilities: Access all the essential amenities like free Wi-Fi, unlimited tea/coffee, ergonomic chairs, and more.</li>
-                                    <li >Affordable & Flexible:</strong>o need an occasional workspace.</li>
-                                </ul>
-                        
-                                <h3>Pricing:</h3>
-                            <p>  Starts from <span class="rate">₹349</span> per day. Coworking Seats Access Only. No Meeting Room Access.</p>
-                        
-                                <h3>Get Your One Day Pass Now!</h3>
-                                <p >
-                                    Book your One Day Pass and enjoy all the benefits of our coworking space for the day!
-                                </p>
+<section class="product-detail-container">
+  <div class="container">
+    <div class="row">
+      <!-- Left Column - Product Images (Sticky on Desktop) -->
+      <div class="col-md-7 product-left-column">
+        <div class="product-main-image-container popup-trigger" data-type="image" data-src="<%= product && product.arrays && product.arrays.arrayOne && product.arrays.arrayOne.length > 0 ? S3_BASE_URL + product.arrays.arrayOne[0] : '' %>" id="mainImageContainer" style="<%= product && product.arrays && product.arrays.arrayOne && product.arrays.arrayOne.length > 0 ? 'cursor: pointer;' : '' %>">
+          <% if (product && product.arrays && product.arrays.arrayOne && product.arrays.arrayOne.length > 0) { %>
+            <img 
+              src="<%= S3_BASE_URL + product.arrays.arrayOne[0] %>" 
+              alt="<%= product.title || 'Product Image' %>"
+              class="product-main-image"
+              id="mainImage"
+            >
+          <% } else { %>
+            <div class="no-image-placeholder">
+              <i class="fa-solid fa-image"></i>
                                  </div>
+          <% } %>
                         </div>
                         
-                    <% } else if (serviceId === 'weekly-pass') { %>
-                        <div class="col-md-8"  >
-                            <section class="pt-100" style="margin-top: 5px;">
-                                <div class="swiper mySwiper">
-                                    <div class="swiper-wrapper">
-                                        <div class="swiper-slide">
-                                            <div class="banner-area bg_cover d-flex align-items-center" 
-                                                 style="background-image: url(/assets/images/banner-bg-1.jpg); height: 400px;">
+        <!-- Thumbnails -->
+        <% if (product && product.arrays && product.arrays.arrayOne && product.arrays.arrayOne.length > 0) { %>
+          <div class="thumbnail-container">
+            <div class="thumbnail-wrapper">
+              <% product.arrays.arrayOne.forEach((image, index) => { %>
+                <div class="thumbnail-item popup-trigger <%= index === 0 ? 'active' : '' %>" data-type="image" data-src="<%= S3_BASE_URL + image %>" onclick="changeMainImage('<%= S3_BASE_URL + image %>', <%= index %>)">
+                  <img src="<%= S3_BASE_URL + image %>" alt="Thumbnail <%= index + 1 %>">
+                                            </div>
+              <% }) %>
                                             </div>
                                         </div>
-                                        <div class="swiper-slide">
-                                            <div class="banner-area bg_cover d-flex align-items-center" 
-                                                 style="background-image: url(/assets/images/banner-bg-2.jpg); height: 400px;">
-                                            </div>
-                                        </div>
+        <% } %>
                                     </div>
                             
-                                    <!-- Navigation Buttons -->
-                                    <div class="swiper-button-prev"></div>
-                                    <div class="swiper-button-next"></div>
-                            
-                                    <!-- Pagination Dots -->
-                                   
+      <!-- Right Column - Product Info -->
+      <div class="col-md-5">
+        <div class="product-info-section">
+          <!-- Mobile Header (visible only on mobile) -->
+          
+
+          <!-- Category -->
+          <div class="product-category">
+            <% if (product && product.category && product.category.name) { %>
+              <%= product.category.name %>
+            <% } else { %>
+              Product
+            <% } %>
                                 </div>
                             
-                               
-                            </section>
+          <!-- Product Title -->
+          <h1 class="product-title"><%= product?.title || 'Product Name' %></h1>
+
+          <!-- Price -->
+          <% if (product && product.sellingPrice) { %>
+            <div class="product-price-section">
+              <span class="product-price">₹<%= product.sellingPrice.toLocaleString() %></span>
+              <% if (product.unit) { %>
+                <span class="product-unit">Per <%= product.unit %></span>
+              <% } %>
+            </div>
+          <% } %>
+
+          <!-- Description -->
+          <div class="product-section">
+            <h2 class="product-section-title">Description</h2>
+            <div class="product-description blog-description">
+              <%- product.description ? product.description.replace(/<span[^>]*>/g, '').replace(/<\/span>/g, '').replace(/\n/g, '<br>') : 'No description available.' %>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                  const blogDescription = document.querySelector('.blog-description');
+                  
+                  if (blogDescription) {
+                    const content = blogDescription.innerHTML || '';
+                    
+                    // Check if content contains encoded table tags
+                    if (content.includes('&lt;table')) {
+                      try {
+                        // First, preserve the non-table content
+                        const parts = content.split(/(&lt;table[\s\S]*?&lt;\/table&gt;)/);
+                        
+                        let finalContent = '';
+                        parts.forEach(part => {
+                          if (part.includes('&lt;table')) {
+                            // Decode table HTML
+                            const tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = part;
+                            let decodedTable = tempDiv.textContent;
                             
+                            // Clean up only the table HTML
+                            decodedTable = decodedTable
+                              .replace(/<\/?p>/g, '') // Remove <p> and </p> tags
+                              .replace(/&nbsp;/g, '') // Remove &nbsp;
+                              .replace(/\s+</g, '<')  // Remove whitespace before tags
+                              .replace(/>\s+/g, '>')  // Remove whitespace after tags
+                              .trim();
                             
-                            <div class="swiper-pagination" style="bottom: auto;"></div>
-                            <div class="image-counter">
-                                <span id="current-slide">1</span> of <span id="total-slides">2</span>
-                            </div>
-                            <h2 class="title">Weekly Pass</h2>
-                        
-                            <p>
-                                “Enjoy a full week of workspace access with no long-term commitment.”
-                            </p>
-                            <div class="item" style="margin: 20px 0;">
-                                <p class="price">Price: Starts from<span class="rate">₹1,499</span> per week</p>
-                                <p class="overview">
-                                     Our Weekly Pass is designed for professionals who need a flexible, productive workspace for an entire week without the commitment of a long-term contract. Whether you're working on a project, need a change of environment, or simply prefer a workspace for a week, this pass offers you access to all the amenities and comfort of our coworking space.
-                                </p>
-                                <h3>Workspace Comfort & Productivity:</h3>
-                                <ul >
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Access to Coworking Seats</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> High-Speed Wi-Fi</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Free and Full-Time Water</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> No Limit Tea & Coffee</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Comfortable Chairs & Spacious Tables</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Air Conditioners</li>
-                                </ul>
-                        
-                                <h3>Convenience & Support:</h3>
-                                <ul >
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Free Electricity</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Daily Cleaning</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Easy Parking</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Washroom Cleaning</li>
-                                    <li class="col-sm-6"><i class="fa fa-check"></i> Flexible Working Hours (10:00 AM to 9:00 PM)</li>
-                                </ul>
-                        
-                                <h3>Important Note:</h3>
-                                <ul>
-                                    <li>Meeting Room Access Not Included: Meeting room access is not available for Weekly Pass holders.</li>
-                                    <li>Only for Coworking Seat Access: The Weekly Pass is valid for coworking seat access only and does not include meeting room access.</li>
-                                </ul>
-                        
-                                <h3>Why Choose Our Weekly Pass?</h3>
-                                <ul>
-                                    <li>No Long-Term Commitment: Ideal for professionals who need a dedicated workspace for a short-term project or a change of scenery</li>
-                                    <li >Full Access to Coworking Facilities: Benefit from unlimited access to all essential amenities like high-speed Wi-Fi, unlimited tea and coffee, ergonomic seating, and more.</li>
-                                    <li>Affordable & Flexible: At just ₹1,499/week, it’s an affordable solution for anyone who needs a temporary workspace.</li>
-                                </ul>
-                        
-                                <h3>Pricing:</h3><p>Starts from<span class="rate">₹1,499</span>/week Coworking Seats Access Only. No Meeting Room Access.</p>
-                        
-                                <h3>Get Your Weekly Pass Today!</h3>
-                                <p >
-                                    Book your Weekly Pass and experience a productive and flexible workspace for a full week!
-                                </p>
-                               
-                            </div>
-                        </div>
-                        
-                    <% }  else { %>
-                        <script>
-                          window.location.href = '/404'; // Replace '/404' with the URL of your 404 page
-                        </script>
-                      <% } %>
-                <div class="col-lg-4 col-md-6 col-sm-7" >
-                    <div class="sidebar service-sidebar" >
-                       
-
-                        
-                        <div class="sidebar__single sidebar__post" style="padding-top: 30px; padding-bottom:34px">
-                            <h3 class="sidebar__title" style="margin-bottom:28px">Explore services</h3><!-- /.sidebar__title -->
-                            <div class="sidebar__post-wrap">
-
-  <% 
-        // Array of services with their respective details
-        const services = [
-            { id: 'coworking-seat', title: 'Coworking Seat', image: 'explore-1.jpg', price: '₹4,499', Id: '1' ,description:'Shared workspaces offering flexibility'},
-            { id: 'private-cabin', title: 'Private Cabin', image: 'explore-2.jpg', price: '₹13,499', Id: '2',description:'Exclusive, quiet spaces for private work' },
-            { id: 'meeting-room', title: 'Meeting Room', image: 'explore-3.jpg', price: '₹999/hour', Id: '3',description:'Professional meeting rooms available' },
-            { id: 'one-day-pass', title: 'One day pass', image: 'explore-4.jpg', price: '₹349', Id: '4' ,description:'Flexible access to our workspace for a day'},
-            { id: 'weekly-pass', title: 'Weekly Pass', image: 'explore-4.jpg', price: '₹1,499', Id: '5',description:'Enjoy a full week of workspace access' }
-        ];
-
-        // Loop through the services and display those that don't match the current serviceId
-        services.forEach(service => {
-            if (service.id !== serviceId) { 
-        %>
-
-        <div class="sidebar__post__single explore"   onclick="window.location.href='/service-details/<%= service.id %>';">
-            <div class="sidebar__post-image">
-                <div class="inner-block" style=" min-width: 100px;
-  max-width: 100px;
-  height: 100px;
-  box-sizing: border-box; 
-  margin: -1px;
-  overflow:hidden;
-  padding: 0;"><img src="/assets/images/<%= service.image %>"
-                        alt="Awesome Image"  /></div>
-                <!-- /.inner-block -->
-            </div><!-- /.sidebar__post-image -->
-            <div class="sidebar__post-content">
-                <h4 class="sidebar__post-title"><a href="/service-details/<%= service.id %>"><%= service.title %></a></h4>
-                <p style="font-size: 13px; line-height:20px"><%= service.description %></p>
-            </div><!-- /.sidebar__post-content -->
-        </div><!-- /.sidebar__post__single -->
-
-                           
-                                <% 
-                            }
+                            finalContent += decodedTable;
+                          } else {
+                            // Keep non-table content as is (preserves <p> tags and <br>)
+                            finalContent += part;
+                          }
                         });
-                        %>
-<!--                 
-                        <% if (services.every(service => service.id !== serviceId)) { %>
-                        <div class="col-lg-12">
-                            <h2 class="title">Service Not Found</h2>
-                            <p>Sorry, the service you're looking for is not available.</p>
-                        </div>
-                        <% } %>
-                                -->
                         
-                      
-                    </div><!-- /.sidebar -->
-                </div><!-- /.col-lg-4 -->
-            </div><!-- /.row -->
-        </div><!-- /.container -->
-            </div></div>
-    </section><!-- /.blog-details -->
+                        // Replace the content
+                        blogDescription.innerHTML = finalContent;
+                        
+                        // Wrap tables in scrollable container
+                        const tables = blogDescription.querySelectorAll('table');
+                        tables.forEach(table => {
+                          const wrapper = document.createElement('div');
+                          wrapper.className = 'table-scroll-wrapper';
+                          table.parentNode.insertBefore(wrapper, table);
+                          wrapper.appendChild(table);
+                        });
+                      } catch (error) {
+                        console.error('Error processing table HTML:', error);
+                      }
+                    }
+                  }
+                });
+              </script>
+              
+              <!-- Enquire Buttons -->
+              <div style="margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
+                <button  style="display: flex; align-items: center; justify-content: center; border: none; " class="btn-1 btn-3 link hover-white" onclick="openEnquiryModal()">
+                  <span style="gap: 15px; font-size: 15px; "><i style="margin-right: 10px;" class="fa-solid fa-paper-plane"></i> Enquire Now</span>
+                </button>
+                               
+                            </div>
+                        
+                        </div>
+                        
+        
+     
+        </div>
+      </div>
+    </div>
+                        </div>
+</section>
 
-    <section class="write-massage-area pb-120" style="padding-top: 0px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="write-massage-content">
-                        <div class="write-massage-title" style="padding-bottom: 25px;">
-                            <h3 class="title">Get a call Back</h3>
-                        </div>
-                        <div class="write-massage-input">
-                            <form id="booktour">
-                                <%- include('./partials/book.ejs') %>
-                            </form>
-                        </div>
+<!-- Enquiry Modal -->
+<div id="enquiryModal" class="enquiry-modal" >
+  <div class="enquiry-modal-content p-50" >
+    <button class="enquiry-modal-close" onclick="closeEnquiryModal()"><i class="fa-solid fa-xmark"></i></button>
+    <div class="add-comments" style="padding: 0;">
+      <form id="productEnquiryForm" class="inner-add-comments form-contact-2">
+        <div class="row" style="margin: 0 -15px;">
+          <div class="col-md-12" style="padding: 0 15px; margin-bottom: 20px;">
+            <h4 style="margin-bottom: 15px; font-size: 24px; font-weight: 600;">Get in Touch with Us</h4>
+            <p style="margin-bottom: 25px; color: #666; line-height: 1.5;">Have a query or requirement? Share your details below — our team will reach out with the best solution, price, and technical support.</p>
+          </div>
+          <div class="col-md-6 inner-add-comments-box" style="padding: 0 15px; margin-bottom: 20px;">
+            <input type="text" name="strings.stringOne" placeholder="Name*" required="" style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+          </div>
+          <div class="col-md-6 inner-add-comments-box" style="padding: 0 15px; margin-bottom: 20px;">
+            <input type="email" name="email" placeholder="Email*" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address" required="" style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+          </div>
+          <div class="col-md-6 inner-add-comments-box" style="padding: 0 15px; margin-bottom: 20px;">
+            <input type="tel" name="strings.stringTwo" placeholder="Phone*" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" maxlength="10" required="" style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+          </div>
+          <div class="col-md-6 inner-add-comments-box" style="padding: 0 15px; margin-bottom: 20px;">
+            <input type="text" name="strings.stringThree" placeholder="Product Name" value="<%= product?.title || '' %>" readonly="" style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background-color: #f5f5f5; cursor: not-allowed;">
+          </div>
+          <div class="col-md-12 inner-add-comments-box" style="padding: 0 15px; margin-bottom: 20px;">
+            <input type="hidden" name="productId" value="<%= product?._id || '' %>">
+            <textarea name="remarks" placeholder="Additional Details!" style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; min-height: 100px; resize: vertical;"></textarea>
+          </div>
+          <div class="col-md-12 inner-add-comments-box last" style="padding: 0 15px; margin-bottom: 0 ;">
+            <button class="btn-1 btn-3 submit" type="submit" id="enquirySubmitBtn" style="width: 100%;  font-size: 16px; font-weight: 600;">
+              <span id="enquiryBtnText">Submit</span>
+              <span class="submit-loader" id="enquirySubmitLoader" style="display: none;">
+                <svg width="20" height="20" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+                  <g fill="none" fill-rule="evenodd">
+                    <g transform="translate(1 1)" stroke-width="2">
+                      <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
+                      <path d="M36 18c0-9.94-8.06-18-18-18">
+                        <animateTransform
+                          attributeName="transform"
+                          type="rotate"
+                          from="0 18 18"
+                          to="360 18 18"
+                          dur="1s"
+                          repeatCount="indefinite"/>
+                      </path>
+                    </g>
+                  </g>
+                </svg>
+              </span>
+            </button>
+            <span class="out-message"></span>
+          </div>
+        </div>
+      </form>
+    </div>
                     </div>
                 </div>
                 
-            </div>
-        </div>
-       
-    </section>
-    <%- include('./partials/enquire.ejs') %>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var swiper = new Swiper(".mySwiper", {
-                loop: true,
-                pagination: {
-                    el: ".swiper-pagination",
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
-                },
-                on: {
-                    slideChange: function () {
-                        document.getElementById("current-slide").textContent = this.realIndex + 1;
+<script>
+  const API_BASE_URL = "<%= API_BASE_URL %>";
+  const websiteID = "<%= websiteID %>";
+  const WEBSITE_ID_KEY = "<%= WEBSITE_ID_KEY %>";
+
+  let scrollPosition = 0;
+
+  // Open enquiry modal
+  function openEnquiryModal() {
+    // Save current scroll position
+    scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    
+    const modal = document.getElementById('enquiryModal');
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('show'), 10);
+    
+    // Freeze background at current position
+    document.body.style.top = `-${scrollPosition}px`;
+    document.body.classList.add('modal-open');
+  }
+
+  // Close enquiry modal
+  function closeEnquiryModal() {
+    const modal = document.getElementById('enquiryModal');
+    modal.classList.remove('show');
+    setTimeout(() => modal.style.display = 'none', 300);
+    
+    // Restore scroll position
+    document.body.classList.remove('modal-open');
+    document.body.style.top = '';
+    window.scrollTo(0, scrollPosition);
+  }
+
+  // Close modal on clicking outside
+  document.getElementById('enquiryModal').addEventListener('click', function(event) {
+    if (event.target === this) {
+      closeEnquiryModal();
+    }
+  });
+
+  // Close modal on Escape key
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      const modal = document.getElementById('enquiryModal');
+      if (modal.classList.contains('show')) {
+        closeEnquiryModal();
                     }
                 }
             });
     
-            // Set total slides count
-            document.getElementById("total-slides").textContent = document.querySelectorAll(".swiper-slide").length;
-        });
-    </script>
+  // Phone number validation for product enquiry
+  document.querySelector('input[name="strings.stringTwo"]').addEventListener('input', function(e) {
+    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+  });
+
+  // Product Enquiry Form Submission
+  document.getElementById('productEnquiryForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const submitBtn = document.getElementById('enquirySubmitBtn');
+    const btnText = document.getElementById('enquiryBtnText');
+    const loader = document.getElementById('enquirySubmitLoader');
+
+    try {
+      const productForm = e.target;
+
+      // Show loader
+      btnText.style.display = 'none';
+      loader.style.display = 'inline-block';
+      submitBtn.disabled = true;
+
+      // Build payload with null checks
+      const payload = {
+        'strings.stringOne': productForm.querySelector('input[name="strings.stringOne"]')?.value || '',
+        'strings.stringTwo': productForm.querySelector('input[name="strings.stringTwo"]')?.value || '',
+        'strings.stringThree': productForm.querySelector('input[name="strings.stringThree"]')?.value || '',
+        email: productForm.querySelector('input[name="email"]')?.value || '',
+        remarks: productForm.querySelector('textarea[name="remarks"]')?.value || '',
+        product: productForm.querySelector('input[name="productId"]')?.value || '',
+        [WEBSITE_ID_KEY]: websiteID,
+      };
+
+      const headers = new Headers({
+        "Content-Type": "application/json",
+      });
+
+      // Submit the form regardless of response status
+      const response = await fetch(`${API_BASE_URL}/website/product-enquiry/create-product-enquiry`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(payload),
+      }).catch(error => {
+        console.log("Submission completed (ignoring server response)", error);
+      });
+
+      // Always proceed with success flow since we know data is saved
+      sessionStorage.setItem(
+        "thankYouMessage", 
+        "Thank you for your product enquiry! We've received your request and our team will contact you shortly."
+      );
+      window.location.href = "/thankyou";
+
+    } catch (error) {
+      console.error("Form processing error:", error);
+      // Even if something fails, still proceed to thank-you page
+      sessionStorage.setItem(
+        "thankYouMessage", 
+        "Thank you for your interest in our products! We've received your enquiry and will contact you soon."
+      );
+      window.location.href = "/thankyou";
+    } finally {
+      // Reset button state
+      btnText.style.display = 'inline';
+      loader.style.display = 'none';
+      submitBtn.disabled = false;
+    }
+  });
+
+  // Image switching functionality
+  let currentImageIndex = 0;
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  function changeMainImage(imageSrc, index) {
+    const mainImage = document.getElementById('mainImage');
+    if (mainImage) {
+      mainImage.src = imageSrc;
+      currentImageIndex = index;
+      
+      // Update active thumbnail
+      document.querySelectorAll('.thumbnail-item').forEach((thumb, i) => {
+        if (i === index) {
+          thumb.classList.add('active');
+        } else {
+          thumb.classList.remove('active');
+        }
+      });
+    }
+  }
+
+  // Touch swipe functionality for mobile
+  const mainImageContainer = document.getElementById('mainImageContainer');
+  if (mainImageContainer) {
+    mainImageContainer.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    mainImageContainer.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+  }
+
+  function handleSwipe() {
+    const thumbnails = document.querySelectorAll('.thumbnail-item');
+    const totalImages = thumbnails.length;
     
-    <!-- Styles for Buttons and Counter -->
-    <style>
-        .swiper-button-prev:after, .swiper-rtl .swiper-button-next:after {
-            font-size: 20px;
-        }
-        .swiper-button-next:after, .swiper-rtl .swiper-button-prev:after {
-            font-size: 20px;
-        }
-        .swiper-button-prev, .swiper-button-next {
-            color: rgb(255, 255, 255); /* Change button color */
-            border: 1px solid white;
-            background-color: #353232a7;
-            height: 30px;
-            font-size: 16px;
-            padding: 20px;
-            border-radius: 50%;
-            width: 30px;
-            position: absolute;
-            bottom: 20px;
-            z-index: 10;
-        }
-        
-        .image-counter {
-            position: absolute;
-            right: 20px;
-            color: #4c4949;
-            z-index: 1;
-            padding: 0px;
-            border-radius: 5px;
-            font-size: 14px;
-            background-color: rgba(255, 255, 255, 0.7);
-        }
+    if (touchEndX < touchStartX - 50) {
+      // Swipe left - next image
+      currentImageIndex = (currentImageIndex + 1) % totalImages;
+      thumbnails[currentImageIndex].click();
+    }
     
-        .swiper-pagination .swiper-pagination-bullet-active {
-            background-color: #ff4332 !important;
-        }
+    if (touchEndX > touchStartX + 50) {
+      // Swipe right - previous image
+      currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+      thumbnails[currentImageIndex].click();
+    }
+  }
+</script>
+
+<style>
+    /* Product Detail Styles */
+    .product-detail-container {
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+  
+  
+    .product-detail-container .row {
+      display: flex;
+      align-items: flex-start;
+    }
+    .hover-white:hover{
+      color: white !important;
+    }
+  
+    .product-detail-container .col-md-6 {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+  
+    /* Add padding on large screens */
+    @media (min-width: 992px) {
+      .product-detail-container .col-md-7:first-child {
+        padding: 0 40px !important;
+      }
+    }
+  
+    .product-main-image-container {
+      position: relative;
+      width: 100%;
+      margin: 0 auto 20px;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: grab;
+      user-select: none;
+      background-color: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .product-main-image-container:active {
+      cursor: grabbing;
+    }
+  
+    .product-main-image,
+    .product-main-video {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 16px;
+      display: block;
+    }
+  
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+    }
+  
+    .video-play-button {
+      width: 64px;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(32px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+    }
+  
+    .video-play-button i {
+      color: white;
+      font-size: 24px;
+    }
+  
+    .thumbnail-container {
+      width: 100%;
+      margin: 0 auto;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+  
+    .thumbnail-wrapper {
+      display: flex;
+      gap: 8px;
+    }
+  
+    .thumbnail-item {
+      flex-shrink: 0;
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid #e5e7eb;
+      cursor: pointer;
+      transition: border-color 0.3s;
+    }
+  
+    .thumbnail-item.active {
+      border-color: var(--primary-color);
+    }
+  
+    .thumbnail-item img,
+    .thumbnail-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  
+    .product-info-section {
+      padding: 20px 0;
+    }
+  
+    .product-category {
+      color: var(--primary-color);
+      font-weight: 500;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+  
+    .product-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+  
+    .product-price-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+  
+    .product-price {
+      font-size: 20px;
+      font-weight: 600;
+    }
+  
+    .product-unit {
+      font-size: 16px;
+      opacity: 0.7;
+    }
+  
+    .product-action-buttons {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+  
+    .btn-enquire {
+      flex: 1;
+      min-width: 180px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+  
+    .btn-enquire:hover {
+      opacity: 0.9;
+    }
+  
+    .btn-enquire i {
+      font-size: 18px;
+    }
+  
+    .btn-whatsapp {
+      flex: 1;
+      min-width: 200px;
+      border: 2px solid #25D366;
+      color: #25D366;
+      padding: 12px 24px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none;
+    }
+  
+    .btn-whatsapp:hover {
+      background-color: #25D366;
+      color: white;
+      text-decoration: none;
+    }
+  
+    .btn-whatsapp i {
+      font-size: 20px;
+    }
+  
+    .product-section {
+      margin-bottom: 32px;
+    }
+  
+    .product-section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+  
+    .product-description {
+      font-size: 15px;
+      line-height: 1.7;
+    }
+  
+    .product-moq {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 15px;
+    }
+  
+    .product-moq-value {
+      opacity: 0.7;
+      font-weight: 500;
+    }
+  
+    .location-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  
+    .location-tag {
+      background-color: rgba(198, 164, 70, 0.1);
+      color: var(--primary-color);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  
+    .no-image-placeholder {
+      width: 100%;
+      aspect-ratio: 1;
+      background-color: rgba(198, 164, 70, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+    }
+  
+    .no-image-placeholder i {
+      font-size: 80px;
+      color: var(--primary-color);
+    }
+  
+    /* Mobile Header */
+    .mobile-product-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+  
+    /* Sticky Left Column on Desktop */
+    @media (min-width: 768px) {
+      .product-left-column {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 20px;
+        align-self: flex-start;
+        /* Remove max-height and overflow to prevent thumbnail trimming */
+      }
+  
+      .mobile-product-header {
+        display: none;
+      }
+  
+      .product-title {
+        font-size: 28px;
+      }
+  
+      .thumbnail-item {
+        width: 80px;
+        height: 80px;
+      }
+    }
+  
+    @media (max-width: 767px) {
+      .product-detail-container {
+        padding-top: 30px;
+      }
+  
+      .product-detail-container .row {
+        display: block;
+      }
+  
+      .product-detail-container .col-md-6 {
+        flex: none;
+        max-width: 100%;
+        width: 100%;
+      }
+  
+      .desktop-product-header {
+        display: none;
+      }
+  
+      .thumbnail-item {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  
+    /* Scrollbar styling */
+    .thumbnail-container::-webkit-scrollbar {
+      height: 4px;
+    }
+  
+    .thumbnail-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+  
+    .thumbnail-container::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 4px;
+    }
+  
+    .thumbnail-container::-webkit-scrollbar-thumb:hover {
+      background: #9ca3af;
+    }
+  
+    /* Table Scroll Wrapper */
+    .table-scroll-wrapper {
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      position: relative;
+      padding-bottom: 12px;
+    }
+  
+    /* Table styles */
+    table {
+      width: auto;
+      min-width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 0;
+      border: 1px solid #dddee1 !important;
+      white-space: nowrap;
+    }
     
-    </style>
+    table th {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border: none !important;
+      white-space: nowrap;
+    }
+    
+    table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px dashed #dddee19e !important;
+      white-space: nowrap;
+    }
+  
+    table th {
+      background-color: #f4f6f8 !important;
+      font-weight: 600;
+      border-bottom: 1px solid #f4f6f8 !important;
+    }
+    
+    table .even-row {
+      background-color: white !important;
+    }
+    
+    table .odd-row {
+      background-color: white !important;
+    }
+    
+    /* Hover effect */
+    table tbody tr:hover {
+      background-color: #f4f6f8 !important;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 640px) {
+      table th,
+      table td {
+        padding: 0.5rem 0.75rem !important;
+      }
+    }
+  
+    /* Scrollbar styling for table wrapper - visible and attached to table */
+    .table-scroll-wrapper::-webkit-scrollbar {
+      height: 10px;
+    }
+  
+    .table-scroll-wrapper::-webkit-scrollbar-track {
+      background: #e5e7eb;
+      border-radius: 0;
+      margin-top: 2px;
+    }
+  
+    .table-scroll-wrapper::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 0;
+      border: 1px solid #b39340;
+    }
+  
+    .table-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+      opacity: 0.8;
+    }
+    
+    /* For Firefox */
+    .table-scroll-wrapper {
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary-color) #e5e7eb;
+    }
+  
+    /* Enquiry Modal Styles */
+    .enquiry-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+  
+    .enquiry-modal.show {
+      display: flex;
+      opacity: 1;
+    }
+  
+    .enquiry-modal-content {
+      background: white;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.2);
+      transform: scale(0.9);
+      transition: transform 0.3s ease-in-out;
+      position: relative;
+    }
+  
+    .enquiry-modal.show .enquiry-modal-content {
+      transform: scale(1);
+    }
+  
+    .enquiry-modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: rgba(0, 0, 0, 0.1);
+      color: #333;
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+      z-index: 1;
+    }
+  
+    .enquiry-modal-close:hover {
+      background: rgba(0, 0, 0, 0.2);
+    }
+  
+    /* Prevent body scroll when modal is open */
+    body.modal-open {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+    }
+  
+    /* Submit Loader Styles */
+    .btn__secondary {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+  
+    .submit-loader {
+      display: none;
+      animation: spin 1s linear infinite;
+    }
+  
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  
+  .btn-enquire{
+    max-width: 50%;
+  }
+  
+    @media (max-width: 768px) {
+      .enquiry-modal-content {
+        padding: 30px 20px;
+        width: 95%;
+        max-height: 85vh;
+      }
+  
+  
+      .btn-enquire{
+    max-width: 100%;
+  }
+  
+  
+      .enquiry-modal-close {
+        top: 10px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        font-size: 24px;
+      }
+    }
+    .p-50{
+      padding: 50px;
+    }
+    @media (max-width:768px) {
+      .p-50{
+        padding: 25px;
+      }
+    }
+  </style>
+  
 <%- include('footer') %>

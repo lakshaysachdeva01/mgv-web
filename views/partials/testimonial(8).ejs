@@ -1,152 +1,230 @@
-<section class="Moments" style="background-color: #e33d5c;">
-  <div class="container">
-    <div class="d-flex justify-content-center align-items-center flex-column mx-auto text-center" data-aos="fade-up">
-      <h1>Amazing Moments</h1>
-      <p>A Visual Celebration of Fun, Creativity, and Growth at Alphabetz</p>
-    </div>
-
-    <!-- Asymmetrical Grid Layout -->
-    <div class="gallery-container">
-      <div class="swiper-wrapper">
-        <% gallery.slice().reverse().forEach((album) => { %>
-          <% if (album.mediaDetails.mediaType === "IMAGE" && album.mediaDetails.images.length > 0) { %>
-            <% album.mediaDetails.images.slice().reverse().forEach((image, index) => { %>
-              <div class="swiper-slide slide-images">
-                <div class="popup-trigger" data-type="image" data-src="https://technolitics-s3-bucket.s3.ap-south-1.amazonaws.com/websitebuilder-s3-bucket/<%= image %>" >
-                  <img 
-                    src="https://technolitics-s3-bucket.s3.ap-south-1.amazonaws.com/websitebuilder-s3-bucket/<%= image %>" 
-                    alt="Image"
-                    class="gallery-image"
-                    data-index="<%= index %>"
-                  />
-                </div>
-              </div>
-            <% }); %>
-          <% } %>
+    <!-- :: Testimonial -->
+    <% if (testimonial && testimonial.length > 0) { %>
+    <style>
+        <% testimonial.forEach((slide, index) => { %>
+        .testimonial .testimonial-carousel.owl-theme .owl-dots .owl-dot:nth-of-type(<%= index + 1 %>) span {
+            background-image: url(<%= process.env.S3_BASE_URL + slide.image %>) !important;
+        }
         <% }) %>
+    </style>
+    <section class="testimonial py-100">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-10 offset-md-1">
+                  <div class="testimonial-carousel owl-carousel owl-theme">
+
+                    
+                    <% testimonial.forEach((slide) => { %>
+                      <div class="item-box">
+                          <div class="text-box"><%= slide.review.length > 125 ? slide.review.slice(0, 125) + '...' : slide.review %> 
+                            <% if (slide.review.length > 125) { %>
+                                <span class="read-more-btn" onclick="openReviewPopup(`<%= slide.review.replace(/'/g, '\\\'').replace(/"/g, '&quot;') %>`)">
+                                    Read More
+                                </span>
+                            <% } %></div>
+                          <div class="item-name text-center">
+                              <i class="ar-icons-right-quote"></i>
+                              <h5><%= slide.name %></h5>
+                              <span><%= slide.companyProfile %></span>
+                          </div>
+                      </div>
+                      <% }) %>
+                   
+                  </div>
+              </div>
+          </div>
       </div>
-    </div>
+  </section>
+  <% } %>
 
-    <div class="d-flex justify-content-center align-items-center" data-aos="fade-up">
-      <a href="/gallery" class="hover4">View All Glimpses</a>
-    </div>
-  </div>
-</section>
-
-<style>
-  .Moments .gallery-container {
-  width: 100%;
-  padding: 40px 0;
-  overflow: hidden;
-}
-
-.Moments .swiper-slide {
-  transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
-  border-radius: 20px;
-  overflow: hidden;
-  max-width: 80% !important;
-  max-height: 500px;
-}
-
-/* Center image effect */
-.Moments .swiper-slide-active img {
-  transform: scale(1);
-  filter: none; /* Full color */
-  opacity: 1;
-}
-
-/* Side images effect */
-.Moments .swiper-slide-prev img,
-.Moments .swiper-slide-next img {
-  transform: scale(0.94);
-  opacity: 1;
-}
-
-.Moments .swiper-slide img {
-  width: 100%;
-  border-radius: 20px;
-  transition: all 0.3s ease-in-out;
-  object-fit: cover;
-  width: 100%;
-  height: 500px;
-}
-@media (max-width: 768px) {
-  .Moments .swiper-container {
-    overflow: hidden; /* Ensures no unwanted scroll */
-  }
- .Moments .container{
-  padding: 0;
- }
-
-  .Moments .swiper-slide {
-    max-width: 80% !important; /* Center image takes 80% */
-    transition: transform 0.3s ease, opacity 0.3s ease;
-  }
-
-  .Moments .swiper-slide-active {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  /* Left & Right images – only 10% visible */
-  .Moments .swiper-slide-prev,
-  .Moments .swiper-slide-next {
-    width: 100% !important; /* Only 10% visible */
-    opacity: 0.5; /* Make them slightly faded */
-    pointer-events: none; /* No click */
-  }
-
-  .Moments .swiper-slide img {
-    width: 100%;
-    border-radius: 20px;
-    max-height: 400px;
-    transition: all 0.3s ease-in-out;
-  }
-}
-
-
-
-</style>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const swiper = new Swiper(".gallery-container", {
-      loop: true,
-      slidesPerView: "1",
-      centeredSlides: true,
-      spaceBetween: 0,
-      autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      breakpoints: {
-        0: {
-          slidesPerView: 1.25, // Center image takes 80%, side images take 10% each
-          spaceBetween: 10, // Push side images slightly out
-        },
-        768: {
-          slidesPerView: "3", // Original behavior for larger screens
-          spaceBetween: 0,
-        },
-    },
+   <!-- TESTIMONIALS
+        ================================================== -->
     
-      on: {
-        slideChange: function () {
-          document.querySelectorAll(".swiper-slide img").forEach(img => {
-            img.style.opacity = "1";
-          });
+       
+          
+  <!-- Review Popup -->
+  <div id="reviewPopup" class="review-popup">
+    <div class="review-popup-content">
+        <p id="fullReviewText" class="fullReviewText"></p>
+    </div>
+    <button class="close-popup" onclick="closeReviewPopup()">&times;</button>
+  </div>
   
-          let activeImage = document.querySelector(".swiper-slide-active img");
-          if (activeImage) {
-            activeImage.style.opacity = "1";
-          }
-        },
-      },
+  <style>
+    /* Glassy Popup Overlay */
+    .review-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        display: none;
+        justify-content: center;
+        align-items: center;
+      
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+  
+    #fullReviewText {
+      font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #1b1a1a;
+    font-size: 20px;
+    line-height: 34px;
+    font-weight: 500;
+    margin-bottom: 19px
+    }
+  
+    /* Popup Content */
+    .review-popup-content {
+        background: white;
+        padding: 60px;
+        border-radius: 12px;
+        width: 50%;
+        max-height: 80vh;
+        overflow-y: auto;
+        text-align: center;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        transform: scale(0.8);
+        transition: transform 0.3s ease-in-out;
+    }
+  
+    /* Custom scrollbar for modal */
+    .review-popup-content::-webkit-scrollbar {
+        width: 8px;
+    }
+  
+    .review-popup-content::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+  
+    .review-popup-content::-webkit-scrollbar-thumb {
+        background: #FC5220;
+        border-radius: 10px;
+    }
+  
+    .review-popup-content::-webkit-scrollbar-thumb:hover {
+        background: #e04718;
+    }
+  
+    @media (max-width: 600px) {
+        .review-popup-content {
+            padding: 15px;
+            margin: 10px;
+            width: 100%;
+            max-height: 85vh;
+        }
+    }
+  
+    /* Close Button Outside */
+    #reviewPopup .close-popup {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        height: 40px;
+        width: 40px;
+        padding: 0;
+        font-size: 24px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        background-color: #76767691;
+        color: white;
+        font-weight: bold;
+        z-index: 1001;
+    }
+  
+    
+  
+    .testimonial-text {
+        color: #323232;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 26px;
+    }
+  
+    /* Read More Button (Inside the Box) */
+    .read-more-btn {
+        margin-top: 5px;
+        background-color: transparent;
+        color: #999999;
+        font-size: 15px;
+        font-style: italic;
+        font-weight: 400;
+        cursor: pointer;
+        padding: 5px 8px 5px 0;
+        border-radius: 4px;
+        transition: all 0.3s ease-in-out;
+    }
+  
+    /* Disable scrolling when modal is open */
+    body.modal-open {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+    }
+  
+    /* Show animation */
+    .review-popup.show {
+        display: flex;
+        opacity: 1;
+    }
+  
+    .review-popup.show .review-popup-content {
+        transform: scale(1);
+    }
+  </style>
+  
+  <script>
+    let scrollPosition = 0;
+    
+    function openReviewPopup(reviewText) {
+        // Save current scroll position
+        scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        
+        document.getElementById("fullReviewText").innerText = reviewText;
+        const popup = document.getElementById("reviewPopup");
+        popup.style.display = "flex";
+        setTimeout(() => popup.classList.add("show"), 10);
+        
+        // Freeze background at current position
+        document.body.style.top = `-${scrollPosition}px`;
+        document.body.classList.add("modal-open");
+        
+        // Prevent spacebar scrolling
+        window.addEventListener('keydown', preventSpaceScroll, false);
+    }
+  
+    function closeReviewPopup() {
+        const popup = document.getElementById("reviewPopup");
+        popup.classList.remove("show");
+        setTimeout(() => popup.style.display = "none", 300);
+        
+        // Restore scroll position
+        document.body.classList.remove("modal-open");
+        document.body.style.top = '';
+        window.scrollTo(0, scrollPosition);
+        
+        // Re-enable spacebar
+        window.removeEventListener('keydown', preventSpaceScroll, false);
+    }
+    
+    // Prevent spacebar from scrolling
+    function preventSpaceScroll(e) {
+        if (e.keyCode === 32 && e.target === document.body) {
+            e.preventDefault();
+        }
+    }
+  
+    // Close popup on clicking outside
+    document.getElementById("reviewPopup").addEventListener("click", function(event) {
+        if (event.target === this) {
+            closeReviewPopup();
+        }
     });
-  });
-</script>
-
+  </script>
+  

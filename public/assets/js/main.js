@@ -37,21 +37,13 @@
     // :: Varables Navbar
     var headerBar = $('.nav-bar'),
         $navbarMenu = $('#open-nav-bar-menu'),
-        $menuLink = $('.open-nav-bar'),
-        $menuTriggerLink = $('.has-menu > a');
+        $menuLink = $('.open-nav-bar');
 
     // :: Add Class Active For $menuLink And $navbarMenu
     $menuLink.on('click', function (e) {
         e.preventDefault();
         $menuLink.toggleClass('active');
         $navbarMenu.toggleClass('active');
-    });
-
-    // :: Add Class Active For $menuTriggerLink
-    $menuTriggerLink.on('click', function (e) {
-        e.preventDefault();
-        var $this = $(this);
-        $this.toggleClass('active').next('ul').toggleClass('active');
     });
     
     // :: Add Class Active To Search Box
@@ -85,9 +77,9 @@
         nav: true,
         margin: 30,
         autoplay: true,
-        autoplayTimeout: 4000,
+        autoplayTimeout: 3000,
         smartSpeed: 1000,
-        autoplayHoverPause: true,
+        autoplayHoverPause: false,
         mouseDrag: true,
         touchDrag: true,
         navText: ['<i class="ar-icons-left-chevron"></i>', '<i class="ar-icons-right-chevron"></i>'],

@@ -3,7 +3,7 @@
 /* Barlow Font Family */
 @font-face {
     font-family: 'Barlow';
-    src: url('../s/barlow/v13/7cHpv4kjgoGqM7EPCw.ttf') format('truetype');
+    src: url('/s/barlow/v13/7cHpv4kjgoGqM7EPCw.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -11,7 +11,7 @@
 
 @font-face {
     font-family: 'Barlow';
-    src: url('../s/barlow/v13/7cHqv4kjgoGqM7E3_-gc4A.ttf') format('truetype');
+    src: url('/s/barlow/v13/7cHqv4kjgoGqM7E3_-gc4A.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -19,7 +19,7 @@
 
 @font-face {
     font-family: 'Barlow';
-    src: url('../s/barlow/v13/7cHqv4kjgoGqM7E30-8c4A.ttf') format('truetype');
+    src: url('/s/barlow/v13/7cHqv4kjgoGqM7E30-8c4A.ttf') format('truetype');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
@@ -27,7 +27,7 @@
 
 @font-face {
     font-family: 'Barlow';
-    src: url('../s/barlow/v13/7cHqv4kjgoGqM7E3t-4c4A.ttf') format('truetype');
+    src: url('/s/barlow/v13/7cHqv4kjgoGqM7E3t-4c4A.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -36,7 +36,7 @@
 /* Heebo Font Family */
 @font-face {
     font-family: 'Heebo';
-    src: url('../s/heebo/v28/NGSpv5_NC0k9P_v6ZUCbLRAHxK1Ebiuccg.ttf') format('truetype');
+    src: url('/s/heebo/v28/NGSpv5_NC0k9P_v6ZUCbLRAHxK1Ebiuccg.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -44,7 +44,7 @@
 
 @font-face {
     font-family: 'Heebo';
-    src: url('../s/heebo/v28/NGSpv5_NC0k9P_v6ZUCbLRAHxK1EiSyccg.ttf') format('truetype');
+    src: url('/s/heebo/v28/NGSpv5_NC0k9P_v6ZUCbLRAHxK1EiSyccg.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -52,7 +52,7 @@
 
 @font-face {
     font-family: 'Heebo';
-    src: url('../s/heebo/v28/NGSpv5_NC0k9P_v6ZUCbLRAHxK1Euyyccg.ttf') format('truetype');
+    src: url('/s/heebo/v28/NGSpv5_NC0k9P_v6ZUCbLRAHxK1Euyyccg.ttf') format('truetype');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
@@ -60,7 +60,7 @@
 
 @font-face {
     font-family: 'Heebo';
-    src: url('../s/heebo/v28/NGSpv5_NC0k9P_v6ZUCbLRAHxK1EVyuccg.ttf') format('truetype');
+    src: url('/s/heebo/v28/NGSpv5_NC0k9P_v6ZUCbLRAHxK1EVyuccg.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
     font-display: swap;

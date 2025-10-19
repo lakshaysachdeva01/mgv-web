@@ -1,0 +1,131 @@
+	<!-- :: Projects -->
+    <%- include('carousel-marquee') %>
+    <section class="projects home-2 py-100-70">
+        <style>
+            /* Carousel specific styling */
+            .carousel-marquee-item .projects-item {
+                cursor: pointer;
+                width: 400px;
+            }
+            
+            .carousel-marquee-item .projects-item .img-box {
+                border-radius: 3px;
+                overflow: hidden;
+            }
+            
+            .carousel-marquee-item .projects-item .img-box img {
+                width: 100%;
+                height: auto;
+                border-radius: 3px;
+            }
+            
+            .carousel-marquee-item .projects-item .hover-box {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 3px;
+            }
+            
+            .carousel-marquee-item .projects-item .maximize-icon {
+                opacity: 0;
+                transition: opacity 0.3s ease, transform 0.3s ease;
+                transform: scale(0.8);
+            }
+            
+            .carousel-marquee-item .projects-item:hover .maximize-icon {
+                opacity: 1;
+                transform: scale(1);
+            }
+        </style>
+        <div class="container">
+            <div class="sec-title home-2">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <h2>We work with global Industries!</h2>
+                        <h3>Global Projects & Supply Excellence</h3>
+                    </div>
+                    <div class="col-lg-5 d-flex align-items-center">
+                        <p class="sec-explain">Magic Global Ventures has successfully supplied industrial and construction materials to clients across the Middle East, Africa, and Asia. Our global partnerships reflect trust, quality, and timely delivery in every project we undertake.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Carousel Marquee -->
+            <div class="carousel-marquee-container" data-speed="40" data-gap="20">
+                <div class="carousel-marquee-wrapper">
+                    <div class="carousel-marquee-item">
+                        <div class="projects-item popup-trigger" data-type="image" data-src="/assets/images/projects/01_projects.jpg">
+                            <span></span>
+                            <div class="img-box">
+                                <img class="img-fluid projects-item-img" src="assets/images/projects/01_projects.jpg" alt="01 projects">
+                            </div>
+                            <div class="hover-box">
+                                <img src="/assets/images/icons/maximize.svg" alt="View" class="maximize-icon" style="width: 40px; height: 40px; filter: brightness(0) saturate(100%) invert(100%);">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-marquee-item">
+                        <div class="projects-item popup-trigger" data-type="image" data-src="/assets/images/projects/06_projects.jpg">
+                            <span></span>
+                            <div class="img-box">
+                                <img class="img-fluid projects-item-img" src="assets/images/projects/06_projects.jpg" alt="06 projects">
+                            </div>
+                            <div class="hover-box">
+                                <img src="/assets/images/icons/maximize.svg" alt="View" class="maximize-icon" style="width: 40px; height: 40px; filter: brightness(0) saturate(100%) invert(100%);">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-marquee-item">
+                        <div class="projects-item popup-trigger" data-type="image" data-src="/assets/images/projects/02_projects.jpg">
+                            <span></span>
+                            <div class="img-box">
+                                <img class="img-fluid projects-item-img" src="assets/images/projects/02_projects.jpg" alt="02 projects">
+                            </div>
+                            <div class="hover-box">
+                                <img src="/assets/images/icons/maximize.svg" alt="View" class="maximize-icon" style="width: 40px; height: 40px; filter: brightness(0) saturate(100%) invert(100%);">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-marquee-item">
+                        <div class="projects-item popup-trigger" data-type="image" data-src="/assets/images/projects/05_projects.jpg">
+                            <span></span>
+                            <div class="img-box">
+                                <img class="img-fluid projects-item-img" src="assets/images/projects/05_projects.jpg" alt="05 projects">
+                            </div>
+                            <div class="hover-box">
+                                <img src="/assets/images/icons/maximize.svg" alt="View" class="maximize-icon" style="width: 40px; height: 40px; filter: brightness(0) saturate(100%) invert(100%);">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-marquee-item">
+                        <div class="projects-item popup-trigger" data-type="image" data-src="/assets/images/projects/03_projects.jpg">
+                            <span></span>
+                            <div class="img-box">
+                                <img class="img-fluid projects-item-img" src="assets/images/projects/03_projects.jpg" alt="03 projects">
+                            </div>
+                            <div class="hover-box">
+                                <img src="/assets/images/icons/maximize.svg" alt="View" class="maximize-icon" style="width: 40px; height: 40px; filter: brightness(0) saturate(100%) invert(100%);">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-marquee-item">
+                        <div class="projects-item popup-trigger" data-type="image" data-src="/assets/images/projects/04_projects.jpg">
+                            <span></span>
+                            <div class="img-box">
+                                <img class="img-fluid projects-item-img" src="assets/images/projects/04_projects.jpg" alt="04 projects">
+                            </div>
+                            <div class="hover-box">
+                                <img src="/assets/images/icons/maximize.svg" alt="View" class="maximize-icon" style="width: 40px; height: 40px; filter: brightness(0) saturate(100%) invert(100%);">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

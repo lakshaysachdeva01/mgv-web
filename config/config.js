@@ -20,6 +20,7 @@ const BANNER_TYPES = {
     phone : "strings.stringTwo",
     email: "email",
     address:"strings.stringThree",
+    country:"strings.stringFour",
     remarks: "remarks",
    };
 
@@ -33,6 +34,17 @@ const BANNER_TYPES = {
     resume: "files.fileOne",
     remarks: "remarks",
    };
+
+   const JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS = {
+    NAME: "strings.stringOne",
+    CONTACT_NUMBER: "strings.stringTwo",
+    EMAIL: "email",
+    RESUME: "files.fileOne",
+    JOB_ID: "job",
+    MESSAGE: "remarks",
+    FORM_TYPE: "formType",
+   };
+
 
    const BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS={
     name : "strings.stringOne",
@@ -54,4 +66,5 @@ module.exports={
     CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS,
     CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS,
     BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS,
+    JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS
 };

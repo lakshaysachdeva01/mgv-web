@@ -1,0 +1,220 @@
+<!-- Carousel Marquee Component -->
+<style>
+    .carousel-marquee-container {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        padding: 20px 0;
+    }
+    
+    .carousel-marquee-wrapper {
+        display: flex;
+        gap: 20px;
+        width: fit-content;
+        will-change: transform;
+    }
+    
+    .carousel-marquee-wrapper.animating {
+        animation: marqueeScroll linear infinite;
+    }
+    
+    .carousel-marquee-wrapper.dragging {
+        cursor: grabbing;
+        animation: none !important;
+    }
+    
+    .carousel-marquee-wrapper:not(.dragging) {
+        cursor: grab;
+    }
+    
+    /* Smooth infinite scroll animation */
+    @keyframes marqueeScroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+    
+    /* Fade edges for smooth effect */
+    .carousel-marquee-container::before,
+    .carousel-marquee-container::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100px;
+        z-index: 2;
+        pointer-events: none;
+    }
+    
+    .carousel-marquee-container::before {
+        left: 0;
+        background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+    }
+    
+    .carousel-marquee-container::after {
+        right: 0;
+        background: linear-gradient(to left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+    }
+    
+    /* Item styling */
+    .carousel-marquee-item {
+        flex-shrink: 0;
+        user-select: none;
+        -webkit-user-drag: none;
+    }
+    
+    .carousel-marquee-item img {
+        pointer-events: none;
+        user-select: none;
+        -webkit-user-drag: none;
+    }
+</style>
+
+<script>
+// Carousel Marquee Component JavaScript
+class CarouselMarquee {
+    constructor(container, options = {}) {
+        this.container = container;
+        this.wrapper = container.querySelector('.carousel-marquee-wrapper');
+        this.items = Array.from(container.querySelectorAll('.carousel-marquee-item'));
+        
+        // Options
+        this.speed = options.speed || 30;
+        this.gap = options.gap || 20;
+        this.resumeDelay = 2000; // 2 seconds
+        
+        // Dragging state
+        this.isDragging = false;
+        this.startPos = 0;
+        this.currentTranslate = 0;
+        this.prevTranslate = 0;
+        this.animationID = null;
+        this.resumeTimeout = null;
+        
+        this.init();
+    }
+    
+    init() {
+        // Clone items for seamless infinite scroll
+        this.cloneItems();
+        
+        // Set animation duration and start
+        this.wrapper.style.animationDuration = `${this.speed}s`;
+        this.wrapper.classList.add('animating');
+        
+        // Add event listeners for manual dragging
+        this.addDragListeners();
+    }
+    
+    cloneItems() {
+        // Clone all items and append to create seamless loop
+        const clone = this.wrapper.innerHTML;
+        this.wrapper.innerHTML += clone;
+    }
+    
+    addDragListeners() {
+        // Mouse events
+        this.wrapper.addEventListener('mousedown', (e) => this.touchStart(e));
+        this.wrapper.addEventListener('mousemove', (e) => this.touchMove(e));
+        this.wrapper.addEventListener('mouseup', () => this.touchEnd());
+        this.wrapper.addEventListener('mouseleave', () => this.touchEnd());
+        
+        // Touch events
+        this.wrapper.addEventListener('touchstart', (e) => this.touchStart(e));
+        this.wrapper.addEventListener('touchmove', (e) => this.touchMove(e));
+        this.wrapper.addEventListener('touchend', () => this.touchEnd());
+        
+        // Prevent context menu on long press
+        this.wrapper.addEventListener('contextmenu', (e) => e.preventDefault());
+    }
+    
+    getPositionX(event) {
+        return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+    }
+    
+    touchStart(event) {
+        this.isDragging = true;
+        this.wrapper.classList.add('dragging');
+        this.wrapper.classList.remove('animating');
+        
+        // Clear any pending resume timeout
+        if (this.resumeTimeout) {
+            clearTimeout(this.resumeTimeout);
+        }
+        
+        this.startPos = this.getPositionX(event);
+        
+        // Get current transform value
+        const style = window.getComputedStyle(this.wrapper);
+        const matrix = new DOMMatrix(style.transform);
+        this.prevTranslate = matrix.m41;
+        this.currentTranslate = this.prevTranslate;
+    }
+    
+    touchMove(event) {
+        if (!this.isDragging) return;
+        
+        const currentPosition = this.getPositionX(event);
+        const diff = currentPosition - this.startPos;
+        this.currentTranslate = this.prevTranslate + diff;
+        
+        // Apply transform
+        this.wrapper.style.transform = `translateX(${this.currentTranslate}px)`;
+    }
+    
+    touchEnd() {
+        if (!this.isDragging) return;
+        
+        this.isDragging = false;
+        this.wrapper.classList.remove('dragging');
+        
+        console.log('🛑 Drag ended, will resume in 2 seconds...');
+        
+        // Set timeout to resume animation after 2 seconds
+        this.resumeTimeout = setTimeout(() => {
+            console.log('▶️ Resuming animation now...');
+            this.resumeAnimation();
+        }, this.resumeDelay);
+    }
+    
+    resumeAnimation() {
+        console.log('🔄 Resume animation called');
+        
+        // Simply restart the animation from position 0
+        this.wrapper.style.animation = 'none';
+        this.wrapper.style.transform = 'translateX(0)';
+        this.wrapper.classList.remove('animating');
+        
+        console.log('⏸️ Animation paused, resetting position');
+        
+        // Force reflow to ensure styles are applied
+        void this.wrapper.offsetHeight;
+        
+        // Restart animation
+        setTimeout(() => {
+            console.log('🎬 Starting animation with duration:', this.speed + 's');
+            this.wrapper.style.animation = `marqueeScroll ${this.speed}s linear infinite`;
+            this.wrapper.classList.add('animating');
+            console.log('✅ Animation should be playing now');
+        }, 50);
+    }
+}
+
+// Initialize all carousel marquees on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const carousels = document.querySelectorAll('.carousel-marquee-container');
+    carousels.forEach(container => {
+        const speed = container.getAttribute('data-speed') || 30;
+        const gap = container.getAttribute('data-gap') || 20;
+        
+        new CarouselMarquee(container, {
+            speed: parseInt(speed),
+            gap: parseInt(gap)
+        });
+    });
+});
+</script>
+

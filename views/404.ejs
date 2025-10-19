@@ -1,27 +1,103 @@
 <%- include('header'), {seoDetails} %>
 
-<body style="overflow: hidden;"><div class="Courses" style="padding-top: 0px; ">
-    <div style="max-width: 1250px; margin: 0 auto" style="display:flex; justify-content:center; align-items:center; height:100%">
-    <div class="row flex-deouti padd-left new-padding-bottom">
-        <div class="col-lg-6 align-self-center">
-        <div class="abou-heding" style="margin:20px">
-        <h1 class="h1error" style="   
-    color: #d30303;
-    font-size: 80px;
-    font-weight: 700;
-    padding-bottom: 38px;">404</h1>
-        <p style="margin-bottom: 40px;">Unfortunately! The page you’re looking for doesn’t exist . Click on link below to go back to Home Page</p>
+<style>
+    .fullscreen-error-page {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 120vh;
+        margin-top: -120px;
+        background: linear-gradient(135deg, #0b0733 0%, #1d1e2a 50%, #1a1c2f 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+   
+    }
+    
+    .error-content {
+        text-align: center;
+        padding: 40px;
+        padding-top: 150px;
+        max-width: 700px;
+        animation: fadeInUp 0.6s ease-out;
+    }
+    
+    .error-content h1 {
+        color: #FC5220;
+        font-size: 120px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-shadow: 0 4px 15px rgba(252, 82, 32, 0.3);
+        line-height: 1;
+    }
+    
+    .error-content h2 {
+        color: #ffffff;
+        font-size: 32px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+    
+    .error-content p {
+        color: #e0e0e0;
+        font-size: 18px;
+        line-height: 1.6;
+        margin-bottom: 40px;
+    }
+    
+    .error-content .btn-home {
+        display: inline-block;
+        padding: 15px 40px;
+        background: #FC5220;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(252, 82, 32, 0.3);
+    }
+    
+    .error-content .btn-home:hover {
+        background: #e04718;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(252, 82, 32, 0.4);
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .error-content h1 {
+            font-size: 80px;
+        }
+        
+        .error-content h2 {
+            font-size: 24px;
+        }
+        
+        .error-content p {
+            font-size: 16px;
+        }
+    }
+</style>
 
-        <a class="hover1"  href="/" >Home</a>
-        </div>
-        </div>
-        <div class="col-lg-6 align-self-center">
-        <div class="content-holder">
-        <div class="holder-inner"><img src="/assets/images/day/alphabetz-preschoolmascotgoing%20toschool.webp" alt=""></div>
-        </div>
-        </div>
-        </div>
+<div class="fullscreen-error-page">
+    <div class="error-content">
+        <h1>404</h1>
+        <h2>Page Not Found</h2>
+        <p>Unfortunately, the page you're looking for doesn't exist. It might have been moved or deleted.</p>
+        <a href="/" class="btn-home">Back to Home</a>
+    </div>
 </div>
-  </div>
-</body>
 
+<%- include('footer') %>

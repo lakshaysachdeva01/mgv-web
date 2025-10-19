@@ -1,7 +1,7 @@
 <!-- Popup Overlay -->
 <div class="popup-overlay" id="popup-overlay">
     <div class="popup-banner">
-       
+      <button class="close-button" id="popup-close-btn"><i style="font-size: 14px;" class="fa-solid fa-xmark"></i></button>
   
         <!-- Desktop Swiper -->
         <div class="popup-desktop-banner">
@@ -32,7 +32,7 @@
             </div>
              
         </div>
-        <button class="close-button" id="popup-close-btn">C L O S E</button>
+        
     </div>
   </div>
   
@@ -66,22 +66,25 @@
   text-align: center;
   display: flex;
   justify-content: center;
+  align-items: center;
+  font-weight: 700;
   border:none;
   color: white;
   width: 100%;
-  margin: 20px 0;
+  
     }
   
-    .popup-close-btn {
+    #popup-close-btn {
         position: absolute;
-        top: -25px;
-        right: 15px;
-        background: rgba(0, 0, 0, 0.7);
+        top: -15px;
+        right: -15px;
+        background: rgb(36, 36, 36);
+        border: 1px solid white;
         color: white;
-        border: none;
-        height: 40px;
-        width: 40px;
-        font-size: 30px;
+  
+        height: 35px;
+        width: 35px;
+        font-size: 20px;
         cursor: pointer;
         padding: 0;
         border-radius: 50%;
@@ -123,15 +126,19 @@
         .popup-desktop-banner {
             display: none;
         }
+        
+        #popup-close-btn {
+    top: -15px;
+    right: 5px;
+  }
+  
         .popup-mobile-banner {
             display: block;
         }
         .popup-banner {
             max-width: 95%;
         }
-        .popup-close-btn {
-            top: -25px;
-        }
+        
         .popup-slide img {
             height: 100%;
             max-height: 500px;
@@ -142,6 +149,155 @@
     }
   </style>
   
+  
+  
+  <!-- Scripts -->
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Verify Swiper is loaded
+    if (typeof Swiper === 'undefined') {
+        console.error('Swiper library not loaded! Check CDN or file path.');
+        return;
+    }
+  
+    const popupOverlay = document.getElementById("popup-overlay");
+    const popupCloseBtn = document.getElementById("popup-close-btn");
+  
+    // Pass popupbanners length from server to client
+    const popupBannersCount = <%= popupbanners.length %>;
+  
+    // Initialize Swiper instances
+    let desktopSwiper, mobileSwiper;
+    function initSwipers() {
+        desktopSwiper = new Swiper('#popup-desktop-swiper', {
+            slidesPerView: 1,
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.popup-pagination-desktop',
+                clickable: true,
+            },
+            on: {
+                init: () => console.log('Desktop Swiper initialized'),
+                slideChange: () => console.log('Desktop Swiper slide changed')
+            }
+        });
+  
+        mobileSwiper = new Swiper('#popup-mobile-swiper', {
+            slidesPerView: 1,
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.popup-pagination-mobile',
+                clickable: true,
+            },
+            on: {
+                init: () => console.log('Mobile Swiper initialized'),
+                slideChange: () => console.log('Mobile Swiper slide changed')
+            }
+        });
+    }
+  
+    // Show popup
+    function showPopup() {
+        console.log('Showing popup');
+        // Disable body scroll
+        document.body.style.overflow = 'hidden';
+        
+        popupOverlay.style.display = "flex";
+        setTimeout(() => {
+            popupOverlay.style.opacity = "1";
+            if (!desktopSwiper || !mobileSwiper) {
+                initSwipers();
+            } else {
+                desktopSwiper.update();
+                mobileSwiper.update();
+            }
+        }, 100);
+    }
+  
+    // Close popup
+    function closePopup() {
+        console.log('Closing popup');
+        // Re-enable body scroll
+        document.body.style.overflow = '';
+        
+        popupOverlay.style.opacity = "0";
+        setTimeout(() => {
+            popupOverlay.style.display = "none";
+            if (desktopSwiper) desktopSwiper.autoplay.stop();
+            if (mobileSwiper) mobileSwiper.autoplay.stop();
+        }, 300);
+        sessionStorage.setItem("popupClosed", "true");
+    }
+  
+    // Check if popup should show
+    if (!sessionStorage.getItem("popupClosed") && popupBannersCount > 0) {
+        setTimeout(showPopup, 500);
+    } else {
+        console.log('No popup shown: Either already closed or no banners available');
+    }
+  
+    // Event listeners
+    popupCloseBtn.addEventListener("click", closePopup);
+    popupOverlay.addEventListener("click", function (e) {
+        // Don't close if clicking directly on an image
+        if (e.target.tagName === 'IMG') {
+            return;
+        }
+        // Close for any other click (overlay, banner background, etc.)
+        closePopup();
+    });
+  });
+  </script>
+  <!--     BANNER
+          ================================================== -->
+  <style>
+      .banner-text-fade {
+          transition: opacity 0.5s ease-in-out;
+      }
+      
+      .banner-text-fade.fade-out {
+          opacity: 0;
+      }
+      
+      .banner-text-fade.fade-in {
+          opacity: 1;
+      }
+  
+      /* Banner Video Styles */
+      .banner-video-container {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          z-index: 0;
+      }
+  
+      .banner-video {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          min-width: 100%;
+          min-height: 100%;
+          width: auto;
+          height: auto;
+          transform: translate(-50%, -50%);
+          object-fit: cover;
+      }
+  
+      .banner-style02 {
+          position: relative;
+      }
+  </style>
   
   
   <!-- Scripts -->
@@ -268,7 +424,18 @@
  <!-- :: Header -->
  <section class="header" id="page">
     <div class="header-carousel owl-carousel owl-theme">
-        <div class="sec-hero display-table" style="background-image: url(assets/images/header/01_header.jpg)">
+
+<% 
+const buttonData = [
+    { btn1: 'Explore Products', link1: '/products', btn2: 'Request Quote', link2: '/contact' },
+    { btn1: 'View Solutions', link1: '/products', btn2: 'Contact Us', link2: '/contact' },
+    { btn1: 'Explore Materials', link1: '/products', btn2: 'Get in Touch', link2: '/contact' }
+];
+%>
+<% banners.forEach((banner, index) => { 
+    const buttons = buttonData[index % buttonData.length];
+%>
+        <div class="sec-hero display-table" style="background-image: url(<%= process.env.S3_BASE_URL + banner.bannerImage.webView %>)">
             <div class="table-cell">
                 <div class="overlay"></div>
                 <div class="container">
@@ -276,19 +443,11 @@
                         <div class="col-lg-8">
                             <div class="banner">
                                 <div class="top-handline">Ready To make your dream!</div>
-                                <h1 class="handline">The Best Solution For Industry Business</h1>
-                                <p class="about-website">Gazolin Are A Industry &amp; Manufacturing Services Provider Institutions. Suitable For Factory, Manufacturing, Industry, Engineering, Construction And Any Related Industry Care Field.</p>
-                                <ul class="header-list-features">
-                                    <li class="item">
-                                        <i class="fas fa-check"></i><h5>100% Satisfaction Guarantee</h5>
-                                    </li>
-                                    <li class="item">
-                                        <i class="fas fa-check"></i><h5>Quality Control System</h5>
-                                    </li>
-                                </ul>
+                                <h1 class="handline"><%= banner.title %></h1>
+                                <p class="about-website"><%= banner.subTitle %></p>
                                 <div class="btn-box">
-                                    <a class="btn-1 move-section" href="#start"><span>Let's Start</span></a>
-                                    <a class='btn-1 btn-2 ml-30' href='01_services.html'><span>Our Services</span></a>
+                                    <a class='btn-1 btn-2' href='<%= buttons.link1 %>'><span><%= buttons.btn1 %></span></a>
+                                    <a class='btn-1 btn-3 ml-30' href='<%= buttons.link2 %>'><span><%= buttons.btn2 %></span></a>
                                 </div>
                             </div>
                         </div>
@@ -296,53 +455,7 @@
                 </div>
             </div>
         </div>
-        <div class="sec-hero display-table" style="background-image: url(assets/images/header/03_header.jpg)">
-            <div class="table-cell">
-                <div class="overlay"></div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <div class="banner">
-                                <div class="top-handline">40 years of experience we provide services</div>
-                                <h1 class="handline">Industry a variety of high quality products</h1>
-                                <p class="about-website">Gazolin Are A Industry &amp; Manufacturing Services Provider Institutions. Suitable For Factory, Manufacturing, Industry, Engineering, Construction And Any Related Industry Care Field.</p>
-                                <div class="btn-box">
-                                    <a class='btn-1 btn-2' href='01_about-us.html'><span>About Us</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="sec-hero display-table" style="background-image: url(assets/images/header/02_header.jpg)">
-            <div class="table-cell">
-                <div class="overlay"></div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <div class="banner">
-                                <div class="top-handline">Quality &amp; Integrity Service Agency</div>
-                                <h1 class="handline">Provide Effective Building Solutions!</h1>
-                                <p class="about-website">Gazolin Are A Industry &amp; Manufacturing Services Provider Institutions. Suitable For Factory, Manufacturing, Industry, Engineering, Construction And Any Related Industry Care Field.</p>
-                                <ul class="header-list-features">
-                                    <li class="item">
-                                        <i class="fas fa-check"></i><h5>Accurate Testing Processes</h5>
-                                    </li>
-                                    <li class="item">
-                                        <i class="fas fa-check"></i><h5>Highly Professional Staff</h5>
-                                    </li>
-                                </ul>
-                                <div class="btn-box">
-                                    <a class='btn-1 btn-2' href='01_request-quote.html'><span>Request Quote</span></a>
-                                    <a class='btn-1 btn-3 ml-30' href='01_about-us.html'><span>Read More</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<% }) %>
     </div>
   </section>
  
