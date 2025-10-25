@@ -31,7 +31,7 @@
 <section style=" padding: 40px 0; margin-bottom: 30px;">
     <div class="container">
         <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 1200px; margin: 0 auto;">
-            <button onclick="filterProducts('all')" class="category-tab active" data-category="all" style="padding: 0px 14px; background: #FC5220; border: 2px solid #FC5220; border-radius: 25px; color: white; text-decoration: none; font-weight: 500; font-size: 14px; height:40px; transition: all 0.3s ease; cursor: pointer;">All Products</button>
+            <button onclick="filterProducts('all')" class="category-tab active" data-category="all" style="padding: 0px 14px; background: #cb1125; border: 2px solid #cb1125; border-radius: 25px; color: white; text-decoration: none; font-weight: 500; font-size: 14px; height:40px; transition: all 0.3s ease; cursor: pointer;">All Products</button>
             <% categories.forEach(category => { %>
                 <button onclick="filterProducts('<%= category._id %>')" class="category-tab" data-category="<%= category._id %>" style="padding: 0px 14px; background: white; border: 2px solid #e9ecef; border-radius: 25px; color: #6c757d; text-decoration: none; font-weight: 500; font-size: 14px; transition: all 0.3s ease; cursor: pointer;"><%= category.name %></button>
             <% }) %>
@@ -69,7 +69,7 @@
     }
     
 .category-name{
-    color: #FC5220 !important;
+    color: #cb1125 !important;
 }
 
   

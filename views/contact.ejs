@@ -24,40 +24,128 @@
 		<div class="contact-us py-100">
             <div class="container">
                 <div class="contact-info-content">
-                    <div class="row">
-                        <div class="col-md-6 col-lg-3 " >
-                            <div class="contact-box" >
-                                <i class="ar-icons-call"></i>
-                                <div class="box">
-                                    <a class="phone" href="tel:+971501560131">+971 50 156 0131</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
+                    <style>
+                        .contact-box .item {
+                          display: flex;
+                          align-items: flex-start;
+                          gap: 8px;
+                          margin-bottom: 20px;
+                        }
+                        .contact-box .item:last-child {
+                          
+                          margin-bottom: 0px;
+                        }
+                        
+                        .contact-box .item i {
+                          font-size: 30px;
+                           /* adjust as per your site theme */
+                          flex-shrink: 0;
+                          margin-top: 3px;
+                        }
+                        
+                        .contact-box .item a {
+                          color: #555;
+                          text-decoration: none;
+                          transition: color 0.2s ease;
+                        }
+                        
+                        .contact-box .item a:hover {
+                          color: #e67e22;
+                        }
+                        </style>
+                        
+                        <div class="row">
+                          <!-- UAE Office -->
+                          <div class="col-md-6 col-lg-6">
                             <div class="contact-box">
-                                <i class="ar-icons-email"></i>
-                                <div class="box">
-                                    <a class="mail" href="mailto:tech.mgvdubai@gmail.com">tech.mgvdubai@gmail.com</a>
+                              <div class="box" style="text-align: left;">
+                                <div class="item">
+                                  <i class="ar-icons-location"></i>
+                                  <a target="_blank" href="https://www.google.com/maps/place/RAKEZ+Al+Hulaila+Industrial+Zone/@25.929254,56.052901,3699m/data=!3m1!1e3!4m6!3m5!1s0x3ef6656d56c8fdc3:0xce5e9421d77c4fd5!8m2!3d25.9292537!4d56.0529013!16s%2Fg%2F11hckbg49r?hl=en&entry=ttu&g_ep=EgoyMDI1MTAyMi4wIKXMDSoASAFQAw%3D%3D">
+                                    VUNE 1327 Compass Building, Al-Hulaila Industrial Zone-FZ, Ras Al Khaimah, United Arab Emirates
+                                  </a>
                                 </div>
+                                <div class="item">
+                                  <i class="ar-icons-call"></i>
+                                  <a href="tel:+971501560131">+971 50 156 0131</a>
+                                </div>
+                                <div class="item">
+                                  <i class="ar-icons-email"></i>
+                                  <a href="mailto:tech.mgvdubai@gmail.com">tech.mgvdubai@gmail.com</a>
+                                </div>
+                              </div>
                             </div>
-                        </div>
-                        <div class="col-md-6 col-lg-6">
+                          </div>
+                        
+                          <!-- India Office -->
+                          <div class="col-md-6 col-lg-6">
                             <div class="contact-box">
-                                <i class="ar-icons-location"></i>
-                                <div class="box">
-                                    <p>VUNE 1327 Compass Building Al-hulaila,ALHulaila Industrial Zone-fz,Ras Al Khaimah, United Arab Emirates</p>
+                              <div class="box" style="text-align: left;">
+                                <div class="item">
+                                  <i class="ar-icons-location"></i>
+                                  <a target="_blank" href="https://www.google.com/maps/place/Magic+paints,+Rawabhata,+Industrial+Area,+Bhanpuri,+Raipur,+Chhattisgarh+493221/@21.3174099,81.6393862,958m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3a28e6fe51f4649f:0x3820cb9be899e419!8m2!3d21.31741!4d81.6442518!16s%2Fg%2F11kzz8yhkg?entry=ttu&g_ep=EgoyMDI1MTAyMi4wIKXMDSoASAFQAw%3D%3D">
+                                    Plot No 12, Rawabhata Industrial Area, Raipur 493221, Chhattisgarh, India
+                                  </a>
                                 </div>
+                                <div class="item">
+                                  <i class="ar-icons-call"></i>
+                                  <a href="tel:+919039266159">+91 90392 66159</a>
+                                </div>
+                                <div class="item">
+                                  <i class="ar-icons-email"></i>
+                                  <a href="mailto:Shoeb@mgvdubai.com">Shoeb@mgvdubai.com</a>
+                                </div>
+                              </div>
                             </div>
+                          </div>
                         </div>
-                    </div>
+                        
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
-                        <!-- :: Map -->
-                        <div class="map-box">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4469.913302176662!2d56.05169049709806!3d25.92917104634747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ef6656d56c8fdc3%3A0xce5e9421d77c4fd5!2sRAKEZ%20Al%20Hulaila%20Industrial%20Zone!5e1!3m2!1sen!2sin!4v1761351814634!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <div class="map-box" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                          <!-- UAE Map -->
+                          <iframe
+                            id="map-uae"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4469.913302176662!2d56.05169049709806!3d25.92917104634747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ef6656d56c8fdc3%3A0xce5e9421d77c4fd5!2sRAKEZ%20Al%20Hulaila%20Industrial%20Zone!5e1!3m2!1sen!2sin!4v1761351814634!5m2!1sen!2sin"
+                            width="100%"
+                            height="100%"
+                            style="border:0; position:absolute; top:0; left:0; transition: opacity 1s ease;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                          </iframe>
+                      
+                          <!-- India Map -->
+                          <iframe
+                            id="map-india"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3700.1046148296897!2d81.63938621533202!3d21.31740988334619!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a28e6fe51f4649f%3A0x3820cb9be899e419!2sMagic%20Paints%2C%20Rawabhata%2C%20Industrial%20Area%2C%20Bhanpuri%2C%20Raipur%2C%20Chhattisgarh%20493221!5e1!3m2!1sen!2sin!4v1761351987567!5m2!1sen!2sin"
+                            width="100%"
+                            height="100%"
+                            style="border:0; position:absolute; top:0; left:0; opacity:0; transition: opacity 1s ease;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                          </iframe>
                         </div>
-                    </div>
+                      </div>
+                      <script>
+                        let showUAE = true;
+                        const uaeMap = document.getElementById("map-uae");
+                        const indiaMap = document.getElementById("map-india");
+                      
+                        setInterval(() => {
+                          if (showUAE) {
+                            uaeMap.style.opacity = "0";
+                            indiaMap.style.opacity = "1";
+                          } else {
+                            uaeMap.style.opacity = "1";
+                            indiaMap.style.opacity = "0";
+                          }
+                          showUAE = !showUAE;
+                        }, 5000); // change every 5 seconds
+                      </script>
+                                            
                     <div class="col-lg-6">
 						<div class="add-comments">
 							<form  id="contactForm" action="/submit-contact" class="inner-add-comments form-contact-2">

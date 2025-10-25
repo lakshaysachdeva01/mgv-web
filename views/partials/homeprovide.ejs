@@ -53,14 +53,38 @@
                 </div>
             </div>
         </div>
-        
+        <style>
+.dualmap{
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px;
+}
+
+            .dualmap .map-box{
+               height: 50%;
+            }
+
+            @media (max-width:768px) {
+                .dualmap{
+                    gap: 0px;
+                }
+                .dualmap .map-box{
+               height: 100%;
+               min-height: 400px;
+            }
+            }
+
+        </style>
         <!-- :: Qoute Box -->
         <div class="quote-box">
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-4 dualmap" >
                     <!-- :: Map -->
-                    <div class="map-box">
+                    <div class="map-box"  >
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4469.913302176662!2d56.05169049709806!3d25.92917104634747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ef6656d56c8fdc3%3A0xce5e9421d77c4fd5!2sRAKEZ%20Al%20Hulaila%20Industrial%20Zone!5e1!3m2!1sen!2sin!4v1761351814634!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="map-box">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4171.763675183478!2d81.63938624846064!3d21.317409930035456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a28e6fe51f4649f%3A0x3820cb9be899e419!2sMagic%20paints%2C%20Rawabhata%2C%20Industrial%20Area%2C%20Bhanpuri%2C%20Raipur%2C%20Chhattisgarh%20493221!5e1!3m2!1sen!2sin!4v1761373314333!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
                 <div class="col-lg-8">
@@ -106,7 +130,7 @@
                             <div class="col-lg-12">
                                 <div class="quote-item">
                                     <div class="quote-item">
-                                        <textarea name="<%= CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks %>" placeholder="Message Details!" required=""></textarea>
+                                        <textarea name="<%= CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS.remarks %>" placeholder="Remarks" required=""></textarea>
                                     </div>
                                 </div>
                             </div>

@@ -33,9 +33,17 @@
                     <div class="job-header">
                         <!-- Job Tags -->
                         <div class="job-tags">
-                            <% if (job.category?.name) { %>
-                            <span class="job-tag"><%= job.jobPosition %></span>
-                            <% } %>
+                            <% if (
+                                job.category && 
+                                job.category.name && 
+                                job.category.name.trim() !== "" && 
+                                job.jobPosition && 
+                                job.jobPosition.trim() !== ""
+                              ) { %>
+                                <span class="job-tag"><%= job.jobPosition %></span>
+                              <% } %>
+                              
+                            
                             <% if (job.workMode) { %>
                             <span class="job-tag"><%= job.workMode.replace('_', ' ') %></span>
                             <% } %>
@@ -48,12 +56,20 @@
                         
                         <!-- Key Details -->
                         <div class="job-key-details">
+                            <% if (
+                                job.category && 
+                                job.category.name && 
+                                job.category.name.trim() !== "" && 
+                                job.jobPosition && 
+                                job.jobPosition.trim() !== ""
+                              ) { %>
                             <div class="detail-item">
                                 <span class="detail-label">Designation</span>
                                 <span class="detail-value">
                                     <%= job.jobPosition %>
                                 </span>
                             </div>
+                            <% } %>
                             <div class="detail-item">
                                 <span class="detail-label">Experience</span>
                                 <span class="detail-value"><%= job.experienceLevel || '' %></span>
@@ -298,8 +314,8 @@
 .job-tag {
     font-size: 13px;
     text-transform: capitalize;
-    border: 1px solid #F57009;
-    color: #F57009;
+    border: 1px solid #cb1125;
+    color: #cb1125;
     padding: 3px 10px;
     margin-right: 10px;
     background: transparent;
@@ -362,7 +378,7 @@
     top: 0;
     bottom: 0;
     width: 4px;
-    background: #F57009;
+    background: #cb1125;
     border-radius: 2px;
 }
 
@@ -462,8 +478,8 @@
 }
 
 .btn__primary {
-    background-color: #F57009;
-    border-color: #F57009;
+    background-color: #cb1125;
+    border-color: #cb1125;
     font-weight: 600;
     position: relative;
     display: inline-flex;
@@ -473,8 +489,8 @@
 }
 
 .btn__primary:hover {
-    background-color: #F57009;
-    border-color:#F57009;
+    background-color: #cb1125;
+    border-color:#cb1125;
 }
 
 /* Responsive adjustments for full-width layout */

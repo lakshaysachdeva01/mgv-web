@@ -71,16 +71,6 @@
             </div>
             
        
-            <div class="page-title-content" style="width: 100%; margin-top: 20px;">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb gallery-breadcrumb" id="blogTabs" style=" gap: 8px;">
-                        <li class="breadcrumb-item active btn-1 btn-3" data-filter="all"><span>All</span></li>
-                        <li class="breadcrumb-item btn-1 btn-3" data-filter="blog"><span>Blogs</span></li>
-                        <li class="breadcrumb-item btn-1 btn-3" data-filter="news"><span>News</span></li>
-                        <li class="breadcrumb-item btn-1 btn-3" data-filter="event"><span>Events</span></li>
-                    </ol>
-                </nav>
-            </div>
         </div>
         <div class="row">
              <style>
@@ -150,7 +140,7 @@
                             <a class='title-blog' href='/blog/<%= item.seoDetails.slug %>'>
                                 <h5><%= item.title %></h5>
                             </a>
-                            <span class="blog-date"><%= item.postDate %></span>
+                            <span class="blog-date"><%= item.category %></span>
                              <div class="blog-description blog-description-clamp"><%- item.description %></div>
                             <a class='btn-1 btn-3 link' aria-label="Read More-about the blog" href='/blog/<%= item.seoDetails.slug %>'><span>Read More</span></a>
                         </div>
