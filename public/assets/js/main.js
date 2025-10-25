@@ -74,7 +74,7 @@
     // :: OWL Carousel Js Header Hero
     $('.header-carousel').owlCarousel({
         loop: true,
-        nav: true,
+        nav: false,
         margin: 30,
         autoplay: true,
         autoplayTimeout: 3000,
@@ -82,7 +82,6 @@
         autoplayHoverPause: false,
         mouseDrag: true,
         touchDrag: true,
-        navText: ['<i class="ar-icons-left-chevron"></i>', '<i class="ar-icons-right-chevron"></i>'],
         dotsClass: ['container','owl-dots'],
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',

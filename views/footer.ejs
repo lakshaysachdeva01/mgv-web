@@ -3,7 +3,7 @@
       <div class="row">
           <div class="col-sm-12 col-md-6 col-lg-4">
               <div class="logo">
-                  <img class="img-fluid" src="/assets/images/logo/download.png" alt="MGV_logo_footer">
+                  <img class="img-fluid" src="/assets/images/logo/MGV-coloured-logo.png" alt="MGV_logo_footer">
                   <p>Leading industrial and construction solutions provider in UAE & India. Supplying oil & gas equipment, building materials, electricals, and more.
                 </p>
               </div>
@@ -21,22 +21,10 @@
                   <li><a href='/contact'>Contact Us</a></li>
               </ul>
           </div>
+         
           <div class="col-sm-6 col-md-6 col-lg-3">
               <div class="footer-title">
-                  <h4>Industries We Serve</h4>
-              </div>
-              <ul class="links">
-                  <li><a href='/products'>Oil &amp; Gas</a></li>
-                  <li><a href='/products'>Petrochemical &amp; Refinery</a></li>
-                  <li><a href='/products'>Construction &amp; Infrastructure</a></li>
-                  <li><a href='/products'>Power &amp; Energy</a></li>
-                  <li><a href='/products'>Industrial &amp; Mechanical</a></li>
-                  <li><a href='/products'>Water &amp; Wastewater</a></li>
-              </ul>
-          </div>
-          <div class="col-sm-6 col-md-6 col-lg-3">
-              <div class="footer-title">
-                  <h4>Product Categories</h4>
+                  <h4>Products</h4>
               </div>
               <ul class="links">
                   <% if (categories && categories.length > 0) { %>
@@ -44,10 +32,31 @@
                           <li><a href='/products?category=<%= category._id %>'><%= category.name %></a></li>
                       <% }) %>
                   <% } else { %>
-                      <li><a href='/products'>All Products</a></li>
+                      
                   <% } %>
               </ul>
           </div>
+
+          <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="footer-title">
+                <h4>Address : Dubai</h4>
+            </div>
+            <ul class="links">
+               <li><a href="">VUNE 1327 Compass Building Al-hulaila,
+
+                ALHulaila Industrial Zone-fz, Ras Al Khaimah,
+                
+                United Arab Emirates</a></li>
+            </ul>
+            <div class="footer-title">
+                <h4>India office</h4>
+            </div>
+            <ul class="links">
+                <li><a href="">
+                    Plot No 12, Rawabhata industrial Area, Raipur 493221, Chhattisgarh
+                    </a></li>
+             </ul>
+        </div>
       </div>
   </div>
   <div class="copyright">

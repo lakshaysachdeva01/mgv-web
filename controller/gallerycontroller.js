@@ -52,7 +52,7 @@ exports.getLatestGalleryImages = async () => {
             return [];
         });
 
-        return latestImages.slice(-4).reverse(); // Get the latest 5 images
+        return latestImages.slice(-12).reverse(); // Get the latest 12 images
     } catch (error) {
         console.error("Error fetching latest gallery images:", error);
         return [];
