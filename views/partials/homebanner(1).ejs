@@ -163,96 +163,118 @@
     const popupOverlay = document.getElementById("popup-overlay");
     const popupCloseBtn = document.getElementById("popup-close-btn");
   
+    if (!popupOverlay || !popupCloseBtn) {
+        return;
+    }
+  
     // Pass popupbanners length from server to client
     const popupBannersCount = <%= popupbanners.length %>;
   
     // Initialize Swiper instances
     let desktopSwiper, mobileSwiper;
+    let swipersInitialized = false;
+    
     function initSwipers() {
-        desktopSwiper = new Swiper('#popup-desktop-swiper', {
-            slidesPerView: 1,
-            loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.popup-pagination-desktop',
-                clickable: true,
-            },
-            on: {
-                init: () => console.log('Desktop Swiper initialized'),
-                slideChange: () => console.log('Desktop Swiper slide changed')
-            }
-        });
-  
-        mobileSwiper = new Swiper('#popup-mobile-swiper', {
-            slidesPerView: 1,
-            loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.popup-pagination-mobile',
-                clickable: true,
-            },
-            on: {
-                init: () => console.log('Mobile Swiper initialized'),
-                slideChange: () => console.log('Mobile Swiper slide changed')
-            }
-        });
+        if (swipersInitialized) {
+            return;
+        }
+        
+        try {
+            const desktopConfig = {
+                slidesPerView: 1,
+                loop: popupBannersCount > 1,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                }
+            };
+            
+            const mobileConfig = {
+                slidesPerView: 1,
+                loop: popupBannersCount > 1,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.popup-pagination-mobile',
+                    clickable: true,
+                }
+            };
+            
+            desktopSwiper = new Swiper('#popup-desktop-swiper', desktopConfig);
+            mobileSwiper = new Swiper('#popup-mobile-swiper', mobileConfig);
+            
+            swipersInitialized = true;
+        } catch (error) {
+            console.error('Error initializing Swiper:', error);
+        }
     }
   
     // Show popup
     function showPopup() {
-        console.log('Showing popup');
-        // Disable body scroll
+        if (!popupOverlay) return;
+        
+        // Disable body scroll without breaking layout
+        const scrollY = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${scrollY}px`;
+        document.body.style.width = '100%';
         document.body.style.overflow = 'hidden';
         
         popupOverlay.style.display = "flex";
-        setTimeout(() => {
+        requestAnimationFrame(() => {
             popupOverlay.style.opacity = "1";
-            if (!desktopSwiper || !mobileSwiper) {
+            if (!swipersInitialized) {
                 initSwipers();
             } else {
-                desktopSwiper.update();
-                mobileSwiper.update();
+                if (desktopSwiper) desktopSwiper.update();
+                if (mobileSwiper) mobileSwiper.update();
             }
-        }, 100);
+        });
     }
   
     // Close popup
     function closePopup() {
-        console.log('Closing popup');
-        // Re-enable body scroll
-        document.body.style.overflow = '';
+        if (!popupOverlay) return;
         
         popupOverlay.style.opacity = "0";
         setTimeout(() => {
             popupOverlay.style.display = "none";
-            if (desktopSwiper) desktopSwiper.autoplay.stop();
-            if (mobileSwiper) mobileSwiper.autoplay.stop();
+            
+            // Restore body scroll properly
+            const scrollY = document.body.style.top;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.overflow = '';
+            
+            if (scrollY) {
+                window.scrollTo(0, parseInt(scrollY || '0') * -1);
+            }
+            
+            if (desktopSwiper && desktopSwiper.autoplay) {
+                desktopSwiper.autoplay.stop();
+            }
+            if (mobileSwiper && mobileSwiper.autoplay) {
+                mobileSwiper.autoplay.stop();
+            }
+            
+            sessionStorage.setItem("popupClosed", "true");
         }, 300);
-        sessionStorage.setItem("popupClosed", "true");
     }
   
     // Check if popup should show
     if (!sessionStorage.getItem("popupClosed") && popupBannersCount > 0) {
         setTimeout(showPopup, 500);
-    } else {
-        console.log('No popup shown: Either already closed or no banners available');
     }
   
     // Event listeners
     popupCloseBtn.addEventListener("click", closePopup);
     popupOverlay.addEventListener("click", function (e) {
-        // Don't close if clicking directly on an image
-        if (e.target.tagName === 'IMG') {
-            return;
+        if (e.target === popupOverlay) {
+            closePopup();
         }
-        // Close for any other click (overlay, banner background, etc.)
-        closePopup();
     });
   });
   </script>
@@ -298,127 +320,6 @@
           position: relative;
       }
   </style>
-  
-  
-  <!-- Scripts -->
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Verify Swiper is loaded
-    if (typeof Swiper === 'undefined') {
-        console.error('Swiper library not loaded! Check CDN or file path.');
-        return;
-    }
-  
-    const popupOverlay = document.getElementById("popup-overlay");
-    const popupCloseBtn = document.getElementById("popup-close-btn");
-  
-    // Pass popupbanners length from server to client
-    const popupBannersCount = <%= popupbanners.length %>;
-  
-    // Initialize Swiper instances
-    let desktopSwiper, mobileSwiper;
-    function initSwipers() {
-        desktopSwiper = new Swiper('#popup-desktop-swiper', {
-            slidesPerView: 1,
-            loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.popup-pagination-desktop',
-                clickable: true,
-            },
-            on: {
-                init: () => console.log('Desktop Swiper initialized'),
-                slideChange: () => console.log('Desktop Swiper slide changed')
-            }
-        });
-  
-        mobileSwiper = new Swiper('#popup-mobile-swiper', {
-            slidesPerView: 1,
-            loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.popup-pagination-mobile',
-                clickable: true,
-            },
-            on: {
-                init: () => console.log('Mobile Swiper initialized'),
-                slideChange: () => console.log('Mobile Swiper slide changed')
-            }
-        });
-    }
-  
-    // Show popup
-    function showPopup() {
-        console.log('Showing popup');
-        // Prevent body scroll
-        document.body.style.overflow = 'hidden';
-        document.body.style.position = 'fixed';
-        document.body.style.width = '100%';
-        
-        popupOverlay.style.display = "flex";
-        setTimeout(() => {
-            popupOverlay.style.opacity = "1";
-            if (!desktopSwiper || !mobileSwiper) {
-                initSwipers();
-            } else {
-                desktopSwiper.update();
-                mobileSwiper.update();
-            }
-        }, 100);
-    }
-  
-    // Close popup
-    function closePopup() {
-        console.log('Closing popup');
-        popupOverlay.style.opacity = "0";
-        setTimeout(() => {
-            popupOverlay.style.display = "none";
-            // Restore body scroll
-            document.body.style.overflow = '';
-            document.body.style.position = '';
-            document.body.style.width = '';
-            
-            if (desktopSwiper) desktopSwiper.autoplay.stop();
-            if (mobileSwiper) mobileSwiper.autoplay.stop();
-        }, 300);
-        sessionStorage.setItem("popupClosed", "true");
-    }
-  
-    // Check if popup should show
-    if (!sessionStorage.getItem("popupClosed") && popupBannersCount > 0) {
-        setTimeout(showPopup, 500);
-    } else {
-        console.log('No popup shown: Either already closed or no banners available');
-    }
-  
-    // Prevent spacebar and other key scrolling
-    function preventScroll(e) {
-        if (popupOverlay.style.display === "flex") {
-            // Prevent spacebar (32), page up (33), page down (34), end (35), home (36), arrow keys (37-40)
-            if ([32, 33, 34, 35, 36, 37, 38, 39, 40].includes(e.keyCode)) {
-                e.preventDefault();
-            }
-        }
-    }
-
-    // Event listeners
-    popupCloseBtn.addEventListener("click", closePopup);
-    popupOverlay.addEventListener("click", function (e) {
-        if (e.target === popupOverlay) {
-            closePopup();
-        }
-    });
-    
-    // Prevent keyboard scrolling when popup is open
-    document.addEventListener('keydown', preventScroll, false);
-  });
-  </script>
 
 
  <!-- :: Header -->

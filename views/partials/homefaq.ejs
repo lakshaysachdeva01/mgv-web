@@ -65,12 +65,93 @@
                   </div>
               </div>
               <div class="col-lg-4 d-flex align-items-center justify-content-between">
-                  <div>
-                      <a class="phone-mail" href="tel:+971501560131"> +971 501560131</a>
-                      <a class="phone-mail" href="mailto:tech.mgvdubai@gmail.com">tech.mgvdubai@gmail.com</a>
+                  <div class="faq-contact-flip-container">
+                      <div class="phone-item active">
+                          <a class="phone-mail" href="tel:+971501560131"> +971 50 156 0131</a>
+                          <a class="phone-mail" href="mailto:Zahabia@mgvdubai.com">Zahabia@mgvdubai.com</a>
+                      </div>
+                      <div class="phone-item">
+                          <a class="phone-mail" href="tel:+919039266159"> +91 90392 66159</a>
+                          <a class="phone-mail" href="mailto:shoeb@mgvdubai.com">shoeb@mgvdubai.com</a>
+                      </div>
                   </div>
               </div>
           </div>
       </div>
   </div>
 </section>
+
+<style>
+    /* FAQ Contact Flip Animation */
+    .faq-contact-flip-container {
+        position: relative;
+        min-height: 50px;
+        overflow: hidden;
+    }
+    
+    .faq-contact-flip-container .phone-item {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .faq-contact-flip-container .phone-item.active {
+        opacity: 1;
+        transform: translateY(0);
+        position: relative;
+    }
+    
+    .faq-contact-flip-container .phone-item.exiting {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    
+    .faq-contact-flip-container .phone-item a {
+        pointer-events: auto;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    
+    .faq-contact-flip-container .phone-item a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    (function() {
+        const faqPhoneItems = document.querySelectorAll('.faq-contact-flip-container .phone-item');
+        
+        if (faqPhoneItems.length < 2) {
+            return; // Need at least 2 items to flip
+        }
+        
+        let currentFaqIndex = 0;
+        
+        function flipFaqContact() {
+            const currentItem = faqPhoneItems[currentFaqIndex];
+            const nextIndex = (currentFaqIndex + 1) % faqPhoneItems.length;
+            const nextItem = faqPhoneItems[nextIndex];
+            
+            // Exit current
+            currentItem.classList.add('exiting');
+            
+            setTimeout(() => {
+                currentItem.classList.remove('active', 'exiting');
+                
+                // Enter next
+                nextItem.classList.add('active');
+                currentFaqIndex = nextIndex;
+            }, 500);
+        }
+        
+        // Flip every 3 seconds
+        setInterval(flipFaqContact, 3000);
+    })();
+</script>

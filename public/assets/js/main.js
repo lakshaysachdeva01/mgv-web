@@ -11,11 +11,6 @@
 (function () {
     'use strict';
     
-    // :: Loading
-    $(window).on('load', function () {
-        $('.loading').fadeOut();
-    });
-    
     // :: Scroll Smooth To Go Section
     $('.move-section').on('click', function (e) {
         e.preventDefault();
