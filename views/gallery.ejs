@@ -162,11 +162,32 @@
                 <div class="page-title-content">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb gallery-breadcrumb" id="galleryTabs" style="justify-content: center;">
-                            <li class="breadcrumb-item active btn-1 btn-3 "] data-filter="all"><span>All</span></li>
-                            <li class="breadcrumb-item btn-1 btn-3 " data-filter="videos"><span>Videos</span></li>
+                            <%
+                                // Count image albums and check for videos
+                                let imageAlbums = [];
+                                let hasVideos = false;
+                                gallery.forEach((album) => {
+                                    if (album.mediaDetails.mediaType === "IMAGE") {
+                                        imageAlbums.push(album);
+                                    } else if (album.mediaDetails.mediaType === "VIDEO" && album.mediaDetails.videoLink) {
+                                        hasVideos = true;
+                                    }
+                                });
+                                
+                                const imageAlbumCount = imageAlbums.length;
+                                const totalCategories = imageAlbumCount + (hasVideos ? 1 : 0);
+                                const showAllTab = totalCategories > 1;
+                                const showSingleAlbumName = !showAllTab && imageAlbumCount === 1 && !hasVideos;
+                            %>
+                            <% if (showAllTab) { %>
+                                <li class="breadcrumb-item active btn-1 btn-3 " data-filter="all"><span>All</span></li>
+                            <% } %>
+                            <% if (hasVideos) { %>
+                                <li class="breadcrumb-item btn-1 btn-3 " data-filter="videos"><span>Videos</span></li>
+                            <% } %>
                             <% gallery.forEach((album) => { %>
                                 <% if (album.mediaDetails.mediaType === "IMAGE") { %>
-                                    <li class="breadcrumb-item btn-1 btn-3 " data-filter="<%= album.title.toLowerCase() %>"><span><%= album.title %></span></li>
+                                    <li class="breadcrumb-item <%= showSingleAlbumName ? 'active' : '' %> btn-1 btn-3 " data-filter="<%= album.title.toLowerCase() %>"><span><%= album.title %></span></li>
                                 <% } %>
                             <% }); %>
                         </ol>
@@ -304,8 +325,15 @@
         });
     });
 
-    // Set default filter to 'All'
-    filterGallery('all');
+    // Set default filter - use 'all' if All tab exists, otherwise use the first tab's filter
+    const allTab = document.querySelector('#galleryTabs .breadcrumb-item[data-filter="all"]');
+    if (allTab) {
+        filterGallery('all');
+    } else if (galleryBreadcrumbs.length > 0) {
+        const firstTab = galleryBreadcrumbs[0];
+        const defaultFilter = firstTab.getAttribute('data-filter');
+        filterGallery(defaultFilter);
+    }
 });
 </script>
 
