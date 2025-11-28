@@ -11,6 +11,11 @@
 (function () {
     'use strict';
     
+    // :: Loading
+    $(window).on('load', function () {
+        $('.loading').fadeOut();
+    });
+    
     // :: Scroll Smooth To Go Section
     $('.move-section').on('click', function (e) {
         e.preventDefault();
@@ -39,6 +44,23 @@
         e.preventDefault();
         $menuLink.toggleClass('active');
         $navbarMenu.toggleClass('active');
+    });
+    
+    // :: Mobile Menu Dropdown Toggle
+    $(document).on('click', '.nav-bar-links .item-level-1.has-menu > .link-level-1', function (e) {
+        e.preventDefault();
+        var $parent = $(this).parent('.item-level-1');
+        var $submenu = $parent.find('.level-2');
+        
+        // Toggle active class on link
+        $(this).toggleClass('active');
+        
+        // Toggle active class on submenu
+        $submenu.toggleClass('active');
+        
+        // Close other open submenus
+        $parent.siblings('.item-level-1.has-menu').find('.link-level-1').removeClass('active');
+        $parent.siblings('.item-level-1.has-menu').find('.level-2').removeClass('active');
     });
     
     // :: Add Class Active To Search Box

@@ -87,7 +87,7 @@
         background-color: #4b4b4b;
     }
     .nav-bar .logo .open-nav-bar:hover span{
-        background-color: #F57009;
+        background-color: #cb1125;
     }
     .nav-bar .logo .open-nav-bar span:nth-of-type(2){
         margin: 5px 0;
@@ -100,7 +100,7 @@
     }
     .nav-bar .nav-bar-links.active{
         display: block;
-        max-height: 300px;
+       
         overflow: hidden;
         overflow-y: scroll;
         -webkit-box-shadow: 0 3px 4px rgb(0 0 0 / 7%);
@@ -113,6 +113,7 @@
     .nav-bar .nav-bar-links .level-1 .item-level-1 .link-level-1{
         padding: 12px 0 12px 12px;
         margin-right: 12px;
+        border-bottom: 1px solid rgb(248 246 247 / 10%);
     }
     .nav-bar.active .nav-bar-links .level-1 .item-level-1 .link-level-1{
         color: #FFF;
@@ -120,12 +121,12 @@
     .nav-bar.active .nav-bar-links .level-1 .item-level-1 .link-level-1:hover,
     .nav-bar.active .nav-bar-links .level-1 .item-level-1 .link-level-1.color-active,
     .nav-bar.active .nav-bar-links .level-2 .item-level-2 .link-level-2:hover{
-        color: #F57009;
+        color: #cb1125;
     }
     .nav-bar .nav-bar-links .level-1 .item-level-1 .link-level-1:before{
         display: none;
     }
-    .nav-bar .nav-bar-links .level-1 .item-level-1 .link-level-1:after{
+    .nav-bar .nav-bar-links .level-1 .item-level-1.has-menu .link-level-1:after{
         content: '\f107';
         font-family: 'Font Awesome 5 Free';
         position: absolute;
@@ -133,7 +134,7 @@
         font-size: 12px;
         width: 25px;
         height: 25px;
-        background-color: #F57009;
+        background-color: #cb1125;
         color: #FFF;
         text-align: center;
         border-radius: 50%;
@@ -166,7 +167,7 @@
         display: block;
     }
     .nav-bar .nav-bar-links .level-2.active .item-level-2{
-        margin: 0 40px;
+        margin: 5px 20px;
     }
     .nav-bar .nav-bar-links .level-2 .item-level-2 .link-level-2{
         color: #F1F1F1;
@@ -230,7 +231,7 @@
 		background-color: #4b4b4b;
 	}
 	.all-navbar.home-2 .nav-bar .logo .open-nav-bar:hover span{
-        background-color: #F57009;
+        background-color: #cb1125;
     }
 	.all-navbar.home-2 .nav-bar .nav-bar-links .level-1 .item-level-1 .link-level-1{
 		color: #FFF;

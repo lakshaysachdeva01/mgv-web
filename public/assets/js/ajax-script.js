@@ -3,7 +3,7 @@ const form = document.querySelector("form.form-contact"),
 
 form.onsubmit = (e) => {
 	e.preventDefault();
-	statusTxt.style.color = "#F57009";
+	statusTxt.style.color = "#cb1125";
 	statusTxt.style.display = "inline-block";
 	statusTxt.innerText = "Sending your message...";
 	form.classList.add("disabled");

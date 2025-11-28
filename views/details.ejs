@@ -88,7 +88,7 @@
 
           <!-- Description -->
           <div class="product-section">
-            <h2 class="product-section-title">Description</h2>
+          
             <div class="product-description blog-description">
               <%- product.description ? product.description.replace(/<span[^>]*>/g, '').replace(/<\/span>/g, '').replace(/\n/g, '<br>') : 'No description available.' %>
             </div>
@@ -675,7 +675,7 @@
       .product-left-column {
         position: -webkit-sticky;
         position: sticky;
-        top: 20px;
+        top: 100px;
         align-self: flex-start;
         /* Remove max-height and overflow to prevent thumbnail trimming */
       }
