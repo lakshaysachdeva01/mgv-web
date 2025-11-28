@@ -27,7 +27,7 @@
                     <style>
                         .contact-box .item {
                           display: flex;
-                          align-items: flex-start;
+                          align-items: center;
                           gap: 8px;
                           margin-bottom: 20px;
                         }
@@ -36,18 +36,27 @@
                           margin-bottom: 0px;
                         }
                         
-                        .contact-box .item i {
+                        .contact-box .item i,
+                        .contact-box .item img {
                           font-size: 30px;
-                           /* adjust as per your site theme */
+                          width: 30px;
+                          height: 30px;
                           flex-shrink: 0;
                           margin-top: 3px;
+                          margin-right: 15px;
+                        }
+                        
+                        .contact-box .item img {
+                          filter: brightness(0) saturate(100%) invert(48.6%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
                         }
                         
                         .contact-box .item a {
                           color: #555;
                           text-decoration: none;
                           transition: color 0.2s ease;
+                          font-size: 14px !important;
                         }
+                        
                         
                         .contact-box .item a:hover {
                           color: #e67e22;
@@ -60,17 +69,17 @@
                             <div class="contact-box">
                               <div class="box" style="text-align: left;">
                                 <div class="item">
-                                  <i class="ar-icons-location"></i>
+                                  <img src="/assets/images/icons/address.svg" alt="Location">
                                   <a target="_blank" href="https://www.google.com/maps/place/RAKEZ+Al+Hulaila+Industrial+Zone/@25.929254,56.052901,3699m/data=!3m1!1e3!4m6!3m5!1s0x3ef6656d56c8fdc3:0xce5e9421d77c4fd5!8m2!3d25.9292537!4d56.0529013!16s%2Fg%2F11hckbg49r?hl=en&entry=ttu&g_ep=EgoyMDI1MTAyMi4wIKXMDSoASAFQAw%3D%3D">
                                     VUNE 1327 Compass Building, Al-Hulaila Industrial Zone-FZ, Ras Al Khaimah, United Arab Emirates
                                   </a>
                                 </div>
                                 <div class="item">
-                                  <i class="ar-icons-call"></i>
+                                  <img src="/assets/images/icons/phone.svg" alt="Phone">
                                   <a href="tel:+971501560131">+971 50 156 0131</a>
                                 </div>
                                 <div class="item">
-                                  <i class="ar-icons-email"></i>
+                                  <img src="/assets/images/icons/email.svg" alt="Email">
                                   <a href="mailto:tech.mgvdubai@gmail.com">tech.mgvdubai@gmail.com</a>
                                 </div>
                               </div>
@@ -82,17 +91,17 @@
                             <div class="contact-box">
                               <div class="box" style="text-align: left;">
                                 <div class="item">
-                                  <i class="ar-icons-location"></i>
+                                  <img src="/assets/images/icons/address.svg" alt="Location">
                                   <a target="_blank" href="https://www.google.com/maps/place/Magic+paints,+Rawabhata,+Industrial+Area,+Bhanpuri,+Raipur,+Chhattisgarh+493221/@21.3174099,81.6393862,958m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3a28e6fe51f4649f:0x3820cb9be899e419!8m2!3d21.31741!4d81.6442518!16s%2Fg%2F11kzz8yhkg?entry=ttu&g_ep=EgoyMDI1MTAyMi4wIKXMDSoASAFQAw%3D%3D">
                                     Plot No 12, Rawabhata Industrial Area, Raipur 493221, Chhattisgarh, India
                                   </a>
                                 </div>
                                 <div class="item">
-                                  <i class="ar-icons-call"></i>
+                                  <img src="/assets/images/icons/phone.svg" alt="Phone">
                                   <a href="tel:+919039266159">+91 90392 66159</a>
                                 </div>
                                 <div class="item">
-                                  <i class="ar-icons-email"></i>
+                                  <img src="/assets/images/icons/email.svg" alt="Email">
                                   <a href="mailto:Shoeb@mgvdubai.com">Shoeb@mgvdubai.com</a>
                                 </div>
                               </div>

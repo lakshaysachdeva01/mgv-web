@@ -84,7 +84,7 @@
         display: block;
     }
     .nav-bar.active .logo .open-nav-bar span{
-        background-color: #1C1A30;
+        background-color: #4b4b4b;
     }
     .nav-bar .logo .open-nav-bar:hover span{
         background-color: #F57009;
@@ -105,7 +105,7 @@
         overflow-y: scroll;
         -webkit-box-shadow: 0 3px 4px rgb(0 0 0 / 7%);
                 box-shadow: 0 3px 4px rgb(0 0 0 / 7%);
-        background-color: #1C1A30;
+        background-color: #4b4b4b;
     }
     .nav-bar .nav-bar-links .level-1 .item-level-1{
         display: block;
@@ -227,7 +227,7 @@
 	
 	/* :: ----------- CSS Home 2 ----------- */
 	.all-navbar.home-2 .nav-bar .logo .open-nav-bar span{
-		background-color: #1C1A30;
+		background-color: #4b4b4b;
 	}
 	.all-navbar.home-2 .nav-bar .logo .open-nav-bar:hover span{
         background-color: #F57009;

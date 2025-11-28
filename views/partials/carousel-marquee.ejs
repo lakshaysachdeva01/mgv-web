@@ -36,28 +36,7 @@
             transform: translateX(-50%);
         }
     }
-    
-    /* Fade edges for smooth effect */
-    .carousel-marquee-container::before,
-    .carousel-marquee-container::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 100px;
-        z-index: 2;
-        pointer-events: none;
-    }
-    
-    .carousel-marquee-container::before {
-        left: 0;
-        background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-    }
-    
-    .carousel-marquee-container::after {
-        right: 0;
-        background: linear-gradient(to left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-    }
+  
     
     /* Item styling */
     .carousel-marquee-item {
