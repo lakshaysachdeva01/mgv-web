@@ -115,3 +115,23 @@ exports.getCategories = async() => {
         return [];
     }
 };
+
+exports.getSubcategoriesByCategory = async(categoryId) => {
+    console.log('📦 getSubcategoriesByCategory called with categoryId:', categoryId);
+    const websiteID = await getWebsiteID(); 
+    console.log('✅ Website ID for subcategories:', websiteID);
+    
+    try {
+        const data = await fetchData(`${API_BASE_URL}/website/sub-category/get-all-sub-categories/${websiteID}?categories=${categoryId}`);
+        console.log('✅ Subcategories fetched:', data);
+        
+        if (data && Array.isArray(data)) {
+            return data;
+        }
+        
+        return [];
+    } catch (error) {
+        console.error('❌ Error fetching subcategories:', error);
+        return [];
+    }
+};

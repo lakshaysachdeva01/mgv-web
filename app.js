@@ -5,7 +5,7 @@ const { getHomeDesktopBanner ,gettestimonial ,getAdBanner,getHomepopupBanner ,ge
 const { getBlog ,getBlogfull, getlatestblogs} = require('./controller/blogcontroller');
 const { getgallery,getLatestGalleryImages} = require('./controller/gallerycontroller');
 const { CONTACT_ENQUIRY_DYNAMIC_FIELDS_KEYS ,JOB_ENQUIRY_DYNAMIC_FIELDS_KEYS , BOOKING_ENQUIRY_DYNAMIC_FIELDS_KEYS} = require('./config/config');
-const { getProducts, getProductDetails ,getCategories ,getjobs ,getjobdetails , getotherjobs } = require('./controller/productcontroller');
+const { getProducts, getProductDetails ,getCategories ,getjobs ,getjobdetails , getotherjobs, getSubcategoriesByCategory, getProductsByCategory } = require('./controller/productcontroller');
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -77,16 +77,31 @@ app.get('/products', async (req, res) => {
     try {
         const baseUrl = req.protocol + '://' + req.get('Host');
         const categories = res.locals.categories || [];
+        const websiteID = await getWebsiteID();
+        const selectedCategoryId = req.query.category || null;
         
-        // Always load ALL products - JavaScript will handle filtering
-        const products = await getProducts();
+        // If category is selected, filter products server-side to avoid flash of all products
+        let products;
+        if (selectedCategoryId) {
+            products = await getProductsByCategory(selectedCategoryId);
+        } else {
+            // Load all products only when no category filter is applied
+            products = await getProducts();
+        }
+        
+        // Get category name if category is selected
+        let categoryName = null;
+        if (selectedCategoryId && categories.length > 0) {
+            const selectedCategory = categories.find(cat => cat._id === selectedCategoryId);
+            categoryName = selectedCategory ? selectedCategory.name : null;
+        }
         
         const seoDetails = {
-            title: "Our Products ",
+            title: categoryName ? `${categoryName} Products` : "Our Products ",
             metaDescription: "",
             metaImage: `${baseUrl}/${metaLogoPath}`,
             keywords: "",
-            canonical: `${baseUrl}/products`,
+            canonical: `${baseUrl}/products${selectedCategoryId ? `?category=${selectedCategoryId}` : ''}`,
         };
 
         res.render('products', { 
@@ -95,14 +110,19 @@ app.get('/products', async (req, res) => {
             baseUrl, 
             seoDetails, 
             S3_BASE_URL, 
-            categoryName: null,
+            API_BASE_URL,
+            WEBSITE_ID_KEY,
+            websiteID,
+            categoryName,
             categories,
-            selectedCategoryId: null,
+            selectedCategoryId,
             activePage: 'products'
         });
     } catch (error) {
         console.error('Error loading products page:', error);
         const baseUrl = req.protocol + '://' + req.get('Host');
+        const websiteID = await getWebsiteID();
+        const selectedCategoryId = req.query.category || null;
         const seoDetails = {
             title: "Our Products - ",
             metaDescription: "",
@@ -118,9 +138,12 @@ app.get('/products', async (req, res) => {
             baseUrl, 
             seoDetails,  
             S3_BASE_URL,
+            API_BASE_URL,
+            WEBSITE_ID_KEY,
+            websiteID,
             categoryName: null,
             categories: res.locals.categories || [],
-            selectedCategoryId: null,
+            selectedCategoryId,
             activePage: 'products'
         });
     }

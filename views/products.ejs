@@ -12,10 +12,10 @@
                         <ul>
                             <li><a href='/'>Home</a></li>
                             <li><i class="fas fa-angle-right"></i></li>
+                            <li><a href='/products'>Products</a></li>
                             <% if (categoryName) { %>
+                                <li><i class="fas fa-angle-right"></i></li>
                                 <li><%= categoryName %></li>
-                            <% } else { %>
-                                <li>Products</li>
                             <% } %>
                         </ul>
                     </div>
@@ -25,10 +25,10 @@
     </section>
 
 
-<!-- CATEGORY FILTER TABS
+<!-- CATEGORY FILTER TABS (hidden if category is selected in URL)
 ================================================== -->
-<% if (categories && categories.length > 0) { %>
-<section style=" padding: 40px 0; margin-bottom: 30px;">
+<% if (categories && categories.length > 0 && !selectedCategoryId) { %>
+<section id="category-tabs-section" style=" padding: 40px 0; margin-bottom: 0px;">
     <div class="container">
         <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 1200px; margin: 0 auto;">
             <button onclick="filterProducts('all')" class="category-tab active" data-category="all" style="padding: 0px 14px; background: #cb1125; border: 2px solid #cb1125; border-radius: 25px; color: white; text-decoration: none; font-weight: 500; font-size: 14px; height:40px; transition: all 0.3s ease; cursor: pointer;">All Products</button>
@@ -39,6 +39,16 @@
     </div>
 </section>
 <% } %>
+
+<!-- SUBCATEGORY FILTER TABS
+================================================== -->
+<section id="subcategory-tabs-section" style="padding: <%= selectedCategoryId ? '40px' : '0px' %> 0 40px 0; margin-bottom: 30px; <%= selectedCategoryId ? '' : 'display: none;' %>">
+    <div class="container">
+        <div id="subcategory-tabs-container" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 1200px; margin: 0 auto;">
+            <!-- Subcategory tabs will be dynamically inserted here -->
+        </div>
+    </div>
+</section>
 
 <!-- PRODUCTS GRID
 ================================================== -->
@@ -124,7 +134,7 @@
              </style>
                <% if (products && products.length > 0) { %>
                 <% products.forEach((item, index) => { %>
-                <div class="col-md-6 col-lg-4 product-item" data-category="<%= item.category ? item.category._id : 'uncategorized' %>" data-wow-delay="<%= (index % 3 + 1) * 100 + 100 %>ms">
+                <div class="col-md-6 col-lg-4 product-item" data-category="<%= item.category ? item.category._id : 'uncategorized' %>" data-subcategory="<%= item.subCategory ? item.subCategory._id : '' %>" data-wow-delay="<%= (index % 3 + 1) * 100 + 100 %>ms">
                     <div class="blog-item">
                         <a href='/product/<%= item.seoDetails.slug %>'>
                             <div class="blog-img">
@@ -165,83 +175,180 @@
 
 
 <script>
+const API_BASE_URL = "<%= API_BASE_URL %>";
+const websiteID = "<%= websiteID %>";
+const selectedCategoryId = "<%= selectedCategoryId || 'all' %>";
+let currentCategoryId = selectedCategoryId !== 'all' ? selectedCategoryId : 'all';
+let currentSubcategoryId = null;
 
+// Fetch subcategories for a given category
+async function fetchSubcategories(categoryId) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/website/sub-category/get-all-sub-categories/${websiteID}?categories=${categoryId}`);
+        const result = await response.json();
+        
+        console.log('Fetched subcategories for category:', categoryId, result);
+        
+        if (result && result.data && Array.isArray(result.data)) {
+            return result.data;
+        }
+        return [];
+    } catch (error) {
+        console.error('Error fetching subcategories:', error);
+        return [];
+    }
+}
 
-// Product Filtering Function
-function filterProducts(categoryId) {
-    // Update active tab
-    document.querySelectorAll('.category-tab').forEach(tab => {
+// Display subcategory tabs
+function displaySubcategoryTabs(subcategories) {
+    const subcategorySection = document.getElementById('subcategory-tabs-section');
+    const subcategoryContainer = document.getElementById('subcategory-tabs-container');
+    
+    // Clear existing subcategory tabs completely
+    subcategoryContainer.innerHTML = '';
+    
+    console.log('Displaying subcategories:', subcategories);
+    console.log('Current category ID:', currentCategoryId);
+    
+    if (subcategories && subcategories.length > 0) {
+        // Filter subcategories to only show those matching the current category
+        // This is a safety check in case API returns subcategories from multiple categories
+        const filteredSubcategories = subcategories.filter(subcat => {
+            if (subcat.category && subcat.category._id) {
+                return subcat.category._id === currentCategoryId;
+            }
+            return true; // If category info is missing, include it anyway
+        });
+        
+        console.log('Filtered subcategories for category:', currentCategoryId, filteredSubcategories);
+        
+        if (filteredSubcategories.length > 0) {
+            // Show subcategory section
+            subcategorySection.style.display = 'block';
+            
+            // Add "All" button for subcategories
+            const allSubcategoryBtn = document.createElement('button');
+            allSubcategoryBtn.className = 'subcategory-tab active';
+            allSubcategoryBtn.setAttribute('data-subcategory', 'all');
+            allSubcategoryBtn.textContent = 'All';
+            allSubcategoryBtn.style.cssText = 'padding: 0px 14px; background: #cb1125; border: 2px solid #cb1125; border-radius: 25px; color: white; text-decoration: none; font-weight: 500; font-size: 14px; height:40px; transition: all 0.3s ease; cursor: pointer;';
+            allSubcategoryBtn.onclick = () => filterBySubcategory('all');
+            subcategoryContainer.appendChild(allSubcategoryBtn);
+            
+            // Add subcategory tabs
+            filteredSubcategories.forEach(subcategory => {
+                const subcategoryBtn = document.createElement('button');
+                subcategoryBtn.className = 'subcategory-tab';
+                subcategoryBtn.setAttribute('data-subcategory', subcategory._id);
+                subcategoryBtn.textContent = subcategory.name;
+                subcategoryBtn.style.cssText = 'padding: 0px 14px; background: white; border: 2px solid #e9ecef; border-radius: 25px; color: #6c757d; text-decoration: none; font-weight: 500; font-size: 14px; height:40px; transition: all 0.3s ease; cursor: pointer;';
+                subcategoryBtn.onclick = () => filterBySubcategory(subcategory._id);
+                subcategoryContainer.appendChild(subcategoryBtn);
+            });
+        } else {
+            // Hide subcategory section if no matching subcategories
+            subcategorySection.style.display = 'none';
+        }
+    } else {
+        // Hide subcategory section if no subcategories
+        subcategorySection.style.display = 'none';
+    }
+}
+
+// Filter products by subcategory
+function filterBySubcategory(subcategoryId) {
+    currentSubcategoryId = subcategoryId === 'all' ? null : subcategoryId;
+    
+    // Update active subcategory tab
+    document.querySelectorAll('.subcategory-tab').forEach(tab => {
         tab.classList.remove('active');
         tab.style.background = 'white';
         tab.style.borderColor = '#e9ecef';
         tab.style.color = '#6c757d';
     });
     
-    // Highlight active tab
-    const activeTab = document.querySelector(`[data-category="${categoryId}"]`);
-    if (activeTab) {
-        activeTab.classList.add('active');
-        activeTab.style.background = '#cb1125';
-        activeTab.style.borderColor = '#cb1125';
-        activeTab.style.color = 'white';
+    // Highlight active subcategory tab
+    const activeSubcategoryTab = document.querySelector(`[data-subcategory="${subcategoryId}"]`);
+    if (activeSubcategoryTab) {
+        activeSubcategoryTab.classList.add('active');
+        activeSubcategoryTab.style.background = '#cb1125';
+        activeSubcategoryTab.style.borderColor = '#cb1125';
+        activeSubcategoryTab.style.color = 'white';
     }
     
-    // Filter products
+    // Filter products by category and subcategory
+    filterProductsByCategoryAndSubcategory(currentCategoryId, currentSubcategoryId);
+}
+
+// Filter products by both category and subcategory
+function filterProductsByCategoryAndSubcategory(categoryId, subcategoryId) {
     const productItems = document.querySelectorAll('.product-item');
     let visibleCount = 0;
     
     productItems.forEach(item => {
         const itemCategory = item.getAttribute('data-category');
+        const itemSubcategory = item.getAttribute('data-subcategory');
         
-        if (categoryId === 'all' || itemCategory === categoryId) {
+        // Check if product matches category filter
+        // If categoryId is 'all', show all. Otherwise only show matching category.
+        // Note: When category is in URL, products are already filtered server-side, 
+        // so all rendered products should match the category
+        const matchesCategory = categoryId === 'all' || itemCategory === categoryId;
+        
+        // Check if product matches subcategory filter
+        const matchesSubcategory = !subcategoryId || subcategoryId === 'all' || itemSubcategory === subcategoryId;
+        
+        if (matchesCategory && matchesSubcategory) {
             item.style.display = 'block';
-            item.style.opacity = '0';
-            item.style.transform = 'translateY(20px)';
-            
-            // Smooth fade-in animation
-            setTimeout(() => {
-                item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                item.style.opacity = '1';
-                item.style.transform = 'translateY(0)';
-            }, 50);
-            
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
             visibleCount++;
         } else {
-            item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            item.style.display = 'none';
             item.style.opacity = '0';
-            item.style.transform = 'translateY(-20px)';
-            
-            setTimeout(() => {
-                item.style.display = 'none';
-            }, 300);
         }
     });
     
-    // Update URL without page refresh
-    const newUrl = categoryId === 'all' ? '/products' : `/products?category=${categoryId}`;
-    window.history.pushState({ category: categoryId }, '', newUrl);
-    
-    // Update page title
-    const categoryName = activeTab ? activeTab.textContent : 'All Products';
-    document.title = `${categoryName} - Passary Refractories`;
-    
-    console.log(`Filtered to ${categoryName}: ${visibleCount} products visible`);
+    console.log(`Filtered to category: ${categoryId}, subcategory: ${subcategoryId || 'all'}, visible: ${visibleCount} products`);
 }
 
-// Handle browser back/forward buttons
+// Product Filtering Function - Navigate to URL for server-side filtering
+function filterProducts(categoryId) {
+    // Navigate to the URL which will trigger server-side filtering
+    // This prevents the flash of all products
+    const newUrl = categoryId === 'all' ? '/products' : `/products?category=${categoryId}`;
+    window.location.href = newUrl;
+}
+
+// Handle browser back/forward buttons - reload page to get correct server-side filtered products
 window.addEventListener('popstate', function(event) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const category = urlParams.get('category') || 'all';
-    filterProducts(category);
+    // Reload to get server-side filtered products
+    window.location.reload();
 });
 
 // Initialize filter based on URL on page load
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('category') || 'all';
     
     if (category !== 'all') {
-        filterProducts(category);
+        // Hide category tabs section if category is selected
+        const categoryTabsSection = document.getElementById('category-tabs-section');
+        if (categoryTabsSection) {
+            categoryTabsSection.style.display = 'none';
+        }
+        
+        // Fetch and display subcategories for the selected category
+        const subcategories = await fetchSubcategories(category);
+        displaySubcategoryTabs(subcategories);
+        
+        // Products are already filtered server-side, but we need to handle subcategory filtering
+        // No need to filter again by category as products are already filtered server-side
+        currentCategoryId = category;
+        
+        // Only filter by subcategory if there's a subcategory in URL (for future enhancement)
+        // For now, just ensure all products for this category are visible
+        // Products are already filtered server-side, so we don't need to hide any
     }
 });
 </script>
